@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['breaking_20changes_0',['Breaking changes',['../_m_a_t_h1_notes.html#math1_550breaks',1,'Breaking changes'],['../_m_a_t_h1_notes.html#math1_540breaks',1,'Breaking changes'],['../_m_a_t_h1_notes.html#math1_530breaks',1,'Breaking changes'],['../_m_a_t_h1_notes.html#math1_520breaks',1,'Breaking changes'],['../_m_a_t_h1_notes.html#math1_510breaks',1,'Breaking changes'],['../_m_a_t_h1_notes.html#math1_500breaks',1,'Breaking changes'],['../_m_a_t_h1_notes.html#math1_490breaks',1,'Breaking changes'],['../_m_a_t_h1_notes.html#math1_480breaks',1,'Breaking changes'],['../_m_a_t_h1_notes.html#math1_470breaks',1,'Breaking changes'],['../_m_a_t_h1_notes.html#math1_460breaks',1,'Breaking changes'],['../_m_a_t_h1_notes.html#math1_450breaks',1,'Breaking changes'],['../_m_a_t_h1_notes.html#math1_441breaks',1,'Breaking changes'],['../_m_a_t_h1_notes.html#math1_440breaks',1,'Breaking changes']]]
+];

@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['improvements_0',['Improvements',['../_m_a_t_h1_notes.html#math1_560improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_550improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_540improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_530improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_520improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_510improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_500improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_490improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_480improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_470improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_460improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_450improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_441improv',1,'Improvements'],['../_m_a_t_h1_notes.html#math1_440improv',1,'Improvements']]]
+];

@@ -1,0 +1,37 @@
+\_form#0=137x30:$ q_h(N_0 N_1) = L \ \frac{\ln(\frac{h_0}{h_1})}{h_0 - h_1} $
+\_form#1=15x15:$ h_0 $
+\_form#2=14x15:$ h_1 $
+\_form#3=11x12:$ L $
+\_form#4=36x15:$ N_0 N_1 $
+\_form#5=209x35:$ h_s(N_0 N_1) = \max{\left( \frac{h_0}{h_1},\frac{h_1}{h_0} \right)} ^ {\frac{1}{L}} - 1 $
+\_form#6=183x35:$   H_i = { \left( {\frac{1}{N_i}} ~ \sum_{edges\;ij} {{L_{ij}}^w} \right) } ^ {\frac{1}{w}}
+$
+\_form#7=17x15:$ H_i $
+\_form#8=20x17:$ L_{ij} $
+\_form#9=17x15:$ N_i $
+\_form#10=83x14:$ \mathrm{M} = \mathrm{B} \, \mathbf{D} \, \mathrm{B}^T $
+\_form#11=89x29:$ \mathbf{D} = \left [ \frac{1}{H_0^2} \, \frac{1}{H_1^2} \right ] $
+\_form#12=111x29:$ \mathbf{D} = \left [ \frac{1}{H_0^2} \, \frac{1}{H_1^2} \, \frac{1}{H_2^2} \right ] $
+\_form#13=219x17:$ \mbox{H-variation} (N_0 N_1) = |h_1 - h_0| / L $
+\_form#14=291x20:$ \mbox{H-shock} (N_0 N_1) = \max(h_0/h_1,h_1/h_0)^{1/L} - 1 $
+\_form#15=68x12:$A X = \lambda X$
+\_form#16=78x12:$B X = \lambda A X$
+\_form#17=135x30:$   D_i = \frac{\sum_{edges\;ij}{L_{ij}^w ~ D_{ij}}}{\sum_{edges\;ij} {L_{ij}^w}}
+$
+\_form#18=17x15:$ D_i $
+\_form#19=21x17:$ D_{ij} $
+\_form#20=111x26:$   D_i = \frac{\sum_{E}{{S_E}^w ~ D_E}}{\sum_{E} {{S_E}^w}}
+$
+\_form#21=18x15:$ S_E $
+\_form#22=21x15:$ D_E $
+\_form#23=33x17:$ T_0(i) $
+\_form#24=35x17:$ K_0(i) $
+\_form#25=33x17:$ T_1(i) $
+\_form#26=35x17:$ K_1(i) $
+\_form#27=131x17:$ D(i) = T_0(i) \times T_1(i) $
+\_form#28=18x15:$ \mathbf{V_i} $
+\_form#29=72x15:$ \mathbf{V_i} = \mathbf{M} \, \mathrm{D_i} $
+\_form#30=47x23:$ \delta = \frac{h^2}{8\,R} $
+\_form#31=65x23:$ \delta = \frac{h^4}{512\,R^3} $
+\_form#32=74x17:$ d_{n+1} = \rho d_{n} $
+\_form#33=15x15:$ d_{n} $

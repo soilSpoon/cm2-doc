@@ -1,0 +1,6 @@
+\_form#0=363x57:$   A = A + a \ \left [ \begin{array}{ccc}
+                            -{V_y}^2-{V_z}^2 &    V_x V_y       &    V_x V_z       \\
+                                 V_y V_x     & -{V_x}^2-{V_z}^2 &    V_y V_z       \\ 
+                                 V_z V_x     &    V_z V_y       & -{V_x}^2-{V_y}^2 \\
+                       \end{array} \right ] 
+$
