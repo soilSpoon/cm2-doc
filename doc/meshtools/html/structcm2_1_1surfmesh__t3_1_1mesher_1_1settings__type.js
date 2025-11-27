@@ -1,0 +1,26 @@
+var structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type =
+[
+    [ "display_handler_type", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a635a8a280e9ea07b974d2cf73cf60df9", null ],
+    [ "interrupt_handler_type", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#acab8fa895b606e90eeab73c14f5ca775", null ],
+    [ "settings_type", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#acd81745ef9239eec60b85d1033fd7438", null ],
+    [ "valid", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a68767d400123d64dfe60cc246661c636", null ],
+    [ "check", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a95ad2c1f1ca294ef4ec41ebf6667f2fc", null ],
+    [ "reset", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a2e9a6087cb59c4e8ca509cf856c623ca", null ],
+    [ "save", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#ad50a89a2cbf641d842cf2e2d0621b2b2", null ],
+    [ "load", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#ae7531fa90c500027b2936ca0e25b65ac", null ],
+    [ "target_h", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a2823e51a6ec99aa2a9b3ce220c33da70", null ],
+    [ "min_h", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#adbfbebcce165585028cdffb4b744b9e1", null ],
+    [ "fix_tolerance", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a71e470ec147c99053fdee17b3991d5f7", null ],
+    [ "max_chordal_error", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#aa0656cadf3e38512b5f096c86b27bd19", null ],
+    [ "max_chordal_error_ratio", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a3957b5a9a607b197212577ade61bdda7", null ],
+    [ "chordal_control_type", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a1843080f5babf06df774faf690ae9be9", null ],
+    [ "max_gradation", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#af47b48b7ff170c08156e8549b4649772", null ],
+    [ "force_even_flag", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a4b2c3148e60622c359fd1c3a81d4c703", null ],
+    [ "optim_level", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a763e6df19c34be35db7d83de87549f76", null ],
+    [ "high_order_type", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a3a3a08a2b01fdfec8762f53fc86ef4e1", null ],
+    [ "high_order_mode", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a5de4aa6d4c0d2c2d2c9a44b6f7b34f96", null ],
+    [ "num_threads", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a65dea05ae9b1fdb0c9c87d5f300e776e", null ],
+    [ "display_hdl", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#abb2c8dacea3322a65837f704ddfabd9d", null ],
+    [ "interrupt_hdl", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#a74917d524609bfd4a42f98136300ffa8", null ],
+    [ "pass_thru", "structcm2_1_1surfmesh__t3_1_1mesher_1_1settings__type.html#aa8a241502a5e6aff92750e08290fb60b", null ]
+];
