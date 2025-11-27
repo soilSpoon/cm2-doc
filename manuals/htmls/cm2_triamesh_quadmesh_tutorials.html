@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .page {
+            page-break-after: always;
+            margin-bottom: 50px;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+        .page-header {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+        table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        pre, code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        pre {
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+<!-- Model: document-parse-250618 -->
+<div class="page">
+<div class="page-header">Page 1</div>
+<h1 id='0' style='font-size:20px'>COMPUTING<br>OBJECTS</h1>
+<h1 id='1' style='font-size:22px'>CM2 TriaMeshⓇ Iso/Aniso<br>CM2 QuadMesh � Iso/Aniso</h1>
+<br><h1 id='2' style='font-size:16px'>Version 5.6</h1>
+<p id='3' data-category='paragraph' style='font-size:18px'>tutorials</p>
+<p id='4' data-category='paragraph' style='font-size:14px'>Revision February 2025.<br>https://www.computing-objects.com<br>Ⓒ Computing Objects SARL - 25 rue du Marechal Foch, 78000 Versailles, France.</p>
+</div>
+<div class="page">
+<div class="page-header">Page 2</div>
+<h1 id='5' style='font-size:20px'>Forewords</h1>
+<p id='6' data-category='paragraph' style='font-size:16px'>This manual is a tutorial for the 2-D mesh generators of the CM2 MeshToolsⓇ SDK:</p>
+<p id='7' data-category='list' style='font-size:14px'>· The isotropic meshers CM2 TriaMeshⓇ Iso and CM2 QuadMesh� Iso,<br>· The anisotropic meshers CM2 TriaMeshⓇ Aniso and CM2 QuadMesh� Aniso.</p>
+<p id='8' data-category='paragraph' style='font-size:16px'>All these mesh generators are constrained unstructured meshers: the boundary mesh (contour mesh) as well<br>as the internal hard edges and hard points (embedded) are kept unmodified in the final mesh.</p>
+<p id='9' data-category='paragraph' style='font-size:16px'>Based on a fast and robust hybrid "Advancing-Front and Delaunay" algorithm, they generate high quality<br>elements with smooth grading sizes according to the length of the boundary edges or to the user-specified<br>sizes. The speed is near independent of the number of the elements to be generated.</p>
+<p id='10' data-category='paragraph' style='font-size:16px'>Setting switches can be used to adapt the meshers to the various needs of the user concerning mesh<br>generation, refinement and optimization (they can also be used as optimizer-only of some already existing<br>meshes).</p>
+<p id='11' data-category='paragraph' style='font-size:16px'>The quad meshers can generate all-quad meshes (the default) or mixed quad-dominant meshes.</p>
+<p id='12' data-category='paragraph' style='font-size:16px'>Many data concerning the mesh are available upon exit: shape and size qualities histograms, matrix of the<br>neighbors, number of sub-domains, area...</p>
+<p id='13' data-category='paragraph' style='font-size:16px'>Like many other meshers of the library, CM2 TriaMeshⓇ Iso/Aniso and CM2 QuadMesh� Iso/Aniso are multi-<br>threaded (you can select in the settings the maximum number of threads the generator can use).<br>The generated meshes are reproducible (same mesh with same input data and same mesh with any number of<br>threads).</p>
+<p id='14' data-category='paragraph' style='font-size:16px'>Data are exchanged with the CM2 mesh generators through vector and matrix objects (no file). Beginners<br>should start by reading the CM2 Math1Ⓡ - overview manual to get first views on these mathematical containers.</p>
+<p id='15' data-category='paragraph' style='font-size:14px'>For a complete description of the data and settings structures used with these meshers please refer to the<br>CM2 TriaMesh & CM2 QuadMesh - reference manual.</p>
+<p id='16' data-category='paragraph' style='font-size:18px'>The source code of the CM2 MeshToolsⓇ SDK (full library) has been registered with the APP under Inter Deposit<br>number IDDN.FR.001 .260002.00.R.P.1998.000.20700 (22/06/1998) and IDDN.FR.001.480030.006.<br>S.P.2001.000.20700 (23/05/2019) is regularly deposited since then.</p>
+<p id='17' data-category='paragraph' style='font-size:16px'>The source code specific to CM2 TriaMeshⓇ Iso/Aniso, together with this manual, has been registered with the<br>APP under Inter Deposit number IDDN.FR.001.440021.000.R.P.2008.000.20700 (31/1 0/2008) and is regularly<br>deposited since then.</p>
+<p id='18' data-category='paragraph' style='font-size:16px'>The source code specific to CM2 QuadMesh� Iso/Aniso, together with this manual, has been registered with the<br>APP under Inter Deposit number IDDN.FR.001.440020.000.R.P.2008.000.20700 (31/10/2008) and is regularly<br>deposited since then.</p>
+<table id='19' style='font-size:16px'><thead></thead><tbody><tr><td>TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 2 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 3</div>
+<h1 id='20' style='font-size:20px'>Table of contents</h1>
+<p id='21' data-category='paragraph' style='font-size:14px'>Forewords. ...... 2</p>
+<br><p id='22' data-category='list' style='font-size:18px'>1. Getting started - a simple square .......... ········· 5<br>Some declarations 6<br>Authorization of the library........ 6<br>Contour mesh 7<br>2. Square with an internal line.......... ...... 14<br>3. Square with internal hole ....... 17<br>4. Quadratic elements & high-order nodes ........ ........ 19<br>5. Square with grading mesh size. ........ 21<br>6. Square with an internal hard node ......... ....... 23<br>7. Multiple meshes ........ ·········· 25<br>8. Shared boundaries ......... ....... 28<br>9. Background mesh ..... ······· 32<br>10. Anisotropic meshes. ...... 38<br>11. 3-D surface meshes (aniso meshers only) .... ...... 43</p>
+<table id='23' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMesh� & CM2 QuadMesh� Iso/Aniso - 3 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 4</div>
+<p id='24' data-category='paragraph' style='font-size:20px'>Before meshing a 2-D domain, the first step is to generate a 1-D mesh of the external contour. This chapter<br>mostly details cases where the boundary mesh is obtained using some simple CM2 MeshTools functions. One<br>example (Section 7) illustrates the case where the boundary mesh has been generated by other means and is<br>simply read from a file.</p>
+<p id='25' data-category='paragraph' style='font-size:20px'>Each example starts with including the file stdafx. h (can be a pre-compiled header) giving access to the<br>classes and the functions of the library (API).</p>
+<p id='26' data-category='paragraph' style='font-size:18px'>The general namespace cm2 has nested namespaces such as cm2 : : vecscal, cm2 : : vecvec, cm2:<br>: meshtools or cm2 : : tri amesh_ iso. The user can add a using namespace cm2 directive in this stdafx.<br>h file. Keeping namespaces in the user's source code can however be useful to improve the legibility and to<br>avoid name conflicts. In the rest of this document we assume such a using namespace cm2 directive.</p>
+<p id='27' data-category='paragraph' style='font-size:18px'>File stdafx.h1:</p>
+<p id='28' data-category='paragraph' style='font-size:14px'>CM2 MESHTOOLS</p>
+<br><p id='29' data-category='paragraph' style='font-size:14px'>11<br>#include " meshtools. h"<br>#include " meshtoo ls1d.h"<br>#include " tri amesh_iso. h"<br>#include " quadmesh_iso. h"<br>#include " triamesh_aniso.h"<br>#include "quadmesh_aniso.h"</p>
+<br><table id='30' style='font-size:16px'><thead></thead><tbody><tr><td>General purpose mesh routines</td></tr><tr><td>To generate 1D meshes</td></tr><tr><td>CM2 TriaMesh Iso</td></tr><tr><td>CM2 QuadMesh Iso</td></tr><tr><td>CM2 TriaMesh Aniso (Section 10 onlyly)</td></tr><tr><td>CM2 QuadMesh Aniso (Section 10</td></tr></tbody></table>
+<br><p id='31' data-category='paragraph' style='font-size:18px'>using namespace cm2;</p>
+<br><p id='32' data-category='paragraph' style='font-size:14px'>/ Main cm2 namespace can now be omitted.</p>
+<p id='33' data-category='paragraph' style='font-size:22px'>Required libraries2:</p>
+<p id='34' data-category='list' style='font-size:14px'>· cm2math1<br>· cm2misc<br>· cm2meshtools<br>· cm2meshtools1d<br>· cm2meshtools2d<br>· cm2triamesh_ iso<br>· cm2quadmesh_ iso<br>· cm2triamesh_aniso (Section 10 only)<br>· cm2quadmesh_aniso (Section 10 only)</p>
+<p id='35' data-category='footnote' style='font-size:16px'>1 If neither meshtools nor CM2 QuadMesh Iso nor the aniso meshers is used, the file stdafx.h can reduce to:#inc lude "triamesh_<br>iso. h" and link only with cm2math1, cm2misc, cm2meshtools, cm2meshtools2d and cm2triamesh_ iso.<br>2 The lib names end with ($platform) 」 ($ver). For instance cm2math1_x64_56. dll. On Windows, file extensions for the libraries are<br>lib and dll. On Linux/Unix/macOS platforms, file extensions are usually .a (static archive), .SO or .dylib (dynamic lib).</p>
+<table id='36' style='font-size:18px'><thead></thead><tbody><tr><td>CM2 Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - tutorials</td><td>4</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 5</div>
+<h1 id='37' style='font-size:22px'>1. Getting started - a simple square</h1>
+<p id='38' data-category='paragraph' style='font-size:18px'>This first example is a regular mesh of a square. The four boundary segments are equally discretized with 10<br>elements.</p>
+<p id='39' data-category='paragraph' style='font-size:14px'>#include "stdafx.h"<br>#include <iostream></p>
+<p id='40' data-category='paragraph' style='font-size:14px'>11 Simple optional display handler.<br>static void display_hdl (void*, unsigned, const char* msg) { std : : cout << msg; }</p>
+<p id='41' data-category='paragraph' style='font-size:14px'>int main()</p>
+<br><p id='42' data-category='paragraph' style='font-size:14px'>{</p>
+<br><table id='43' style='font-size:14px'><thead></thead><tbody><tr><td>const double</td><td>L(10.);</td></tr><tr><td>const unsublevec2</td><td>N(10) ;</td></tr><tr><td>const Doub</td><td>PO(0. , 0.), P1(L, 0. ) , P2(L, L), P3(0 . , L) ;</td></tr><tr><td>DoubleMat</td><td>pos;</td></tr><tr><td>UIntVec</td><td>indices;</td></tr><tr><td>UIntMat</td><td>connectB;</td></tr></tbody></table>
+<p id='44' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>triamesh_iso: : registration("Licensed to SMART Inc " "F53EA108BCWX") ;<br>,</p>
+<br><p id='45' data-category='paragraph' style='font-size:14px'>11 VERTICES AND LINE MESHES.</p>
+<br><p id='46' data-category='paragraph' style='font-size:14px'>pos . push_back (PO) ;<br>pos · push_back(P1) ;<br>pos · push_back (P2) ;<br>pos . push_back (P3) ;<br>meshtools1d: : mesh_straight (pos, 日, 1, N, indices) ; indices. pop_back() ;<br>meshtools1d: : mesh_strai ght(pos, 1, 2, N, indices) ; indices · pop_back() ;<br>meshtools1d: :mesh_straight(pos, 2, 3, N, indices) ; indices · pop_back() ;<br>meshtools1d: :mesh_straight(pos, 3, 0, N, indices) ;<br>meshtools1d: : indices_to_connectE2(indices, connectB) ;</p>
+<p id='47' data-category='paragraph' style='font-size:14px'>11 THE 2D MESH.<br>triamesh_iso: : mesher the_mesher;<br>triamesh_iso: : mesher: :data_type data (pos, connectB) ;<br>the_mesher . run(data) ;</p>
+<p id='48' data-category='paragraph' style='font-size:14px'>11 SOME OUTPUT INFO (OPTIONAL) .<br>data.print_info(&display_hdl) ;</p>
+<p id='49' data-category='paragraph' style='font-size:14px'>11 VISUALISATION (OPTIONAL) .<br>meshtools : : medit_output("out.mesh" , data. pos, data connectM, CM2_FACET3) ;</p>
+<br><p id='50' data-category='paragraph' style='font-size:14px'>return 0;<br>} 11 main</p>
+<h1 id='51' style='font-size:20px'>The resulting mesh is shown Figure 1.</h1>
+<table id='52' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 TriaMesh Ⓡ & CM2 QuadMesh� Iso/Aniso - 5 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 6</div>
+<figure id='53'><img alt="" data-coord="top-left:(380,118); bottom-right:(859,592)" /></figure>
+<caption id='54' style='font-size:14px'>Figure 1 - Triangle mesh of a square.</caption>
+<p id='55' data-category='paragraph' style='font-size:18px'>Let us explain this program line by line.</p>
+<h1 id='56' style='font-size:20px'>Some declarations</h1>
+<p id='57' data-category='paragraph' style='font-size:16px'>Matrix pos is a DoubleMat (variable-sized matrix of doubles)3 and the connectivity matrix connectB is a<br>UIntMat. connectB (i, j) shall store the ith local node of the jth element. This integer refers to the column<br>number in matrix pos where the coordinates of this node can be found4.</p>
+<p id='58' data-category='paragraph' style='font-size:18px'>indices is a temporary vector.</p>
+<p id='59' data-category='paragraph' style='font-size:22px'>Authorization of the library</p>
+<p id='60' data-category='paragraph' style='font-size:16px'>The library triamesh_ iso (resp. quadmesh_iso) is protected and need to be unlocked with a call to<br>tri amesh_ iso : : registration (resp. quadmesh_ iso: : registration). Two strings must be provided for<br>each library: the name of your company or organization that has acquired the license and a secret code5. Note<br>that both strings are case sensitive and the registration call must be made each time the library is loaded into<br>memory and before the first run of the mesher.</p>
+<p id='61' data-category='paragraph' style='font-size:14px'>triamesh_iso : : registration("Licensed to SMART Inc. " "F53EA108BCWX") ;<br>,</p>
+<p id='62' data-category='list' style='font-size:14px'>3 See manual CM2 Math1 - overview.<br>4 Recall that array indices are zero based (from 0 to N-1).<br>5 Contact license@computing-objects.com for any licensing inquiry.</p>
+<table id='63' style='font-size:16px'><thead></thead><tbody><tr><td>CM2 Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 6 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 7</div>
+<p id='64' data-category='paragraph' style='font-size:22px'>Contour mesh</p>
+<p id='65' data-category='paragraph' style='font-size:20px'>This is usually the heaviest part of the work for the user. In this example, we only use routines from the<br>CM2 MeshTools SDK, but the user is free to generate the contour mesh with any other tool or even to read it<br>form a file6. Anyway, the 2-D meshers need this contour mesh as a couple of matrices: the matrix pos<br>containing the points' coordinates and the connectivity matrix connectB of the boundary edges.</p>
+<p id='66' data-category='paragraph' style='font-size:20px'>First, the corners of the square are created as four pair of coordinates in the pos matrix:</p>
+<p id='67' data-category='paragraph' style='font-size:14px'>pos · push_back(P0) ;<br>pos · push_back(P1) ;<br>pos . push_back(P2) ;<br>pos . push_back(P3) ;</p>
+<p id='68' data-category='paragraph' style='font-size:20px'>The push_back function appends a new column at the end of a matrix. The size of the column must match the<br>current number of rows of the matrix. If the matrix is empty, the first vector sets this number of rows.</p>
+<p id='69' data-category='paragraph' style='font-size:20px'>After these four push-backs, the dimensions of the pos matrix are 2 X 4.</p>
+<table id='70' style='font-size:16px'><thead></thead><tbody><tr><td>meshtools1d : : mesh_straight (pos, 日, 1, N, indices) ; indices . pop_ back() ;</td></tr><tr><td>meshtools1d : : mesh_straight(pos , 1, 2, N, indices) ; indices - pop_back() ; meshtools1d : : mesh_straight(pos , 2, 3 , N, indices) ; indices · pop_back() ; meshtoo ls1d : : mesh_straight(pos, 3, ⊙ , N, indices) ;</td></tr></tbody></table>
+<p id='71' data-category='paragraph' style='font-size:20px'>Now that the four corners are present, we can create the points in between and the associated edges:</p>
+<p id='72' data-category='paragraph' style='font-size:20px'>The mesh_straight routine of the meshtools1d library generates N - 1 new points equally spaced into new<br>appended columns in the pos matrix:</p>
+<p id='73' data-category='paragraph' style='font-size:18px'>meshtoo ls1d : : mesh_straight<br>(DoubleMat& pos, unsi gned 10, unsi gned i1, unsi gned N, UIntVec& indices) ;</p>
+<p id='74' data-category='paragraph' style='font-size:20px'>The index of each point, i.e. the column in matrix pos, is also appended to the vector indices.<br>With i0 = 0 and i1 = 1, this vector contains upon exit of this function:</p>
+<p id='75' data-category='paragraph' style='font-size:18px'>[0 4 5 6 7 8 9 10 11 12 1]</p>
+<p id='76' data-category='paragraph' style='font-size:20px'>And the matrix pos is now of size 2 X 13:</p>
+<figure id='77' data-category='chart'><img data-coord="top-left:(377,1294); bottom-right:(866,1482)" /><figcaption><p>Chart Type: line</p></figcaption><table><thead><tr><td></td><td>Four corners</td><td>New generated nodes</td></tr></thead><tbody><tr><td>item_01</td><td>12</td><td>12</td></tr></tbody></table></figure>
+<p id='78' data-category='paragraph' style='font-size:18px'>6 See Section 5, "Square with Grading Mesh Size".</p>
+<table id='79' style='font-size:20px'><thead></thead><tbody><tr><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>7 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 8</div>
+<p id='80' data-category='paragraph' style='font-size:20px'>The last value in the indices vector, i.e. value 1, must be suppressed to avoid having it twice:</p>
+<p id='81' data-category='paragraph' style='font-size:14px'>indices · pop_back() ;</p>
+<p id='82' data-category='paragraph' style='font-size:18px'>The second call to mesh_straight with i0 = 1 and i1 = 2 sets the indices vector to:</p>
+<br><p id='83' data-category='paragraph' style='font-size:18px'>[0 4 5 6 7 8 9 10 11 12 1 13 14 15 16 17 18 19 20 21 2]</p>
+<p id='84' data-category='paragraph' style='font-size:18px'>After the four line meshes, the matrix pos is of size 2 X 40 and the indices vector has 41 values - the last index<br>equals to the first, here zero, to close the contour7.</p>
+<p id='85' data-category='paragraph' style='font-size:22px'>The vector of indices is used to create the connectivity matrix (2-node edges) of the boundary mesh:</p>
+<p id='86' data-category='paragraph' style='font-size:14px'>meshtools1d : : indices_to_connectE2 (indices, connectB) ;</p>
+<p id='87' data-category='paragraph' style='font-size:18px'>The connectB matrix has now dimensions 2 X 40:</p>
+<p id='88' data-category='paragraph' style='font-size:14px'>2x40 [0 4 5 6 7 · · · 39<br>4 5 6 7 8 · · · 0]</p>
+<p id='89' data-category='paragraph' style='font-size:18px'>Now that we have done the boundary mesh, all we have to do is to call the 2-D mesher. This done by creating a<br>data structure holding this 1-D mesh and make the mesher run on it:</p>
+<p id='90' data-category='paragraph' style='font-size:14px'>triamesh_iso : : mesher : :data_type data (pos, connectB) ;<br>the_mesher · run (data) ;</p>
+<p id='91' data-category='paragraph' style='font-size:18px'>This constructs the data structure with shallow-copies of the matrices pos and of connectB into data · pos<br>and data . connectB. Upon exit, the matrix data.pos is bigger and contains all the new points generated<br>inside the square by the 2-D mesher. These new points are appended to the original matrix. The initial 40<br>points are left untouched in the first 40 columns.</p>
+<p id='92' data-category='paragraph' style='font-size:20px'>The connectivity of the final mesh is stored in the matrix data · connectM, each column storing the indices of<br>the nodes for an element8. connectM(i, j) is the ith local node of the jth element.</p>
+<p id='93' data-category='paragraph' style='font-size:14px'>7 The same result could have been achieved with:</p>
+<br><p id='94' data-category='paragraph' style='font-size:16px'>UIntVec hard_nodes (5) ;<br>hard_nodes [0] = 日;<br>hard_nodes[1] = 1;<br>hard_nodes[2] = 2;<br>hard_nodes[3] = 3;<br>hard_nodes [4] = 日;<br>meshtools1d : : mesh_straight (pos, hard_nodes, 4*N, indices) ;<br>This variant of mesh_straight meshes a polyline going through some constrained points (hard_nodes).</p>
+<p id='95' data-category='paragraph' style='font-size:16px'>8 The elements are always oriented counter-clock wise (normal up with the right-hand thumb rule).</p>
+<table id='96' style='font-size:18px'><thead></thead><tbody><tr><td>CM2 Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>TriaMeshⓇ & CM2 QuadMeshⓇ Iso/Aniso - tutorials</td><td>8</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 9</div>
+<p id='97' data-category='paragraph' style='font-size:18px'>Printed information about the generated mesh and a MEDIT9 output file are obtained with:</p>
+<p id='98' data-category='paragraph' style='font-size:14px'>data.print_info(&display_hdl) ;<br>meshtools : : medit_output("out.mesh" , data. pos, data. connectM, CM2_FACET3) ;</p>
+<p id='99' data-category='paragraph' style='font-size:22px'>Here is the output given by data.print_ info(&display_hdl) :</p>
+<figure id='100'><img style='font-size:14px' alt="* ** * * * *
+* CM2 TriaMesh (R) Iso ① ) *
+* **** * * **** ***** * * ******* k * * * * * * *
+Hard nodes : 40/40
+Hard edges : 40/40
+Nodes : 136
+Triangles : 230
+Subdomains : 1
+Area : 1. 600000E+01
+Frint time : 0.00 S.
+: 8. 348321E-01
+Refine time : 0.00 s.
+Optim time : 0.00 s.
+Total time : 0.00 s. (114994.63 t/s.)
+* **** ******* HISTOGRAM QS ************
+Total number of bins : 11
+Total number of counts : 230
+Number of smaller' values : ⊙
+Number of sma va lues : ⊙
+✓ max : 1. 000000E+00
+✓ mean : 9. 466349E-01
+✓ min : 8.348321E-01
+Bin number -- Bin boundaries -- Hits
+10 0.90 1.00 177
+9 0.80 0.90 53
+8 0.70 0.80 ⊙
+7 0.60 0.70 ⊙
+6 0.50 0.60 ⊙
+5 0.40 0.50 ⊙
+4 0.30 0.40 ⊙
+3 0.20 0.30 ⊙
+2 0.10 0.20 ⊙
+1 0.01 0.10 ⊙
+⊙ ⊙  ⊙⊙ 0.01 ⊙" data-coord="top-left:(106,386); bottom-right:(1141,987)" /></figure>
+<caption id='101' style='font-size:16px'>Figure 2 - Output info for the square example.</caption>
+<p id='102' data-category='paragraph' style='font-size:20px'>The generated mesh has 136 nodes and 230 triangles for an initial contour mesh of 40 nodes and 40 edges<br>(hard nodes and hard edges). The times spent in the three steps of the meshing process (front, refine,<br>optimize) are given in seconds10. The front mesh is the triangulation mesh with only the boundary hard nodes.<br>In the second step new nodes are generated inside the domain to get elements with good shape and size.<br>Finally, the last step is for geometrical and topological optimizations to improve the quality of the elements.</p>
+<p id='103' data-category='paragraph' style='font-size:16px'>9 MEDIT is a free visualization program. Other output formats are: Ensight, FEMAP (neutral), Nastran, STL (ASCII or binary), VTK and Wavefront<br>OBJ.</p>
+<p id='104' data-category='footnote' style='font-size:14px'>10 Here the times are below 0.01 S. All runs are done with x64 CM2 libs (VS 2010 MD build) on Windows� 8.1 x64 with Intel� XeonⓇ E3-1270<br>V2 3.5 GHz (turbo boost disabled). The typical speed with default settings on such a platform ranges from 5 000 quads / S. (CM2 QuadMesh<br>Aniso) to more than 100 000 triangles / S. (CM2 TriaMesh Iso).</p>
+<table id='105' style='font-size:18px'><thead></thead><tbody><tr><td>CM2 Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 9 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 10</div>
+<p id='106' data-category='paragraph' style='font-size:18px'>The formula used to compute the shape quality of a triangle writes:</p>
+<table id='107' style='font-size:18px'><thead></thead><tbody><tr><td>S</td><td>S</td><td>Area of the triangle.</td></tr><tr><td>Qs = 4V3 L P</td><td>L with: max</td><td>Length of the longest edge of the triangle.</td></tr><tr><td>max</td><td>P</td><td>Perimeter of the triangle.</td></tr></tbody></table>
+<p id='108' data-category='paragraph' style='font-size:18px'>This quality measure ranges from 0 for a degenerated triangle, to 1 for an equilateral triangle.<br>On the square example, the worst shape quality is 0.83 and the average is 0.94.</p>
+<p id='109' data-category='paragraph' style='font-size:16px'>The size quality is also an important parameter to take into account. The size quality of an edge is a measure<br>based upon its actual length and the target size values defined at its two vertices. A size quality of 1 indicates<br>that the edge has the optimal length. A too short edge has a size quality lesser than 1 - but always positive 一,<br>and a too long edge has a size quality greater than 1. For instance an edge with a quality of 2 is twice as long as<br>it should be (and should have been split).</p>
+<p id='110' data-category='paragraph' style='font-size:18px'>The formula used to compute the length quality of an edge AB writes:</p>
+<p id='111' data-category='equation'>$$Q_{h}^{4B}=L_{A B}\,\frac{\left|\displaystyle\left(\frac{h_{A}}{h_{B}}\right)}{h_{A}-h_{B}}$$</p>
+<br><p id='112' data-category='paragraph' style='font-size:14px'>AB</p>
+<br><p id='113' data-category='paragraph' style='font-size:20px'>L</p>
+<br><p id='114' data-category='paragraph' style='font-size:18px'>with:</p>
+<br><p id='115' data-category='paragraph' style='font-size:18px'>h</p>
+<br><p id='116' data-category='paragraph' style='font-size:18px'>Actual length of edge AB.</p>
+<p id='117' data-category='paragraph' style='font-size:14px'>A</p>
+<br><p id='118' data-category='paragraph' style='font-size:18px'>Target size at node A (expected edge length at A).</p>
+<br><p id='119' data-category='paragraph' style='font-size:18px'>h B Target size at node B (expected edge length at B).</p>
+<p id='120' data-category='paragraph' style='font-size:16px'>Let's introduce also at this point the h-shock measure of an edge:</p>
+<p id='121' data-category='equation'>$$h s^{A B}=\operatorname*{min}\biggl(\frac{h_{A}}{h_{B}},\frac{h_{B}}{h_{A}}\biggr)^{\frac{1}{Q_{B}^{A B}}}-1$$</p>
+<p id='122' data-category='paragraph' style='font-size:16px'>These two measures are dimensionless and positive.</p>
+<p id='123' data-category='paragraph' style='font-size:18px'>When hA = hB the h-shock is null and the length quality simply writes QAB</p>
+<br><p id='124' data-category='paragraph' style='font-size:14px'>AB</p>
+<br><p id='125' data-category='paragraph' style='font-size:20px'>L</p>
+<br><p id='126' data-category='paragraph' style='font-size:22px'>hA</p>
+<br><p id='127' data-category='paragraph' style='font-size:18px'>When QAB = 1 edge AB is considered having optimal length with respect to its target mesh sizes h A and hB.</p>
+<p id='128' data-category='paragraph' style='font-size:18px'>To optimize a mesh we need to improve simultaneously both the shape quality of the elements and the size<br>quality of the edges. On top of these, the h-shock should be kept lower than a maximum threshold to ensure<br>smooth gradations and all the prescribed entities (hard edges and hard nodes) must be honored. All this<br>makes the job of the optimizer difficult and heuristics must be used.</p>
+<p id='129' data-category='paragraph' style='font-size:18px'>The histogram of the size qualities can be computed either inside the mesher by raising the flag settings .<br>compute_Qh_ flag11 before meshing or with a posteriori call to the auxiliary function cm2 : : meshtools :<br>: edge_qualities.</p>
+<p id='130' data-category='paragraph' style='font-size:14px'>11 See CM2 TriaMesh Iso/Aniso & CM2 QuadMesh Iso/Aniso - reference manual for full description of the meshers options.</p>
+<table id='131' style='font-size:16px'><thead></thead><tbody><tr><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>10 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 11</div>
+<p id='132' data-category='paragraph' style='font-size:20px'>On the square example, the size qualities are well centered on the value 1 with a small variance:</p>
+<figure id='133'><img style='font-size:14px' alt="* * * 大 * ******* HISTOGRAM QH ************
+Total number of bins : 20
+Total number of counts : 365
+Number of larger values : ⊙
+Number of sma ller values : ⊙
+V max : 1. 362359E+00
+✓ mean : 1. 004864E+00
+✓ min : 7.529856E-01
+Bin number -- Bin boundaries Hits
+19 10.00 +INF ⊙
+18 5.00 10.00 ⊙
+17 3.33 5.00 ⊙
+16 2.50 3.33 ⊙
+15 2.00 2.50 ⊙
+14 1.67 2.00 ⊙
+13 1.43 1.67 ⊙
+12 1. 25 1.43 1
+11 1. 11 1.25 37
+10 1. ⊙⊙ 1. 11 156
+9 0.90 1.00 140
+8 0.80 0.90 23
+7 0.70 0.80 8
+6 0.60 0.70 ⊙
+5 0.50 0.60 ⊙
+4 0.40 0.50 ⊙
+3 0.30 0.40 ⊙
+2 0.20 0.30 ⊙
+1 0.10 0.20 ⊙
+⊙ 0.00 0.10 ⊙" data-coord="top-left:(100,176); bottom-right:(1142,693)" /></figure>
+<caption id='134' style='font-size:16px'>Figure 3 - Histogram of the size-qualities of all the edges in the square example.</caption>
+<table id='135' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. 6 rev. February 2025</td><td>CM2 TriaMesh Ⓡ & CM2 QuadMeshⓇ Iso/Aniso - 11 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 12</div>
+<p id='136' data-category='paragraph' style='font-size:22px'>To mesh with quadrangles all is needed is to change the class of the mesher:</p>
+<p id='137' data-category='paragraph' style='font-size:18px'>#include "stdafx.h"<br>#include <iostream></p>
+<p id='138' data-category='paragraph' style='font-size:18px'>11 Simple optional display handler.<br>static void display_hdl (void*, unsigned, const char* msg) { std : : cout << msg; }</p>
+<p id='139' data-category='paragraph' style='font-size:18px'>int main()</p>
+<br><p id='140' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='141' data-category='paragraph' style='font-size:14px'>const</p>
+<br><p id='142' data-category='paragraph' style='font-size:16px'>const</p>
+<br><p id='143' data-category='paragraph' style='font-size:14px'>const</p>
+<br><table id='144' style='font-size:18px'><thead></thead><tbody><tr><td>double</td><td>L(10.);</td></tr><tr><td>unsi gned</td><td>N(10) ;</td></tr><tr><td>Doub leVec2</td><td>PO(0. , 0.), P1(L, ⊙. ) , P2(L, L), P3(0 . L) ; ,</td></tr><tr><td>DoubleMat</td><td>pos;</td></tr><tr><td>UIntVec</td><td>indices;</td></tr><tr><td>UIntMat</td><td>connectB;</td></tr></tbody></table>
+<p id='145' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>" "F53EA108BCWX") ;<br>quadmesh_iso : :registration("Licensed to SMART Inc .<br>,</p>
+<p id='146' data-category='paragraph' style='font-size:16px'>11 VERTICES AND LINE MESHES.<br>pos . push_back (PO) ;<br>pos . push_back (P1) ;<br>pos · push_back(P2) ;<br>pos . push_back (P3) ;<br>meshtools1d : : mesh_strai ght(pos, ⊙, 1, N, indices) ; indices.pop_back() ;<br>meshtools1d : : mesh_straight (pos, 1, 2, N, indices) ; indices · pop_back() ;<br>meshtools1d: :mesh_straight(pos, 2, 3, N, indices) ; indices. pop_back() ;<br>meshtools1d: : mesh_straight (pos, 3, 日, N, indices) ;<br>meshtools1d: : indices_ to_connectE2(indices, connectB) ;</p>
+<table id='147' style='font-size:18px'><thead></thead><tbody><tr><td>11 THE 2D MESH.</td><td></td></tr><tr><td>quadmesh_iso: : mesher quadmesh_ iso: : mesher::data_type the_mesher . run (data) ; data.print_info (&display_hdl) ;</td><td>the_mesher; data (pos, connectB) ;</td></tr></tbody></table>
+<p id='148' data-category='paragraph' style='font-size:16px'>11 VISUALIZATION.<br>meshtools : : medit_output("out.mesh" , data.pos, data.connectM, CM2_FACEQ4) ;</p>
+<br><p id='149' data-category='paragraph' style='font-size:18px'>return 0;<br>11 main</p>
+<br><p id='150' data-category='paragraph' style='font-size:18px'>}</p>
+<p id='151' data-category='paragraph' style='font-size:22px'>In this particular case, the generated mesh is a perfectly structured quad mesh with all qualities equal to one12.</p>
+<p id='152' data-category='paragraph' style='font-size:16px'>12 We could get the same structured Q4 mesh with cm2 : : meshtools2d : :mesh_struct_Q4.</p>
+<table id='153' style='font-size:20px'><thead></thead><tbody><tr><td>QuadMesh� Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMesh Ⓡ & CM2 Iso/Aniso - 12 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 13</div>
+<caption id='154' style='font-size:14px'>Figure 4 - Square meshed with quads.</caption>
+<p id='155' data-category='paragraph' style='font-size:22px'>For a plane quadrangle, we use the following measure of the shape quality:</p>
+<table id='156' style='font-size:18px'><thead></thead><tbody><tr><td>S</td><td>S min</td><td>Minimum area of the four triangles.</td></tr><tr><td>Qs = 8V2 min</td><td>with: L</td><td>Max length of the four sides and the two diagonals.</td></tr><tr><td>L P max</td><td>max P</td><td>Perimeter of the quad.</td></tr></tbody></table>
+<p id='157' data-category='paragraph' style='font-size:18px'>This measure gives the maximal value 1 only for a square.</p>
+<p id='158' data-category='paragraph' style='font-size:20px'>The size quality is given by the same measure as for the triangles (because it is based on edges only).</p>
+<table id='159' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. 6 rev. February 2025</td><td>CM2 TriaMesh Ⓡ & CM2 QuadMeshⓇ Iso/Aniso - 13 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 14</div>
+<h1 id='160' style='font-size:22px'>2. Square with an internal line</h1>
+<p id='161' data-category='paragraph' style='font-size:20px'>Starting from the previous example, we add a circle inside the square. Here is the program for a triangle mesh:</p>
+<p id='162' data-category='paragraph' style='font-size:16px'>#include "stdafx.h"</p>
+<p id='163' data-category='paragraph' style='font-size:16px'>int main()</p>
+<br><p id='164' data-category='paragraph' style='font-size:14px'>{</p>
+<br><table id='165' style='font-size:16px'><thead></thead><tbody><tr><td>const double</td><td>L(10.), R(3.) ;</td></tr><tr><td>const Doubtevec2</td><td>N1(10) , N2(20) ;</td></tr><tr><td>const Doub</td><td>PO(0. , 0.) , P1(L, 0.), P2(L, L), P3(0. , L) ;</td></tr><tr><td>const DoubleVec2</td><td>P4(L/2 + R, L/2);</td></tr><tr><td>DoubleMat</td><td>pos ;</td></tr><tr><td>UIntVec</td><td>indices;</td></tr><tr><td>UIntMat</td><td>connectB;</td></tr></tbody></table>
+<p id='166' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>" "F53EA108BCWX") ;<br>triamesh_iso: : registration("Licensed to SMART Inc .<br>,</p>
+<p id='167' data-category='paragraph' style='font-size:14px'>11 VERTICES AND LINE MESHES.<br>pos . push_back (PO) ;<br>pos · push_back (P1) ;<br>pos . push_back(P2) ;<br>pos · push_back (P3) ;<br>pos . push_back (P4) ;<br>meshtools1d: : mesh_strai ght (pos, ⊙, 1, N1 , indices) ; indices. pop_back() ;<br>meshtools1d: : mesh_strai ght(pos, 1, 2, N1, indices) ; indices . pop_back() on<br>meshtools1d: : mesh_straight(pos, 2, 3, N1, indices) ; indices. pop_back() ;<br>meshtools1d: : mesh_straight(pos, 3, 日, N1, indices) ;<br>meshtools1d : : indices_ to_connectE2(indices, connectB) ;</p>
+<br><p id='168' data-category='paragraph' style='font-size:20px'>indices.clear();</p>
+<br><p id='169' data-category='paragraph' style='font-size:16px'>meshtools1d: :extrude rotate (pos, 4, DoubleVec2(L/2., L/2.), 2.*M_PI, N2, indices) ;<br>indices.back() = indices. front();<br>meshtools1d::indices_ to_connectE2(indices, connectB) ;</p>
+<p id='170' data-category='paragraph' style='font-size:16px'>11 THE 2D MESH.<br>triamesh_iso: :mesher the_mesher;<br>triamesh_iso: : mesher::data_type data (pos, connectB) ;<br>the_mesher. run(data) ;</p>
+<p id='171' data-category='paragraph' style='font-size:14px'>11 VISUALIZATION.<br>meshtools : : medit_output("out.mesh" , data.pos, data.connectM, CM2_FACET3) ;</p>
+<br><p id='172' data-category='paragraph' style='font-size:16px'>return 0;<br>} 11 main</p>
+<table id='173' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 TriaMesh Ⓡ & CM2 QuadMesh� Iso/Aniso - 14 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 15</div>
+<figure id='174' data-category='chart'><img data-coord="top-left:(114,115); bottom-right:(593,593)" /><figcaption><p>Chart Type: line</p></figcaption><table><thead><tr><td></td><td>Red</td><td>Blue</td><td>Green</td><td>Yellow</td><td>Purple</td><td>Orange</td></tr></thead><tbody><tr><td>item_01</td><td>10</td><td>12</td><td>8</td><td>5</td><td>4</td><td>3</td></tr></tbody></table></figure>
+<br><figure id='175'><img alt="" data-coord="top-left:(646,115); bottom-right:(1124,592)" /></figure>
+<caption id='176' style='font-size:16px'>Figure 5 - Square with internal line (T3 and all-Q4).</caption>
+<p id='177' data-category='paragraph' style='font-size:18px'>The mesh of the circle is generated with the function cm2 : : meshtools1d : : extrude_rotate. The rotation<br>is defined by a center, here by the point DoubleVec2 (L/2, L/2) and a rotation scalar around Oz, here 2 �.</p>
+<p id='178' data-category='paragraph' style='font-size:18px'>The circular line is discretized using 20 elements13 starting from point #4. Here, the last generated point - point<br>#24 - is coincident with the first one - point #4. In order to close topologically the circle, it is important to<br>replace value 24 with value 4 in the indices vector SO that the first and the last point are identical not only<br>coincident17:</p>
+<p id='179' data-category='paragraph' style='font-size:14px'>indices. back() = indices. front() ;</p>
+<p id='180' data-category='paragraph' style='font-size:18px'>As for the external contour, these indices are converted into edges with the indices_ to_connectE2<br>function and appended to the connectB matrix.</p>
+<p id='181' data-category='paragraph' style='font-size:20px'>Again, to mesh with quads, we simply replace the tri amesh_ iso namespace with quadmesh_ iso. Moreover,<br>if we accept some triangles we can get a better mesh.</p>
+<p id='182' data-category='footnote' style='font-size:14px'>13 Remember that CM2 QuadMesh needs an even number of edges on each line (external and internal lines) in all-quad mode.<br>14 Note that the coordinates at column 24 in the pos matrix will remain unused.</p>
+<table id='183' style='font-size:18px'><thead></thead><tbody><tr><td>CM2 Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 15 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 16</div>
+<p id='184' data-category='paragraph' style='font-size:22px'>Here with CM2 QuadMesh� Iso in quad-dominant mode:</p>
+<p id='185' data-category='paragraph' style='font-size:16px'>#include "stdafx.h"</p>
+<br><p id='186' data-category='paragraph' style='font-size:16px'>int main()</p>
+<br><p id='187' data-category='paragraph' style='font-size:16px'>{</p>
+<br><table id='188' style='font-size:18px'><thead></thead><tbody><tr><td>const double</td><td>L(10) , R(3.) ·</td></tr><tr><td>const unsigned</td><td>N1(10), N2(20);</td></tr><tr><td>DoubleMat</td><td>pos;</td></tr><tr><td>const DoubleVec2</td><td>0.), P1(L, 0.), P2(L, L), P3(0. , L) ; P4(L/2+R;</td></tr><tr><td>const DoubleVec2</td><td>L/2);</td></tr><tr><td>UIntVec</td><td>indices;</td></tr><tr><td>UIntMat</td><td>connectB;</td></tr></tbody></table>
+<p id='189' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>" "F53EA108BCWX") ;<br>quadmesh_iso: : registration("Licensed to SMART Inc .<br>,</p>
+<p id='190' data-category='paragraph' style='font-size:14px'>11 VERTICES AND LINE MESHES.<br>pos. push_back (PO) ;<br>pos . push_back (P1) ;<br>pos · push_back (P2) ;<br>pos . push_back (P3) ;<br>pos . push_back (P4) ;<br>meshtools1d: : mesh_straight(pos, ⊙, 1, N1 , indices) ; indices.pop_back() ;<br>meshtools1d: : mesh_straight(pos, 1 , 2, N1 , indices) ; indices. pop_back() ;<br>meshtools1d: :mesh_straight(pos, 2 , 3, N1, indices) ; indices. pop_back() ;<br>meshtools1d: : mesh_straight(pos, 3, 日, N1, indices) ;<br>meshtools1d: :indices_to_connectE2(indices, connectB) ;<br>indices.clear() ;<br>meshtools1d: :extrude_ rotate(pos, 4, DoubleVec2(L/2., L/2.) , 2. *M_PI, N2, indices) ;<br>indices. back() = indices. front() ;<br>meshtools1d: :indices_to_connectE2 (indices, connectB) ;</p>
+<p id='191' data-category='paragraph' style='font-size:14px'>11 THE 2D MESH.</p>
+<br><p id='192' data-category='paragraph' style='font-size:16px'>quadmesh_iso: :mesher the_mesher;<br>quadmesh_iso: :mesher: :data_type data(pos, connectB) ;<br>the_mesher.settings.all_quad_flag = false;<br>the_mesher run(data) ;</p>
+<p id='193' data-category='paragraph' style='font-size:14px'>11 VISUALIZATION.<br>meshtools : : mecit_output("out.mesh" , data.pos, data. connectM, CM2_FACE_MIX) ;</p>
+<br><p id='194' data-category='paragraph' style='font-size:16px'>return 0;<br>} 11 main</p>
+<figure id='195' data-category='chart'><img data-coord="top-left:(379,1005); bottom-right:(860,1482)" /><figcaption><p>Chart Type: pie</p></figcaption><table><thead><tr><td></td><td>Purple</td><td>Orange</td><td>Red</td><td>Blue</td><td>Green</td></tr></thead><tbody><tr><td>item_01</td><td>20%</td><td>20%</td><td>20%</td><td>20%</td><td>20%</td></tr></tbody></table></figure>
+<caption id='196' style='font-size:16px'>Figure 6 - Square with internal line (quad-dominant mode).</caption>
+<table id='197' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMesh Ⓡ & CM2 QuadMesh� Iso/Aniso - 16 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 17</div>
+<h1 id='198' style='font-size:22px'>3. Square with internal hole</h1>
+<p id='199' data-category='paragraph' style='font-size:18px'>A hole is an internal closed contour with edges oriented the opposite way from the external contour. Note that<br>this implies that all edges of the external contour should be oriented in a uniform way (either clockwise or<br>counter-clockwise15). Based on the previous example, we simply change the sign of the rotation vector to revert<br>the orientation of the internal edges and thus to remove the disk from the domain:</p>
+<p id='200' data-category='paragraph' style='font-size:14px'>meshtools1d : : extrude_rotate (pos, 4, DoubleVec3 (L/2., L/2.), -2.*M_PI, N2, indices) ;</p>
+<p id='201' data-category='paragraph' style='font-size:20px'>And the resulting meshes:</p>
+<figure id='202'><img alt="" data-coord="top-left:(97,481); bottom-right:(572,954)" /></figure>
+<br><figure id='203'><img alt="" data-coord="top-left:(628,480); bottom-right:(1107,952)" /></figure>
+<caption id='204' style='font-size:14px'>Figure 7 - Square with a circular hole (T3 and all-Q4).</caption>
+<p id='205' data-category='paragraph' style='font-size:14px'>15 Without any closed internal hard line, the orientation of the external contour is irrelevant.</p>
+<table id='206' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 17 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 18</div>
+<p id='207' data-category='paragraph' style='font-size:20px'>One can nest alternatively positive and negative rotations:</p>
+<figure id='208'><img alt="" data-coord="top-left:(111,174); bottom-right:(591,653)" /></figure>
+<br><figure id='209'><img alt="" data-coord="top-left:(650,171); bottom-right:(1132,658)" /></figure>
+<caption id='210' style='font-size:14px'>Figure 8 - Concentric circles with alternate orientation (T3 and all-Q4).</caption>
+<table id='211' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 18 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 19</div>
+<h1 id='212' style='font-size:22px'>4. Quadratic elements & high-order nodes</h1>
+<p id='213' data-category='paragraph' style='font-size:20px'>Let us derive the example 3 "Square with internal hole" to generate quadratic T6 elements. In addition, we<br>would like also the edges along the circular hole to be curved.</p>
+<p id='214' data-category='paragraph' style='font-size:16px'>For that matter we use the conversion functions cm2 : : meshtools1d : : convert_ into_quadratic, cm2 :<br>: meshtools1d : : convert_ into_linear and cm2 : : meshtools2d : :convert_ into_quadratic.</p>
+<p id='215' data-category='paragraph' style='font-size:14px'>#include "stdafx.h"</p>
+<br><p id='216' data-category='paragraph' style='font-size:16px'>int main()</p>
+<br><p id='217' data-category='paragraph' style='font-size:14px'>{</p>
+<br><table id='218' style='font-size:16px'><thead></thead><tbody><tr><td>const double</td><td>L(10.), R(3.) in</td></tr><tr><td>const unsigned</td><td>N1(10); N2(20) �.),</td></tr><tr><td>const Doub [eVec2</td><td>P2(L, L) , P3(0 * , L) ; P1(L,</td></tr><tr><td>const DoubleVec2</td><td>P4(L/2 + R, L/2);</td></tr><tr><td>DoubleMat</td><td>indices;</td></tr><tr><td>UIntVec</td><td></td></tr><tr><td>UIntMat</td><td>connectB, connectE2;</td></tr></tbody></table>
+<br><p id='219' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>triamesh_iso : : registration("Licensed to SMART Inc. " "F53EA108BCWX") ;<br>,</p>
+<p id='220' data-category='paragraph' style='font-size:14px'>11 VERTICES AND LINE MESHES.<br>pos · push_back (PO) ;<br>pos · push_back (P1) ;<br>pos · push_back (P2) ;<br>pos · push_back (P3) ;<br>meshoolsid : : mesh_strai ght (pos, 日, 1, N1, indices) ; indices . pop_back() ;<br>. push_back (P4) ;<br>meshtools1d : : mesh_strai ght (pos, 1, 2, N1, indices) ; indi ces · pop_back() on<br>meshtools1d : : mesh_strai ght (pos, 2 , 3, N1 , indices) ; indices · pop_back() ;<br>meshtools1d : : mesh_strai ght (pos, 3 , 日, N1, indices) ;<br>meshtools1d: : indices_ to_connectE2(indices, connectB) ;<br>meshtools1d: : convert_into_quadratic(pos, connectB);<br>indi ces. clear () ;<br>meshtools1d : :extrude_ rotate(pos, 4, DoubleVec2(L/2, L/2) , -2 * M_PI, 2 * N2, indices) ;<br>indi ces. back() = indi ces. front() ;<br>meshtools1d: :indices_ to_connectE3(indices, connectB) ;<br>connectE2.copy (connectB) ;<br>meshtools1d: :convert_into_linear (connectE2) ;</p>
+<p id='221' data-category='paragraph' style='font-size:14px'>11 THE 2D MESH.<br>triamesh_ iso: : mesher the_mesher;<br>triamesh_iso : : mesher: :data_type data (pos, connectE2) ; / / Linear edges here.</p>
+<br><p id='222' data-category='paragraph' style='font-size:14px'>the_mesher. run (data) ;</p>
+<br><p id='223' data-category='paragraph' style='font-size:16px'>meshtools2d: :convert_into_quadratic(data.pos, data.connectM, connectB) ;</p>
+<br><p id='224' data-category='paragraph' style='font-size:14px'>11 VISUALIZATION.<br>meshtools : : medit_output("out.mesh" , data.pos, data.connectM, CM2_FACET6) ;</p>
+<br><p id='225' data-category='paragraph' style='font-size:14px'>return 0;<br>} 11 main</p>
+<p id='226' data-category='paragraph' style='font-size:20px'>To keep the boundary edges straight (not curved) we convert T3 into T616 without the connectB parameter<br>(this will create new high-order nodes, different from those in connectB):</p>
+<p id='227' data-category='paragraph' style='font-size:16px'>meshtools2d : :convert_into_quadratic(data.pos, data.connectM) ;</p>
+<p id='228' data-category='footnote' style='font-size:14px'>16 A more general function is available to convert into any type of high-order elements:. cm2 : :meshtools2d: :convert_into_high_<br>order · Refer to the HTML reference manual for detailed information.</p>
+<table id='229' style='font-size:18px'><thead></thead><tbody><tr><td>CM2 Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - tutorials</td><td>19</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 20</div>
+<p id='230' data-category='paragraph' style='font-size:18px'>This would create and push new (high-order) nodes into matrix data · pos and convert the T3 connectivity<br>matrix data · connectM into a T6 connectivity matrix gaining three new rows. The new nodes being linearly<br>interpolated between the initial vertices, all the edges would remain straight.</p>
+<p id='231' data-category='paragraph' style='font-size:20px'>This is not what we want here (we want the edges along the circle to be curved). Moreover, the connectivity<br>matrix of the boundary edges (or some of them) is usually required later to setup boundary conditions<br>(Dirichlet, Neumann...)</p>
+<p id='232' data-category='paragraph' style='font-size:20px'>So, for the outer square we use meshtools2d : : convert_ to_ quadratic to convert linear edges into 3-<br>node edges creating and pushing new high-order nodes into matrix pos (created at the centers of the edges):</p>
+<p id='233' data-category='paragraph' style='font-size:16px'>meshtools1d : : convert_into_quadratic (pos, connectB) ;</p>
+<p id='234' data-category='paragraph' style='font-size:18px'>The connectivity matrix connectB gains one new row (the new high-order nodes). The first two rows are<br>unchanged. A matrix view to these first two rows is equivalent to the initial connectivity matrix (linear edges17).</p>
+<p id='235' data-category='paragraph' style='font-size:16px'>0</p>
+<br><p id='236' data-category='paragraph' style='font-size:16px'>linear nodes</p>
+<br><p id='237' data-category='paragraph' style='font-size:14px'>1</p>
+<br><table id='238' style='font-size:16px'><thead><tr><td></td><td>1</td><td>2 3</td><td>4</td><td>6</td><td>8</td><td>10</td></tr></thead><tbody><tr><td></td><td>2</td><td>3</td><td>4</td><td>5 7</td><td>9</td><td>11</td></tr><tr><td>12</td><td>13</td><td>14</td><td>15</td><td>16 17</td><td>18</td><td>19</td></tr></tbody></table>
+<caption id='239' style='font-size:16px'>Figure 9 - Example of connectivity matrix for quadratic edges and view to linear edges.</caption>
+<p id='240' data-category='paragraph' style='font-size:20px'>For the inner circle, we create quadratic edges directly with indice_ to_connectE3 to transform a sequence<br>of node indices into a quadratic connectivity matrix, as illustrated by the second set of edges (along the circle).<br>This is possible because we have generated along the circle twice as much nodes as in the previous example<br>(extrude_rotate with 2 N2).</p>
+<p id='241' data-category='paragraph' style='font-size:22px'>Now we have quadratic edges all along the boundaries. Straight edges along the square, curved edges along<br>the circle.</p>
+<p id='242' data-category='paragraph' style='font-size:20px'>However, the mesh generators accept only linear edges upon entry and give only linear face elements upon<br>exit. Hence, we have to feed the mesher with the linear view of the connectB edge connectivity matrix (called<br>connectE2 in the example). For that matter, we duplicate connectB and transform the copy back into linear<br>edges with convert_ into_ linear.</p>
+<p id='243' data-category='paragraph' style='font-size:20px'>After the surface meshing, to transform the linear T3 faces into T6 faces and to reuse the quadratic nodes<br>along the boundaries (and then keeping curved edges along the circle), we pass the quadratic edge connectivity<br>matrix connectB created before:</p>
+<p id='244' data-category='footnote' style='font-size:14px'>meshtools2d : : convert_into_quadratic (data.pos, data connectM, connectB ) ;</p>
+<p id='245' data-category='paragraph' style='font-size:20px'>This forces convert_into_quadratic to use the high-order nodes of connectB wherever edges match.</p>
+<p id='246' data-category='paragraph' style='font-size:16px'>17 Note that the mid-side node is local node #2 after the linear nodes #0 and #1 though geometrically placed between them.</p>
+<table id='247' style='font-size:18px'><thead></thead><tbody><tr><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>20 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 21</div>
+<h1 id='248' style='font-size:22px'>5. Square with grading mesh size</h1>
+<p id='249' data-category='paragraph' style='font-size:20px'>There are two ways to get a graded size in a mesh. First, you can simply generate edges with varying size along<br>the boundary (or interior lines). The mesher computes a default size value on each hard node18, interpolates<br>these values inside the domain and generates elements accordingly.</p>
+<p id='250' data-category='paragraph' style='font-size:20px'>To illustrate this, let us use again the example of the square. Instead of meshing regularly the four segments of<br>the contour we specify different mesh sizes on each four vertices:</p>
+<p id='251' data-category='paragraph' style='font-size:14px'>#include "stdafx.h"</p>
+<br><p id='252' data-category='paragraph' style='font-size:16px'>int main()</p>
+<br><p id='253' data-category='paragraph' style='font-size:14px'>{</p>
+<br><table id='254' style='font-size:18px'><thead></thead><tbody><tr><td>const double</td><td>L(10.);</td></tr><tr><td>const unsi gLevec2</td><td>N(10).3,</td></tr><tr><td>const Doub</td><td>P1(L, 0.) , P2(L, L), P3(0. , L) ;</td></tr><tr><td>DoubleMat</td><td>indices</td></tr><tr><td>UIntVec</td><td>, hard_nodes (5) ;</td></tr><tr><td>DoubleVec</td><td>sizes(5);</td></tr><tr><td>UIntMat</td><td>connectB;</td></tr></tbody></table>
+<p id='255' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>triamesh_iso : : registration ("Licensed to SMART Inc. " "F53EA108BCWX") ;<br>,</p>
+<br><p id='256' data-category='paragraph' style='font-size:14px'>11 VERTICES AND LINE MESHES.</p>
+<br><p id='257' data-category='paragraph' style='font-size:14px'>pos · push_back (PO) ;<br>pos · push_back (P1) ;<br>pos . push_back (P2) ;<br>pos · push_back(P3) ;<br>hard_nodes [0] = 0; sizes [0] = 0. 1*L/N;<br>hard_nodes [1] 1; sizes [1] = 2. 0*L/N;<br>hard_nodes [2] = 2; sizes [2] = 0 . 1*L/N;<br>hard_nodes [3] = 3; sizes [3] = 2 · 0*L/N;<br>hard_nodes [4] = 0; sizes [4] = 0. 1*L/N;<br>meshtools1d: :mesh_straight (pos, hard_nodes, sizes, true, indices) ;<br>meshtools1d : : indices_to_connectE2 (indices, connectB) ;</p>
+<p id='258' data-category='paragraph' style='font-size:14px'>11 THE 2D MESH.<br>triamesh_ iso: : mesher the_mesher;<br>triamesh_iso: : mesher: :data_type data (pos, connectB) ;<br>the_mesher . run(data) ;</p>
+<p id='259' data-category='paragraph' style='font-size:14px'>11 VISUALIZATION.<br>meshtools : : medit_output ("out.mesh" , data.pos, data.connectM, CM2_FACET3) ;</p>
+<br><p id='260' data-category='paragraph' style='font-size:14px'>return 0;<br>11 main</p>
+<br><p id='261' data-category='paragraph' style='font-size:14px'>}</p>
+<p id='262' data-category='paragraph' style='font-size:18px'>This variant of the cm2 : : meshtools1d : : mesh_straight function uses a vector of hard nodes (a polygonal<br>line) and a vector of target size values, one value for each hard node. The contour mesh is generated to fit best<br>the target values on the four corners.</p>
+<p id='263' data-category='paragraph' style='font-size:20px'>These target sizes are not used by the 2-D mesher. Only the resulting edge lengths of the contour will be used<br>to compute the 2-D size map.</p>
+<p id='264' data-category='paragraph' style='font-size:14px'>18 By averaging the lengths of the adjacent edges to each hard node.</p>
+<table id='265' style='font-size:18px'><thead></thead><tbody><tr><td>TriaMeshⓇ QuadMesh� Iso/Aniso Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 & CM2 - 21 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 22</div>
+<figure id='266'><img alt="" data-coord="top-left:(114,117); bottom-right:(593,591)" /></figure>
+<br><figure id='267'><img alt="" data-coord="top-left:(648,116); bottom-right:(1123,590)" /></figure>
+<caption id='268' style='font-size:14px'>Figure 10 - Meshes with grading size (T3 and all-Q4).</caption>
+<p id='269' data-category='paragraph' style='font-size:18px'>The second way to get grading sizes is to specify in the data of the 2-D mesher the target size values on some<br>hard nodes. This is explained in the next section.</p>
+<table id='270' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 22 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 23</div>
+<h1 id='271' style='font-size:20px'>6. Square with an internal hard node</h1>
+<p id='272' data-category='paragraph' style='font-size:18px'>So far, we have seen only three fields of the structure used to exchange data with the mesher:</p>
+<p id='273' data-category='list' style='font-size:18px'>· The pos matrix for the coordinates of the points.<br>· The connectB matrix for the connectivity of the hard edges.<br>· The connectM matrix for the connectivity of the 2-D mesh.</p>
+<p id='274' data-category='paragraph' style='font-size:18px'>In this example we add an isolated hard node at the center of the square and specify a target size on it. This will<br>be done using the two new fields isolated_nodes and metrics:</p>
+<figure id='275'><img style='font-size:14px' alt="#include 'stdafx.h'
+int main()
+{
+const double L(10.);
+const unsi Levec2 N(10) ;
+PO(0. , 0.), P1(L, 0. ) , P2(L, L), P3(0. , L) , P4(L/2., L/2.) ;
+const Doub
+DoubleMat pos;
+UIntVec indices;
+UIntMat connectB;
+11 UNLOCK THE DLL.
+triamesh_ iso : : registration('Licensed to SMART Inc. ' 'F53EA108BCWX') ;
+,
+11 VERTICES AND LINE MESHES.
+pos . push_back (PO) ;
+pos . push_back (P1) ;
+pos . push_back(P2) ;
+pos . push_back (P3) ;
+pos . push_back (P4) ;
+meshtools1d : : mesh_straight (pos, ⊙, 1, N, indices) ; indices . pop_ back() ;
+meshtools1d: : mesh_strai ght(pos , 1 , 2, N indices) ; indices · pop_back() ;
+meshtools1d: : mesh_straight(pos, 2 , 3, N, indices) ; indices · pop_back () ;
+meshtools1d: : mesh_straight (pos, 3 , ⊙ , N, indices) ;
+meshtools1d: : indices_ to_connectE2(indices, connectB) ;
+11 THE 2D MESH.
+triamesh_ iso: : mesher the_mesher;
+triamesh_iso: : mesher : : data_ type data (pos, connectB) ;
+data · isolated_ nodes. push_back(4) ;
+data · metrics. resize(5, 0.0) ;
+data · metrics[4] = 0. 1*L/N;
+the_mesher . run (data) ;
+11 VISUALIZATION.
+meshtools : : medit_output('out.mesh' , data.pos, data.connectM, CM2_FACET3) ;
+return 0;
+} 11 main" data-coord="top-left:(100,405); bottom-right:(1144,1135)" /></figure>
+<p id='276' data-category='paragraph' style='font-size:18px'>We have created a new point at the centre with coordinates placed in column #4 of matrix pos. Its index (4) is<br>pushed into the vector data · isolated_nodes. This new field stores the isolated nodes that must be<br>honored in the final mesh.</p>
+<p id='277' data-category='paragraph' style='font-size:16px'>The vector data  metrics stores the user-specified target sizes. If the value for a node is zero -or negative or<br>not present- a default value will be used instead19.</p>
+<p id='278' data-category='paragraph' style='font-size:18px'>In our example the vector is resized to 5 with all values set to zero except for point #4 where we ask for a 10<br>times finer mesh around it.</p>
+<p id='279' data-category='paragraph' style='font-size:14px'>19 For an isolated node, the default computed size is based on the size value of the nearest nodes.</p>
+<table id='280' style='font-size:18px'><thead></thead><tbody><tr><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>23 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 24</div>
+<figure id='281'><img alt="" data-coord="top-left:(116,117); bottom-right:(593,592)" /></figure>
+<br><figure id='282'><img alt="" data-coord="top-left:(649,116); bottom-right:(1123,590)" /></figure>
+<caption id='283' style='font-size:14px'>Figure 11 - Mesh concentration near a hard node (T3 and all-Q4).</caption>
+<table id='284' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 24 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 25</div>
+<h1 id='285' style='font-size:22px'>7. Multiple meshes</h1>
+<p id='286' data-category='paragraph' style='font-size:20px'>The matrix connectB can contain internal lines. It can also contain several external disconnected contours (to<br>mesh several disconnected domains simultaneously). Some care must be taken however in the orientation of<br>these contours. For multiple domains, the edges of all external contours must be oriented the same way, for<br>instance counter-clockwise (the so-called positive orientation). In addition, these contours must not intersect<br>each other.</p>
+<figure id='287'><img alt="" data-coord="top-left:(117,335); bottom-right:(595,810)" /></figure>
+<br><figure id='288'><img alt="" data-coord="top-left:(651,337); bottom-right:(1121,807)" /></figure>
+<p id='289' data-category='paragraph' style='font-size:16px'>Figure 12 - Multiple meshes (T3 and all-Q4).<br>The four sub-domains are meshed simultaneously.</p>
+<p id='290' data-category='paragraph' style='font-size:20px'>In this example, the coordinates matrix and the connectivity of the contour meshes are read from a file20:</p>
+<figure id='291'><img style='font-size:14px' alt="#include 'stdafx.h'
+#include <fstream>
+int main()
+{
+std: : ifstream istrm('cards.dat') ;
+triamesh_iso : : mesher the_mesher ;
+triamesh_iso : : mesher: :data_type data;
+triamesh_iso : : registration('Licensed to SMART Inc. ' 'F53EA108BCWX') ;
+,
+matio : : read (istrm, data.pos) ;
+matio: : read (istrm, data.connectB) ;
+the_mesher · run(data) ;
+meshtools : : medit_output ( 'out.mesh' , data · pos, data · connectM, CM2_FACET3) ;
+return ⊙;
+} 11 main" data-coord="top-left:(100,993); bottom-right:(1139,1389)" /></figure>
+<p id='292' data-category='paragraph' style='font-size:14px'>20 We could also have used the function cm2 : : meshtools1d : :mesh_spline which generate 1-D meshes along splines.</p>
+<table id='293' style='font-size:18px'><thead></thead><tbody><tr><td>CM2 TriaMeshⓇ CM2 QuadMeshⓇ Iso/Aniso - Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>& 25 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 26</div>
+<p id='294' data-category='paragraph' style='font-size:20px'>The input boundary meshes are read from an ASCII file with cm2 : : matio: :read21</p>
+<p id='295' data-category='paragraph' style='font-size:20px'>The format for the matrices is:</p>
+<table id='296' style='font-size:16px'><thead></thead><tbody><tr><td>n X m</td><td>[ <table><thead></thead><tbody><tr><td>do,o</td><td>do,1</td><td>do,2</td><td>· · ·</td><td>do,m-1</td></tr><tr><td>d1,0</td><td>d1,1</td><td>d1,2</td><td>· · ·</td><td>d1,m-1</td></tr></tbody></table></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>dn-1, 0</td><td></td><td>dn-1,1</td><td>dn-1,2 ·</td><td>· ·</td><td>dn-1,m-1</td><td>]</td></tr></tbody></table>
+<p id='297' data-category='paragraph' style='font-size:22px'>The format for each component of the matrix is free.</p>
+<p id='298' data-category='paragraph' style='font-size:18px'>For instance a 2 X 4 Doub leMat can be stored as:</p>
+<p id='299' data-category='paragraph' style='font-size:16px'>2 X 4 [<br>0 0.5 1 2.0<br>0 1 1 2.E-1]</p>
+<h1 id='300' style='font-size:20px'>Notes:</h1>
+<p id='301' data-category='list' style='font-size:20px'>· We can see in this example that the meshes may not always be symmetric even with a symmetric contour.<br>· We can set the flag multi_structured_ flag = true to force any rectangle-like (or diamond-like) sub-<br>domain to be meshed in a structured manner.</p>
+<p id='302' data-category='paragraph' style='font-size:14px'>21 A similar cm2 : :matio: : transpose_read function can read a matrix and transpose it on the fly.<br>This can be more useful because itis usually more convenient to store the transposed matrices in the ASCII files.</p>
+<table id='303' style='font-size:20px'><thead></thead><tbody><tr><td>CM2 TriaMeshⓇ & CM2 QuadMeshⓇ Iso/Aniso - Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>26 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 27</div>
+<p id='304' data-category='paragraph' style='font-size:22px'>As an exercise we can get the same result by making four successive meshes and concatenating the results:</p>
+<p id='305' data-category='paragraph' style='font-size:18px'>#include "stdafx.h"<br>#include <fstream></p>
+<p id='306' data-category='paragraph' style='font-size:18px'>int main()</p>
+<br><p id='307' data-category='paragraph' style='font-size:18px'>{</p>
+<br><table id='308' style='font-size:18px'><thead></thead><tbody><tr><td>std: :ifstream</td><td>istrm</td></tr><tr><td>UIntMat</td><td>connectM;</td></tr><tr><td>DoubleMat</td><td>pos;</td></tr></tbody></table>
+<p id='309' data-category='paragraph' style='font-size:14px'>" "F53EA108BCWX") ;<br>triamesh_iso : : registration("Licensed to SMART Inc . ,</p>
+<p id='310' data-category='paragraph' style='font-size:16px'>triamesh_ iso : : mesher the_mesher;<br>triamesh_iso : : mesher: :data_type data;</p>
+<p id='311' data-category='paragraph' style='font-size:16px'>istrm. open("heart.dat") ;<br>matio : : read (istrm, data · pos) ;<br>matio: : read (istrm, data. connectB) ;<br>the_mesher. run (data) ;<br>pos. push_back(data. pos) ;<br>connectM.push_back(data.connectM) ;</p>
+<p id='312' data-category='paragraph' style='font-size:16px'>istrm. open("spade.dat") ;<br>matio: : read(istrm, data . pos) ;<br>matio: : read (istrm, data. connectB) ;<br>the_mesher ・ run (data) ;<br>matscal: : add (pos. cols () , data.connectM) ; 11 Shift indices.<br>pos. push_back(data. pos) ;<br>connectM.push_back(data.connectM) ;</p>
+<p id='313' data-category='paragraph' style='font-size:16px'>istrm. open("diamond. dat") ;<br>matio : : read (istrm, data. pos) ;<br>matio: : read (istrm, data. connectB) ;<br>the_mesher. run(data) ;<br>matscal: : add (pos. cols () , data.connectM) ; 11 Shift indices.<br>pos. push_back(data. pos) ;<br>connectM.push_back(data.connectM) ;</p>
+<p id='314' data-category='paragraph' style='font-size:16px'>istrm. open("club. dat") ;<br>matio: : read (istrm, data. pos) ;<br>matio: : read (istrm, data. connectB) ;<br>the_mesher. run (data) ;<br>matscal: : add (pos. cols () , data.connectM) ; / / Shift indices.<br>pos. push_back(data.pos) ;<br>connectM.push_back(data.connectM) ;</p>
+<p id='315' data-category='paragraph' style='font-size:16px'>meshtools : :medit_output("out.mesh" , pos, connectM, CM2_FACET3) ;</p>
+<br><footer id='316' style='font-size:18px'>return 0;<br>} 11 main</footer>
+<table id='317' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. 6 rev. February 2025</td><td>CM2 TriaMesh Ⓡ & CM2 QuadMesh� Iso/Aniso - 27 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 28</div>
+<h1 id='318' style='font-size:22px'>8. Shared boundaries</h1>
+<p id='319' data-category='paragraph' style='font-size:16px'>Edges can be shared between some contours and lines. In this case some edges are defined several times<br>(usually twice) in the connectB matrix but with different orientation. In addition it is sometimes more<br>convenient for the user to generate the 1-D meshes of the contours independently from each other. That<br>usually implies duplicated nodes on the shared contours.</p>
+<p id='320' data-category='paragraph' style='font-size:18px'>The following example deals with such a case.</p>
+<p id='321' data-category='paragraph' style='font-size:18px'>Consider three sub-domains all oriented counter-clockwise as defined below. Several edges are shared<br>between sub-domains but with different orientation. We also want to mesh the contours of the sub-domains<br>independently from each other but without any duplicated nodes.</p>
+<figure id='322' data-category='chart'><img data-coord="top-left:(359,446); bottom-right:(868,863)" /><figcaption><p>Chart Type: line</p></figcaption><table><thead><tr><td></td><td>P0</td><td>P</td><td>P3</td><td>P4</td><td>P5</td><td>P6</td></tr></thead><tbody><tr><td>item_01</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr></tbody></table></figure>
+<caption id='323' style='font-size:14px'>Figure 13 - Domain composed of three attached sub-domains.</caption>
+<p id='324' data-category='paragraph' style='font-size:18px'>The shared edges are no problem for the mesher. The duplicate nodes however must be avoided. In non-strict<br>mode (see CM2 TriaMesh� Iso/Aniso and CM2 QuadMesh� Iso/Aniso - reference manual), duplicated nodes<br>can be discarded indeed but that implies also that the associated edges cannot be enforced. As a side effect,<br>the mesher may not be able to tell the sign of the inner square, and that can lead to a hole.</p>
+<p id='325' data-category='paragraph' style='font-size:20px'>The solution consists in merging the nodes after the meshing of the edges before the 2-D meshing:</p>
+<table id='326' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMeshⓇ Iso/Aniso - 28 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 29</div>
+<h1 id='327' style='font-size:18px'>#include "stdafx.h"</h1>
+<p id='328' data-category='paragraph' style='font-size:18px'>static void mesh_segment</p>
+<br><p id='329' data-category='paragraph' style='font-size:20px'>(DoubleMat& pos, UIntMat& connectB,<br>unsigned start_index, unsigned stop_index, unsigned num_edges)</p>
+<br><p id='330' data-category='paragraph' style='font-size:16px'>{</p>
+<br><p id='331' data-category='paragraph' style='font-size:18px'>UIntVec indices;<br>meshtools1d : :mesh_straight (pos, start_index, stop_index, num_edges, indices) ;<br>meshtools1d : : indices_to_connectE2 (indices, connectB) ;</p>
+<br><p id='332' data-category='paragraph' style='font-size:18px'>}</p>
+<p id='333' data-category='paragraph' style='font-size:18px'>int main()</p>
+<br><p id='334' data-category='paragraph' style='font-size:18px'>{</p>
+<br><table id='335' style='font-size:16px'><thead></thead><tbody><tr><td>const DoubleVec2</td><td>PO (0.,</td><td>0.),</td><td>P1(10. , 0.),</td><td>P2(10. , 2.) ,</td><td></td><td></td><td>P3(8. , 2.) ;</td></tr><tr><td>const DoubleVec2</td><td></td><td>P4 (2. , 2.),</td><td></td><td>P5(0. , 2.) ,</td><td>P6(10. , 10. ) ,</td><td>P7(0. ,</td><td>10.) ;</td></tr><tr><td>const DoubleVec2</td><td></td><td>P8 (2., 8.)</td><td>,</td><td>P9 (8. , 8.) ;</td><td></td><td></td><td></td></tr><tr><td>const unsi gned</td><td></td><td>N(4) ;</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>DoubleMat</td><td></td><td>pos;</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>UIntMat</td><td></td><td>connectB;</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+<p id='336' data-category='paragraph' style='font-size:16px'>11 UNLOCK THE DLL.<br>triamesh_iso: : registration("Licensed to SMART Inc. " "F53EA108BCWX") ;<br>,</p>
+<br><p id='337' data-category='paragraph' style='font-size:18px'>11 VERTICES POINTS.</p>
+<br><p id='338' data-category='paragraph' style='font-size:14px'>pos . push_back (PO) ; pos . push_back(P1) ; pos . push_back (P2) ; pos · push_back (P3) ;<br>pos · push_back (P4) ; pos · push_back(P5) ; pos · push_back (P6) ; pos · push_back (P7) ;<br>pos . push_back(P8) ; pos · push_back(P9) ;</p>
+<p id='339' data-category='paragraph' style='font-size:16px'>11 BOTTOM RECTANGLE POSITIVE (I.E. COUNTER-CLOCKWISE) ·</p>
+<br><p id='340' data-category='paragraph' style='font-size:20px'>mesh_segment (pos, connectB, 日, 1, N) ;</p>
+<br><p id='341' data-category='paragraph' style='font-size:20px'>mesh_segment(pos, connectB, 1, 2, N) ;</p>
+<br><p id='342' data-category='paragraph' style='font-size:20px'>mesh_segment (pos, connectB, 2, 3, N) ;</p>
+<br><p id='343' data-category='paragraph' style='font-size:20px'>mesh_segment (pos, connectB, 3, 4, N) ;</p>
+<br><p id='344' data-category='paragraph' style='font-size:20px'>mesh_segment(pos, connectB, 4, 5, N) ;</p>
+<br><p id='345' data-category='paragraph' style='font-size:20px'>mesh_segment(pos, connectB, 5, 日, N) ;</p>
+<p id='346' data-category='paragraph' style='font-size:16px'>11 TOP HORSE-SHOE POSITIVE (I. E. COUNTER-CLOCKWISE) ·</p>
+<br><p id='347' data-category='paragraph' style='font-size:20px'>mesh_segment (pos, connectB, 2, 6, N) ;</p>
+<br><p id='348' data-category='paragraph' style='font-size:20px'>mesh_segment(pos, connectB, 6, 7, N) ;</p>
+<br><p id='349' data-category='paragraph' style='font-size:20px'>mesh_segment (pos, connectB, 7, 5, N) ;</p>
+<br><p id='350' data-category='paragraph' style='font-size:20px'>mesh_segment (pos, connectB, 5, 4, N) ·</p>
+<br><p id='351' data-category='paragraph' style='font-size:20px'>mesh_segment (pos, connectB, 4, 8, N) ·</p>
+<br><p id='352' data-category='paragraph' style='font-size:20px'>mesh_segment (pos, connectB, 8, 9, N) ;</p>
+<br><p id='353' data-category='paragraph' style='font-size:20px'>mesh_segment(pos, connectB, 9, 3, N) ;</p>
+<br><p id='354' data-category='paragraph' style='font-size:18px'>mesh_segment(pos, connectB, 3, 2, N) ;</p>
+<p id='355' data-category='paragraph' style='font-size:18px'>11 INNER SQUARE POSITIVE (I. E. COUNTER-CLOCKWISE) ·<br>mesh_segment (pos, connectB, 3, 9, N) ;<br>mesh_segment(pos, connectB, 9, 8, N) ;<br>mesh_segment(pos, connectB, 8, 4, N) ;<br>mesh_segment(pos, connectB, 4, 3, N) ;</p>
+<p id='356' data-category='paragraph' style='font-size:18px'>11 MERGE TOGETHER DUPLICATED NODES.<br>meshtools : : merge (pos, connectB, /*tol=>*/ 1E-6, /*merge_type=>* / 0) ;</p>
+<br><p id='357' data-category='paragraph' style='font-size:18px'>11 THE 2D MESH.</p>
+<br><p id='358' data-category='paragraph' style='font-size:16px'>triamesh_iso: : mesher the_mesher;<br>triamesh_iso : : mesher: :data_ type data (pos, connectB) ;<br>the_mesher · run(data) ;</p>
+<p id='359' data-category='paragraph' style='font-size:16px'>11 VISUALIZATION.<br>meshtools : : medit_output("out.mesh" , data.pos, data.connectM, CM2_FACET3) ;</p>
+<br><p id='360' data-category='paragraph' style='font-size:18px'>return 0;<br>11 main</p>
+<br><p id='361' data-category='paragraph' style='font-size:18px'>}</p>
+<table id='362' style='font-size:22px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMesh Ⓡ & CM2 QuadMesh� Iso/Aniso - 29 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 30</div>
+<p id='363' data-category='paragraph' style='font-size:20px'>Note that this solution works because the shared edges are discretized similarly and the nodes are (almost)<br>coincident.</p>
+<figure id='364'><img alt="" data-coord="top-left:(114,198); bottom-right:(593,674)" /></figure>
+<br><figure id='365' data-category='chart'><img data-coord="top-left:(648,199); bottom-right:(1124,673)" /><figcaption><p>Chart Type: bar</p></figcaption><table><thead><tr><td></td><td>Red</td><td>Blue</td><td>Green</td><td>Purple</td><td>Cyan</td></tr></thead><tbody><tr><td>item_01</td><td>10</td><td>10</td><td>10</td><td>10</td><td>20</td></tr></tbody></table></figure>
+<caption id='366' style='font-size:14px'>Figure 14 - Example with shared boundaries (T3 and all-Q4).</caption>
+<p id='367' data-category='paragraph' style='font-size:20px'>Note that the contour of the inner square is oriented completely both ways (positive and negative). In such a<br>case, the mesher favors the positive orientation and keeps the inner sub-domain.</p>
+<p id='368' data-category='paragraph' style='font-size:16px'>A similar case occurs when an inner contour is not properly oriented (see figure below). The mesher considers<br>the inner domain to have the same status as the "most external domain" adjacent to it. Here the most external<br>domain adjacent to the inner square is the outer square. Hence, the inner square will be meshed (i.e. no hole).</p>
+<figure id='369'><img alt="" data-coord="top-left:(450,964); bottom-right:(788,1267)" /></figure>
+<caption id='370' style='font-size:14px'>Figure 15 - Example of ambiguous orientation of an inner contour.</caption>
+<table id='371' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 30 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 31</div>
+<p id='372' data-category='paragraph' style='font-size:18px'>Here is another example where a hole is adjacent to the external contour. In this case, the most external<br>domain adjacent to the inner square is the outside void. Hence, the inner square will not be meshed (i.e. hole).</p>
+<figure id='373'><img alt="" data-coord="top-left:(425,191); bottom-right:(815,559)" /></figure>
+<br><caption id='374' style='font-size:14px'>Figure 16 - Hole adjacent to the external contour.</caption>
+<figure id='375'><img alt="" data-coord="top-left:(113,701); bottom-right:(595,1183)" /></figure>
+<br><figure id='376' data-category='chart'><img data-coord="top-left:(647,704); bottom-right:(1124,1180)" /><figcaption><p>Chart Type: bar</p></figcaption><table><thead><tr><td></td><td>Dark Gray</td><td>Light Gray</td></tr></thead><tbody><tr><td>item_01</td><td>50</td><td>50</td></tr></tbody></table></figure>
+<caption id='377' style='font-size:14px'>Figure 17 - Example of ambiguous orientation of an inner contour.</caption>
+<table id='378' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 31 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 32</div>
+<h1 id='379' style='font-size:20px'>9. Background mesh</h1>
+<p id='380' data-category='paragraph' style='font-size:16px'>Sometimes it is not convenient to specify the target mesh sizes at some hard nodes. This is the case especially<br>when automatic mesh adaptivity is involved. The background mesh option is the solution in this case.</p>
+<p id='381' data-category='paragraph' style='font-size:18px'>The background mesh is an auxiliary mesh used by the mesher to find the target mesh size at any point inside<br>the domain. It's represented by the connectivity matrix background_mesh in the data of the mesher.</p>
+<p id='382' data-category='paragraph' style='font-size:16px'>As always the indices of the nodes refer to columns in the same pos matrix as all other connectivity matrices or<br>vectors (such as connectM or connectB).</p>
+<p id='383' data-category='paragraph' style='font-size:16px'>The nodes of the background mesh can share nodes with connectB or can all be different. They must all have<br>a valid associated size value in the metrics array. The size map (also called metric map) is interpolated inside<br>the background mesh.</p>
+<p id='384' data-category='paragraph' style='font-size:18px'>In the following example, a regular structured background mesh is used to support a size map with a sinusoidal<br>variation in the two directions. The domain to be meshed is a simple square regularly discretized along its<br>boundaries22.</p>
+<p id='385' data-category='paragraph' style='font-size:14px'>22 For a change, we use here the mesh_straight overload with the parameters for the sizes at the extremities.</p>
+<table id='386' style='font-size:16px'><thead></thead><tbody><tr><td>CM2 TriaMeshⓇ CM2 QuadMeshⓇ Iso/Aniso - Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>& 32 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 33</div>
+<h1 id='387' style='font-size:18px'>#include "stdafx.h"</h1>
+<br><p id='388' data-category='paragraph' style='font-size:20px'>int main()</p>
+<br><p id='389' data-category='paragraph' style='font-size:16px'>{</p>
+<br><table id='390' style='font-size:18px'><thead></thead><tbody><tr><td>const double</td><td>L(4.), h0 (0. 25) , h1 (0. 05) ;</td></tr><tr><td>DoubleMat</td><td>pos;</td></tr><tr><td>UIntVec</td><td>indices;</td></tr><tr><td>UIntMat</td><td>connectE2, connectT3, BGM;</td></tr><tr><td>DoubleVec</td><td>sizes;</td></tr><tr><td>unsigned</td><td>n;</td></tr><tr><td>double</td><td>W, h;</td></tr></tbody></table>
+<p id='391' data-category='paragraph' style='font-size:16px'>11 UNLOCK THE DLL.<br>triamesh_iso: :registration("Licensed to SMART Inc. " "F53EA108BCWX") ;<br>,</p>
+<p id='392' data-category='paragraph' style='font-size:18px'>11 VERTICES AND LINE MESHES.<br>pos · push_back (DoubleVec2(-L/2, -L/2)) ;<br>pos · push_back(DoubleVec2 (+L/2, -L/2)) ;<br>pos · push_back(DoubleVec2 (+L/2, +L/2)) ;<br>pos · push_back(DoubleVec2 (-L/2, +L/2))<br>meshtools1d: : mesh_ straight(pos, 日, 1, ho, h0, true, indices) ;<br>indices. pop_ back() ;<br>meshtools1d : : mesh_ straight(pos, 1, 2, h0, h0, true, indices) ;<br>indices. pop_ back() ;<br>meshtools1d : : mesh_ straight(pos, 2, 3, h0, h0, true, indices) ;<br>indices. pop_back() ;<br>meshtools1d : : mesh_straight(pos, 3, 0, h0, ho, true, indices) ;<br>meshtools1d: : indices_to_connectE2(indices, connectE2) ;</p>
+<br><p id='393' data-category='paragraph' style='font-size:18px'>11 THE BACKGROUND MESH.</p>
+<br><p id='394' data-category='paragraph' style='font-size:14px'>n = unsigned(L/h1) ;</p>
+<br><p id='395' data-category='paragraph' style='font-size:20px'>indices.clear () ;<br>meshtools1d: :mesh_ straight(pos, 0, 1, n, indices) ;<br>indices.pop_ back() ;<br>meshtools1d: :mesh_ straight(pos, 1, 2, n, indices);<br>indices.pop_back() ;<br>meshtools1d: :mesh_ straight(pos, 2, 3, n, indices);<br>indices.pop_back() ;<br>meshtools1d: :mesh_straight(pos, 3, 0, n, indices) ;<br>meshtools2d: :mesh_struct_T3(pos, indices, n, true, BGM) ;</p>
+<p id='396' data-category='paragraph' style='font-size:18px'>11 THE METRICS ON THE BACKGROUND MESH.<br>indices.clear();<br>meshtools: :unique_ indices(indices, BGM) ;<br>sizes.resize(pos. cols() , 0.) ; 11 Null value for nodes not in BGM.<br>for (size_t i = 0; i く indices.size(); ++i)</p>
+<br><p id='397' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='398' data-category='paragraph' style='font-size:18px'>n = indices[i];<br>n)));<br>W = std: :max(: :fabs(pos(0, n)), ⌀1 /2.;<br>h = : :cos(8. *M_PI*w/L) * (h0-h1)/2. +<br>sizes[n] = h;</p>
+<br><p id='399' data-category='paragraph' style='font-size:18px'>}</p>
+<p id='400' data-category='paragraph' style='font-size:16px'>11 THE 2D MESH.<br>triamesh_ iso: : mesher the_mesher;<br>triamesh_ iso: : mesher : : data_ type data (pos, connectE2) ;<br>data.background_mesh = BGM;<br>data. metrics = sizes;<br>the_mesher · run(data) ;</p>
+<p id='401' data-category='paragraph' style='font-size:16px'>11 VISUALIZATION.<br>meshtools : : medit_output("out.mesh" , data.pos, data.connectM, CM2_FACET3) ;</p>
+<br><p id='402' data-category='paragraph' style='font-size:18px'>return 0;<br>} 11 main</p>
+<table id='403' style='font-size:22px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMesh � & CM2 QuadMesh� Iso/Aniso - 33 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 34</div>
+<figure id='404'><img alt="" data-coord="top-left:(117,118); bottom-right:(593,592)" /></figure>
+<br><figure id='405'><img alt="" data-coord="top-left:(650,117); bottom-right:(1124,591)" /></figure>
+<caption id='406' style='font-size:14px'>Figure 18 - Use of a background mesh to support a sizes map on the domain (T3 and all-Q4).</caption>
+<p id='407' data-category='paragraph' style='font-size:20px'>The background mesh is the same structured triangle mesh in both cases (here, covering all the domain):</p>
+<figure id='408'><img alt="" data-coord="top-left:(381,756); bottom-right:(860,1233)" /></figure>
+<caption id='409' style='font-size:16px'>Figure 19 - The background mesh used in the previous examples.</caption>
+<p id='410' data-category='paragraph' style='font-size:18px'>The background mesh does not need to fit exactly the domain to be meshed. It can cover only a small part of it<br>and/or be partially outside of the domain. In the areas not covered by the background mesh, the default size<br>field based on hard edge length, specific sizes at the hard nodes and target size (if any of them) is used instead.</p>
+<p id='411' data-category='paragraph' style='font-size:18px'>Here is an example where the domain is a disk and the background mesh is also a disk but with half the radius.<br>We have set a uniform value for the sizes map on the background mesh to get a finer mesh in this area.</p>
+<table id='412' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. 6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 34 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 35</div>
+<figure id='413'><img alt="" data-coord="top-left:(374,111); bottom-right:(867,598)" /></figure>
+<caption id='414' style='font-size:16px'>Figure 20 - Background mesh covering only a fraction of the domain.</caption>
+<p id='415' data-category='paragraph' style='font-size:20px'>We can also consider the case where the boundary mesh of the domain must also be governed by a<br>background mesh. In addition to the 2D-background mesh we need also to discretize the boundary in order to<br>support the sizes map on this line. Then the real boundary mesh is generated using this 1D "background mesh"<br>and the associated sizes. The discretization for this 1D background mesh must be fine enough to represent<br>accurately the geometry of the line.</p>
+<p id='416' data-category='paragraph' style='font-size:18px'>An overload of the cm2 : : meshtools1d : : mesh_ line function is used for that23. Here we discretize a full<br>circle with 200 nodes in indices0 starting from node #1 and centered on point CR:</p>
+<p id='417' data-category='paragraph' style='font-size:14px'>meshtools1d : : extrude_rotate(pos, 1, CR, 2 * M_PI, 200, indices0) ;<br>indices0 . back() = indices0. front();</p>
+<p id='418' data-category='paragraph' style='font-size:18px'>Sizes are specified on the nodes of this circle and a new set of adapted nodes are generated:</p>
+<p id='419' data-category='paragraph' style='font-size:16px'>vecvec : :push_back(sizes, indices0, sizes0) ; 11 Pick-up sizes for indices0.<br>meshtoo ls1d : : mesh_line (pos, indices0, sizes0, true, 1,<br>UINT_MAX, 0. , indices, new U, new_sizes) ;<br>meshtools1d : : indices_to_connectE2 (indices, connectE) ;</p>
+<p id='420' data-category='paragraph' style='font-size:20px'>The parameters true, 1, UINT_MAX and 0. stand for: force even number of edges, minimum of 1 edge,<br>maximum of UINT_MAX edges along the arc and no chordal control21.</p>
+<p id='421' data-category='paragraph' style='font-size:18px'>The indices vector now contains the nodes of the circle mesh adapted to the metrics.</p>
+<p id='422' data-category='paragraph' style='font-size:18px'>new_ U and new_sizes contain the parameter values along the circle and the interpolated metrics at these<br>nodes but these vectors are not used in the rest of the example.</p>
+<p id='423' data-category='paragraph' style='font-size:16px'>23 Several overloads for mesh_straight, mesh_spl ine and mesh_ line exist in the meshtools1d library.</p>
+<table id='424' style='font-size:18px'><thead></thead><tbody><tr><td>CM2 Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - tutorials</td><td>35</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 36</div>
+<figure id='425'><img alt="" data-coord="top-left:(117,117); bottom-right:(597,590)" /></figure>
+<br><figure id='426'><img alt="" data-coord="top-left:(645,109); bottom-right:(1127,593)" /></figure>
+<caption id='427' style='font-size:16px'>Figure 21 - Background meshes for both the boundary and the domain (T3 and all-Q4).</caption>
+<p id='428' data-category='paragraph' style='font-size:20px'>Note: A background mesh can be used also in REGULARIZE_MODE on a pre-existing mesh to adapt/optimize it<br>to a changed metrics map.</p>
+<p id='429' data-category='paragraph' style='font-size:14px'>24 See HTML reference manual for more info on these parameters.</p>
+<table id='430' style='font-size:18px'><thead></thead><tbody><tr><td>QuadMesh� Ⓒ Computing Objects /version 5. 6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 Iso/Aniso - 36 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 37</div>
+<h1 id='431' style='font-size:18px'>#include "stdafx.h"</h1>
+<br><p id='432' data-category='paragraph' style='font-size:18px'>int main()</p>
+<br><p id='433' data-category='paragraph' style='font-size:16px'>{</p>
+<br><table id='434' style='font-size:16px'><thead></thead><tbody><tr><td>const double</td><td>R(4.) ;</td></tr><tr><td>const double</td><td>h0(0.5) , h1(0.05) , sig(0. 40) ;</td></tr><tr><td>const DoubleVec2</td><td>CR(0 · 0.) , PO(R, 0.) ; ,</td></tr><tr><td>DoubleMat</td><td>pos;</td></tr><tr><td>DoubleVec</td><td>new_U, sizes, sizes0, new_sizes;</td></tr><tr><td>UIntVec</td><td>indices0, indices;</td></tr><tr><td>UIntMat</td><td>connectE, connectM, BGM;</td></tr><tr><td>double</td><td>x, y, W, wo, w1, w2;</td></tr></tbody></table>
+<p id='435' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>triamesh_iso : : registration("Licensed to SMART Inc . "F53EA108BCWX") ;<br>"<br>,</p>
+<p id='436' data-category='paragraph' style='font-size:14px'>triamesh_iso : : mesher the_mesher;</p>
+<p id='437' data-category='paragraph' style='font-size:14px'>pos · push_back(CR) ; 11 Point #⊙ (centre of the circle) ·<br>pos . push_back(P0) ; 11 Point #1 (start of the circle) ·</p>
+<p id='438' data-category='paragraph' style='font-size:16px'>11 THE 2D BACKGROUND MESH<br>n = unsigned (2. *M_PI*R / h1) ;<br>meshtools1d: :extrude rotate(pos, 1, CR, 2 * M_PI, n, indices) ;<br>indices. back() = indices · front() ; 11 Close the circle.<br>meshtools1d: : indices_ to_connectE2(indices, connectE) ;<br>triamesh_ iso : : mesher : : data_type BGMdata(pos, connectE) ;<br>the_ mesher . run(BGMdata) ;<br>BGMdata.extract(pos, BGM) ;</p>
+<p id='439' data-category='paragraph' style='font-size:18px'>11 MESH THE GEOMETRIC SUPPORT OF THE BOUNDARY (1D BACKGROUND MESH) ·<br>meshtools1d: :extrude_ rotate(pos, 1, CR, 2*M_PI, 200, indices0) ;<br>indices0.back() = indices0.front();</p>
+<p id='440' data-category='paragraph' style='font-size:16px'>11 THE METRICS ON THE BACKGROUND MESHES (1D AND 2D) .<br>indices.clear();<br>meshtools: :unique indices(indices, BGM) ;<br>indices.push_back(indices0); 11 Also the nodes of the circle.<br>sizes. resize(pos. cols() , 0.);<br>for (size_t i = 0; i く indices.size() ; ++i)</p>
+<br><p id='441' data-category='paragraph' style='font-size:16px'>{</p>
+<br><p id='442' data-category='paragraph' style='font-size:14px'>const size_t n = indices[i] ;<br>X = pos(0, n) ;<br>y = pos(1, n) ;<br>w⊙ = : : fabs (y + 2*x - R/2) / : :sqrt(5.) ;<br>w1 = : : fabs (y - X - R/2) / : :sqrt(2.) ;<br>w2 = : : fabs (x + R/2) ;<br>W = std : : min (wo, w1) ; sigil. Gaussian variations.<br>W = std : : min (w, w2) /<br>W = : :exp(-w*w) ;<br>sizes[n] = = h0* (1. -w) + h1*w;</p>
+<br><p id='443' data-category='paragraph' style='font-size:18px'>}</p>
+<br><p id='444' data-category='paragraph' style='font-size:20px'>11 Pick-up the sizes along the circle.<br>sizes0.clear();<br>vecvec: :push_back(sizes, indices0, sizes0) ;</p>
+<br><p id='445' data-category='paragraph' style='font-size:20px'>11 MESH THE CIRCLE ACCORDING TO THE METRICS.<br>indices.clear();<br>connectE.clear();<br>meshtools1d: :mesh_line(pos, indices0, sizes0, true, 1,<br>UINT MAX, 0. , indices, new U, new_sizes) ;<br>meshtools1d: :indices_to_connectE2(indices, connectE) ;</p>
+<p id='446' data-category='paragraph' style='font-size:16px'>11 THE 2D MESH ACCORDING TO THE METRICS ON THE BGM.<br>triamesh_ iso: : mesher : : data_ type data(pos, connectE) ;<br>data.background_mesh = BGM;<br>data.metrics = sizes;<br>the_mesher run(data) ;</p>
+<p id='447' data-category='paragraph' style='font-size:16px'>11 VISUALIZATION.<br>meshtools : : medit_output("out.mesh" , data.pos, data.connectM, CM2_FACET3) ;</p>
+<p id='448' data-category='paragraph' style='font-size:18px'>return 0;<br>} 11 main</p>
+<table id='449' style='font-size:22px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMesh � & CM2 QuadMesh� Iso/Aniso - 37 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 38</div>
+<h1 id='450' style='font-size:22px'>10. Anisotropic meshes</h1>
+<p id='451' data-category='paragraph' style='font-size:18px'>CM2 TriaMesh Iso and CM2 QuadMesh Iso are isotropic unstructured meshers, that is, they tend to produce<br>equilateral triangles and squares. It is sometimes useful however to have elements stretched in some specific<br>directions. To deal with complex domains we still need an unstructured mesher. Here come the anisotropic<br>unstructured meshers CM2 TriaMesh Aniso and CM2 QuadMesh Aniso. They are almost identical to their<br>isotropic counterparts except for the data . metrics array that is now a matrix (DoubleMat). In the isotropic<br>case we needed only a scalar at each node to define the target mesh size. Now the target mesh size is defined<br>by a 2 X 2 symmetric matrix at each node, stored column-wise in the metrics array.</p>
+<figure id='452'><img style='font-size:14px' alt="h1
+h
+P ho
+P
+Figure 22 - A single scalar defines an isotropic metric (left).
+A 2D-anisotropic metric needs two vectors (right)." data-coord="top-left:(309,402); bottom-right:(911,841)" /></figure>
+<p id='453' data-category='paragraph' style='font-size:20px'>Mj = ab b<br>c</p>
+<br><p id='454' data-category='paragraph' style='font-size:16px'>with :</p>
+<p id='455' data-category='paragraph' style='font-size:16px'>a > 0<br>ac - b2 > 0<br>i.e. the two eigen values are > 0</p>
+<br><p id='456' data-category='paragraph' style='font-size:18px'>data.metrics</p>
+<br><p id='457' data-category='paragraph' style='font-size:14px'>a</p>
+<br><p id='458' data-category='paragraph' style='font-size:14px'>·</p>
+<br><p id='459' data-category='paragraph' style='font-size:18px'>b</p>
+<br><p id='460' data-category='paragraph' style='font-size:22px'>:</p>
+<br><p id='461' data-category='paragraph' style='font-size:14px'>c</p>
+<p id='462' data-category='paragraph' style='font-size:20px'>column #j</p>
+<caption id='463' style='font-size:14px'>Figure 23 - Definition and storage of the 2-D anisotropic metrics.</caption>
+<p id='464' data-category='paragraph' style='font-size:18px'>Let (V⌀, V1) be the two ortho-normal vectors along the axes of the ellipse:</p>
+<br><p id='465' data-category='paragraph' style='font-size:22px'>[vo] = [v1] = 1<br><V0,V1>=0</p>
+<table id='466' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 38 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 39</div>
+<p id='467' data-category='paragraph' style='font-size:20px'>Then the metrics Mj writes:</p>
+<p id='468' data-category='equation'>$$\begin{array}{c c}{{M_{j}=\mathbf{B}}}&{{\displaystyle\left[\frac{1}{h_{0}^{~2}}\right.\quad\qquad}}&{{\displaystyle\left|\begin{array}{c}{{}}\\ {{}}\\ {{}}&{{}}\\ {{\displaystyle\qquad\displaystyle\frac{1}{h_{1}^{~2}}\end{array}\right|}}}\end{array}\right.\qquad}}\end{array}$$</p>
+<br><p id='469' data-category='paragraph' style='font-size:18px'>with :</p>
+<br><p id='470' data-category='paragraph' style='font-size:22px'>B = [vo v1]<br>stored column - wise</p>
+<p id='471' data-category='paragraph' style='font-size:18px'>The metric equivalent to an isotropic size of h writes:</p>
+<p id='472' data-category='equation'>$$M_{_{j}}=\left[\frac{1}{h^{2}}\quad\begin{array}{c c c}{{0}}\\ {{}}&{{}}\\ {{0}}&{{\frac{1}{h^{2}}\right]$$</p>
+<p id='473' data-category='paragraph' style='font-size:20px'>A null matrix would lead to infinite sizes in both directions (infinite circle).</p>
+<p id='474' data-category='paragraph' style='font-size:20px'>When the user doesn't specify a metric, the mesher uses the default one which is equivalent to the isotropic<br>default metrics we have seen before. For each hard node the default metric is based on the length of the<br>adjacent edges. This leads to the same default behavior as their related isotropic counterparts. Take for<br>instance examples 1, 2, 3 or 4 and replace:</p>
+<p id='475' data-category='paragraph' style='font-size:14px'>triamesh_ iso : : mesher the_mesher;</p>
+<h1 id='476' style='font-size:20px'>with:</h1>
+<p id='477' data-category='paragraph' style='font-size:14px'>triamesh_aniso : : mesher the_mesher;</p>
+<p id='478' data-category='paragraph' style='font-size:20px'>and you get the same meshes25.</p>
+<p id='479' data-category='paragraph' style='font-size:14px'>25 The anisotropic meshers are however much slower than their isotropic counterparts (about 4 times slower).</p>
+<table id='480' style='font-size:18px'><thead></thead><tbody><tr><td>CM2 TriaMesh Ⓡ & CM2 QuadMeshⓇ Iso/Aniso - Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>39 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 40</div>
+<p id='481' data-category='paragraph' style='font-size:20px'>To benefit from the anisotropic feature the user must fill the metrics array with valid anisotropic matrices (i.e.<br>positive-definite matrices). Some functions in meshtools and meshtools1d can help in computing these<br>matrices as in the following example.</p>
+<figure id='482'><img alt="" data-coord="top-left:(113,225); bottom-right:(595,698)" /></figure>
+<caption id='483' style='font-size:16px'>Figure 24 - Anisotropic meshes (T3 and Q4).</caption>
+<p id='484' data-category='paragraph' style='font-size:20px'>Here a square is meshed non-uniformly with the variant of mesh_strai ght we have already seen in the<br>previous section26. This is not sufficient to get a 2-D anisotropic mesh. We need an anisotropic mesher. We<br>need also specify that we want a different size along the normals than along the tangents of the boundary lines<br>(along the tangents the default sizes, i.e. mean of the edges' lengths, suit us). This is the role of cm2 :<br>: meshtools1d: :metrics_gen_aniso2d. This function takes a 1D mesh and a size along the normal and<br>generates a set of 2-D anisotropic metrics stored in an array metrics as depicted in Figure 23. At each node<br>Ni, a metric M(Ni, hn) is computed. For instance, along the right vertical line we specify a constant size hn in the<br>horizontal direction27:</p>
+<p id='485' data-category='paragraph' style='font-size:16px'>meshtools1d : : metrics_gen_aniso2d (pos, connect2, hn, metrics) ;</p>
+<p id='486' data-category='paragraph' style='font-size:14px'>26 We could obviously get about the same structured Q4 mesh with cm2 : : meshtools2d : : mesh_struct_Q4.</p>
+<br><p id='487' data-category='footnote' style='font-size:16px'>27 Note that the metrics parameter is not a pure output parameter. Indeed this function does not simply overwrite the existing columns in<br>metrics but replace them with their intersection with the newly computed metric M(Ni, hn). If Mi in column #i already exists in metrics, Mi<br>is replaced by intersection (Mi, M(Ni, hn)). Intersection (Mi, Mj) is the ellipse inscribed inside the two associated ellipses.<br>Note also that a null metric is equivalent to an infinite circle, and that intersection (Mi, 0) = Mi.<br>This property of the metrics_gen_aniso2d function is essential to make coherent the intersections of the generated metrics at the four<br>summits of the square.</p>
+<table id='488' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. 6 rev. February 2025 CM2 TriaMeshⓇ & CM2 QuadMeshⓇ - Tutorials 40</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 41</div>
+<h1 id='489' style='font-size:16px'>#include "stdafx.h"</h1>
+<br><p id='490' data-category='paragraph' style='font-size:18px'>int main()</p>
+<br><p id='491' data-category='paragraph' style='font-size:14px'>{</p>
+<br><table id='492' style='font-size:16px'><thead></thead><tbody><tr><td>const double</td><td>L(10.) ;</td></tr><tr><td>const double</td><td>hx(1.) ;</td></tr><tr><td>const double</td><td>Y size at bottom line. h0y(hx) ; </td></tr><tr><td>const double</td><td>Y size at top line. h1y(hx / 20.) ;</td></tr><tr><td>const DoubleVec2</td><td>P0(0 . 0.) ; ,</td></tr><tr><td>const DoubleVec2</td><td>P1(L, 0.) ;</td></tr><tr><td>const DoubleVec2</td><td>P2(L, L);</td></tr><tr><td>const DoubleVec2</td><td>P3(0 · , L) ;</td></tr><tr><td>DoubleMat</td><td>pos;</td></tr><tr><td>UIntVec</td><td>indices;</td></tr><tr><td>UIntMat</td><td>connect1, connect2, connect3, connect4, connectE;</td></tr><tr><td>UIntMat</td><td>connectM;</td></tr><tr><td>DoubleMat</td><td>metrics;</td></tr></tbody></table>
+<p id='493' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>triamesh_aniso: : registration("Licensed to SMART Inc. " "F53EA108BCWX") ;<br>,</p>
+<p id='494' data-category='paragraph' style='font-size:14px'>11 VERTICES<br>pos . push_back (PO) ;<br>pos · push_back(P1) ;<br>pos · push_back(P2) ;<br>pos . push_back(P3) ;</p>
+<p id='495' data-category='paragraph' style='font-size:16px'>11 BOTTOM LINE<br>indices. clear () ;<br>meshtools1d : : mesh_straight (pos, 日, 1, hx, hx, true, indices) ;<br>meshtools1d: : indices_ to_connectE2 (indices, connect1) ;<br>connectE.push_back (connect1) ;</p>
+<br><p id='496' data-category='paragraph' style='font-size:18px'>11 RIGHT-SIDE LINE</p>
+<br><p id='497' data-category='paragraph' style='font-size:16px'>indices.clear() ;<br>meshtools1d: : mesh_straight (pos, 1, 2, h0y, h1y, true, indices) ;<br>meshtools1d: : indices_ to_connectE2 (indices, connect2) ;<br>connectE.push_back (connect2) ;</p>
+<p id='498' data-category='paragraph' style='font-size:16px'>11 LEFT-SIDE LINE</p>
+<br><p id='499' data-category='paragraph' style='font-size:16px'>indices.clear() ;<br>meshtools1d: : mesh_straight (pos, 2, 3, hx, hx, true, indices) ;<br>meshtools1d: : indices_ to_connectE2 (indices, connect3) ;<br>connectE.push_back (connect3) ;</p>
+<p id='500' data-category='paragraph' style='font-size:16px'>11 TOP LINE<br>indices.clear() ··<br>meshtools1d: :mesh_straight (pos, 3, 日, h1y, h0y, true, indices) ;<br>meshtools1d: : indices_ to_connectE2 (indices, connect4) ;<br>connectE.push_back(connect4) ;</p>
+<br><p id='501' data-category='paragraph' style='font-size:16px'>11 METRICS</p>
+<br><table id='502' style='font-size:18px'><thead></thead><tbody><tr><td>meshtools1d: :metrics_gen_aniso2d(pos, connect1, /*hn=>*/ h0y, metrics) ;</td></tr><tr><td>meshtools1d: :metrics_gen_aniso2d(pos, connect2, /*hn=>*/ hx , metrics) ;</td></tr><tr><td>meshtools1d: :metrics_gen_aniso2d(pos, connect3, /*hn=>*/ h1y, metrics);</td></tr><tr><td>meshtools1d: :metrics_gen_aniso2d(pos, connect4, /*hn=>*/ hx , metrics) ;</td></tr></tbody></table>
+<br><p id='503' data-category='paragraph' style='font-size:16px'>11 2D MESH</p>
+<br><p id='504' data-category='paragraph' style='font-size:14px'>triamesh_aniso : : mesher the_mesher;<br>triamesh_aniso: : mesher: :data_type data (pos, connectE2) ;<br>data. metrics = metrics;<br>the_mesher · run(data) ;</p>
+<p id='505' data-category='paragraph' style='font-size:16px'>11 VISUALIZATION.<br>meshtools : : medit_output("out.mesh", data.pos, data. connectM, CM2_FACET3) ;</p>
+<br><p id='506' data-category='paragraph' style='font-size:16px'>return 0;<br>} 11 main</p>
+<p id='507' data-category='paragraph' style='font-size:22px'>As already stated, except for the metrics array, the anisotropic meshers have the very same options and<br>parameters as their isotropic counterparts. They accept internal hard lines, isolated nodes, multiple domains,<br>shared boundaries, background meshes...</p>
+<p id='508' data-category='paragraph' style='font-size:20px'>The following example illustrates the internal hard line feature.<br>We have specified a normal size along the inner circle much smaller than the default tangent size (using again<br>meshtools1d : : metrics_gen_aniso2d).</p>
+<table id='509' style='font-size:18px'><thead></thead><tbody><tr><td>CM2 Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 41 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 42</div>
+<p id='510' data-category='paragraph' style='font-size:20px'>For the external square, nothing was specified in the metrics array and the mesher used its default isotropic<br>metrics based on the length of the adjacent edges.</p>
+<figure id='511'><img alt="" data-coord="top-left:(115,199); bottom-right:(594,673)" /></figure>
+<br><figure id='512'><img alt="" data-coord="top-left:(648,198); bottom-right:(1122,673)" /></figure>
+<caption id='513' style='font-size:14px'>Figure 25 - 2-D anisotropic meshes (T3 and all-Q4).</caption>
+<p id='514' data-category='paragraph' style='font-size:16px'>The example below is mesh of Figure 21 revisited the anisotropic way.<br>Here we specify a small size in the directions normal to the three lines but a uniform size along the tangents.<br>The normal sizes follow the same kind of Gaussian variation.<br>All these metrics are specified at the nodes of the same uniform background mesh.</p>
+<figure id='515'><img alt="" data-coord="top-left:(115,914); bottom-right:(596,1390)" /></figure>
+<br><figure id='516'><img alt="" data-coord="top-left:(643,907); bottom-right:(1130,1390)" /></figure>
+<caption id='517' style='font-size:14px'>Figure 26 - 2-D anisotropic meshes (T3 and all-Q4).</caption>
+<table id='518' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 42 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 43</div>
+<h1 id='519' style='font-size:22px'>11. 3-D surface meshes (aniso meshers only)</h1>
+<p id='520' data-category='paragraph' style='font-size:20px'>The four meshers CM2 TriaMesh Iso, CM2 QuadMesh Iso and their anisotropic versions CM2 TriaMesh Aniso<br>and CM2 QuadMesh Aniso are plane 2-D meshers. They generate or optimize meshes in the Z = 0 plane only.<br>To generate meshes on 3-D parametric surfaces, CM2 MeshTools offers a convenient solution by the way of a<br>template function that pre- and post-process the data for a 2-D anisotropic mesher (CM2 TriaMesh Aniso or<br>CM2 QuadMesh Aniso):</p>
+<p id='521' data-category='paragraph' style='font-size:14px'>template <class Surface, class AnisoMesher, class AuxMesher><br>int<br>meshtools2d : : mesh_surface_param</p>
+<br><p id='522' data-category='paragraph' style='font-size:16px'>(const Surface& S, AnisoMesher& mesher2D,</p>
+<br><p id='523' data-category='paragraph' style='font-size:14px'>typename AnisoMesher : : data_ type& data3D, AuxMesher& aux_mesher,<br>double max_ chordal_error, double min_h, unsi gned chordal_control_type,<br>unsi gned high_order_ type = ⊙ , unsigned hi gh_order_mode = 2,<br>doub le max_chordal_error ratio = 0. 10, bool dry_run_flag = false,<br>unsi gned max_ bgm_remeshings = 4<br>bool recompute_Qs_flag = true, bool compute_area_flag = true) ;</p>
+<p id='524' data-category='paragraph' style='font-size:20px'>This function can be used as in the following code sample:</p>
+<table id='525' style='font-size:14px'><thead></thead><tbody><tr><td><table><thead></thead><tbody><tr><td>tri amesh_aniso: :mesher amesh_iso : :mesher</td><td>the_mesher; aux_mesher;</td></tr><tr><td>tri tri amesh_ani so: :mesher: :data_type surface_type</td><td>data (pos, connectE2) ; S(some parameters) ; 11 A parametric surface.</td></tr></tbody></table></td></tr><tr><td>meshtools2d : : mesh_surface_param (S, the_mesher, data, aux_mesher , -0.05, 0. , 4) ; data.extract (pos, connectM) ;</td></tr></tbody></table>
+<p id='526' data-category='paragraph' style='font-size:18px'>The class Surface for parameter S is a concept of parametric surface with members:</p>
+<p id='527' data-category='paragraph' style='font-size:14px'>int get_3D_coordinates (const Doub leMat& pos2D, DoubleMat& pos3D) const;<br>int get_2D_coordinates (const Doub leMat& pos3D, const UIntVec& nodeIDs,<br>DoubleMat& pos2D) const;<br>int get_ tangents (const DoubleMat& pos2D, DoubleMat& T) const;<br>int get_curvatures (const Doub leMat& pos2D, DoubleMat& C) const;</p>
+<p id='528' data-category='paragraph' style='font-size:18px'>The Surface: : get_3D_coordinates member should compute the 3-D coordinates of a set of 2-D points<br>located on the reference plane. The 3-D coordinates of the point in column #j of pos2D must be returned in<br>column #j of pos3D. This function should return zero when successful and a negative value (-1 for instance)<br>when failed.</p>
+<p id='529' data-category='paragraph' style='font-size:20px'>The Surface : : get_2D_coordinates member is the reciprocal function of the previous one28. It should give<br>the coordinates in the 2-D reference plane of a set of 3-D points. The reference coordinates of the point in<br>column #j of pos3D must be returned in column #j of pos2D. This function should return zero when<br>successful and a negative value (-1 for instance) when failed.</p>
+<p id='530' data-category='paragraph' style='font-size:14px'>28 For parametric surfaces such as Bezier surfaces or NURB surfaces, the computation of reference coordinates often involves a non-linear<br>search. However, this function is called only for the nodes on the boundary mesh and for the isolated nodes (i.e. the hard nodes only). It is<br>not called for the new nodes generated inside the surface by the mesher.</p>
+<table id='531' style='font-size:18px'><thead></thead><tbody><tr><td>CM2 Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - tutorials</td><td>43</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 44</div>
+<p id='532' data-category='paragraph' style='font-size:16px'>nodeIDs is an auxiliary vector that can be helpful for an effective implementation. It contains the global indices<br>of the nodes for which the 2-D coordinates are required. These are the indices in the the global matrix<br>data3D . pos. nodeIDs [j] is the node ID (i.e. column in data . pos) for the coordinates in column j of pos3D.<br>This array can be used for fast 2-D coordinates retrieval if these coordinates have been computed before.</p>
+<br><p id='533' data-category='paragraph' style='font-size:16px'>aP aP<br>The Surface : : get_ tangents member should compute the two tangents Bu = and Bv =<br>au av<br>on the surface at a set of points given by their reference coordinates.</p>
+<p id='534' data-category='paragraph' style='font-size:18px'>These tangents must not be normalized. They are the mere derivatives of the surface with respect to two<br>reference parameters. The two tangents at the point in column #j of pos2D must be returned in column #j of T<br>(dimension 6 X N). The first three values are for the first tangent (with respect to the first reference coordinate),<br>then the next three are for the second tangent29.</p>
+<p id='535' data-category='paragraph' style='font-size:18px'>The Surface : : get_curvatures function may compute the curvatures of the surface at a set of points given<br>by their reference coordinates (optional).</p>
+<p id='536' data-category='paragraph' style='font-size:16px'>The curvatures H are 2 X 2 symmetric matrices defined as:</p>
+<p id='537' data-category='paragraph' style='font-size:20px'>a2P<br>· Huu du2 N)<br>Dot product between the derivative of Bu (first local tangent) with respect to u,<br>and the normal N to the surface.</p>
+<p id='538' data-category='paragraph' style='font-size:18px'>O2P<br>· Huv = N<br>du av<br>Dot product between the derivative of Bu (first local tangent) with respect to V, or derivative of Bv<br>(second local tangent) with respect to u, and the normal N to the surface.</p>
+<p id='539' data-category='paragraph' style='font-size:18px'>�2P<br>· Hw = N<br>av2<br>Dot product between the derivative of Bv (second local tangent) with respect to V,<br>and the normal N to the surface.</p>
+<p id='540' data-category='paragraph' style='font-size:16px'>These three values must be stored column-wise in matrix H: H. on row 0, Hw on row 1 and Hw on row 2.<br>uu</p>
+<br><p id='541' data-category='paragraph' style='font-size:18px'>You can leave the implementation of this member empty (returning -1 for instance). In this case approximate<br>curvatures computed from variations of the tangents will be used instead.</p>
+<p id='542' data-category='paragraph' style='font-size:14px'>29 This function should normally return in T only valid bases made of two non-null and non-colinear vectors. When the surface exhibits some<br>singularities, the user can "correct" the deficient bases. As far as the mesher is concerned, the exactness of these tangents with respect to<br>the true surface is not critical. More precisely, the tangent bases are used by the template function as transformation matrices to compute<br>the target anisotropic 2-D metrics array. The template function checks for deficient aniso metrics (derived from deficient local bases) and<br>replace them with a default one.</p>
+<table id='543' style='font-size:16px'><thead></thead><tbody><tr><td>CM2 Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 44 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 45</div>
+<p id='544' data-category='paragraph' style='font-size:18px'>The template class AnisoMesher is a concept of triangle anisometric mesher with function:</p>
+<p id='545' data-category='paragraph' style='font-size:14px'>void run (typename AnisoMesher: :data_type& data) const;</p>
+<p id='546' data-category='paragraph' style='font-size:16px'>The mesh_surface_param function is designed to work with one of the 2-D anisotropic meshers<br>CM2 TriaMesh Aniso or CM2 QuadMesh Aniso.</p>
+<p id='547' data-category='paragraph' style='font-size:16px'>The data3D parameter is the structure gathering all the input and output data, just like for any other<br>unstructured mesher of the CM2 MeshTools SDK. The type of data3D is either triamesh_aniso: : mesher:<br>: data_type or quadmesh_aniso : : mesher : :data_type depending on the type of anisotropic mesher<br>used. The point is that the pos matrix is now a 3-D coordinates matrix and the metrics array contains 3-D<br>anisotropic metrics (dimensions 6 X NODS).</p>
+<p id='548' data-category='paragraph' style='font-size:16px'>3D-anisotropic metrics are defined as below:</p>
+<p id='549' data-category='equation'>$${\cal M}_{j}=\left[\frac{a}{b}\begin{array}{c c c}{{b}}&{{d}}\\ {{c}}&{{c}}&{{e}}\\ {{d}}&{{e}}&{{f}}\end{array}\right]$$</p>
+<br><p id='550' data-category='paragraph' style='font-size:16px'>with:</p>
+<p id='551' data-category='paragraph' style='font-size:18px'>a > 0<br>ac - b2 > 0<br>Det (M ) >0<br>i.e. the three eigen values are > 0</p>
+<br><figure id='552'><img style='font-size:14px' alt="a
+* b
+c
+data3D .metrics
+d
+e
+column #j" data-coord="top-left:(630,534); bottom-right:(1032,784)" /></figure>
+<caption id='553' style='font-size:14px'>Figure 27 - Definition and storage of the 3-D anisotropic metrics.</caption>
+<p id='554' data-category='paragraph' style='font-size:16px'>Let (✓ 0, v ☑ V2) be the three ortho-normal vectors along the axes of the ellipsoid:</p>
+<p id='555' data-category='equation'>$$\begin{array}{l}{\left\|\mathbf{v}_{0}\right\|=\left\|\mathbf{v}_{1}\right\|=\left\|\mathbf{v}_{2}\right\|=\left\|\mathbf{v}_{2}\right\|=1}\\ {\left(\mathbf{v}_{0},\mathbf{v}_{1}\right)=0}\\ {\left(\mathbf{v}_{0},\mathbf{v}_{2}\right)=0}\\ {\left(\mathbf{v}_{0},\mathbf{v}_{1},\mathbf{v}_{2}\right)=1}\end{array}$$</p>
+<h1 id='556' style='font-size:20px'>Then, the metrics Mi writes:</h1>
+<p id='557' data-category='equation'>$$M_{j}=\mathbf{B}\left[\begin{array}{c c c}{{1}}&{{0}}&{{0}}\\ {{h_{0}^{~2}}}&{{0}}&{{0}}\\ {{0}}&{{\frac{1}{h_{1}^{~2}}}}&{{0}}\\ {{0}}&{{0}}&{{\frac{1}{h_{2}^{~2}}}}\end{array}\right]$$</p>
+<br><p id='558' data-category='paragraph' style='font-size:14px'>T B</p>
+<br><p id='559' data-category='paragraph' style='font-size:16px'>with:</p>
+<br><p id='560' data-category='paragraph' style='font-size:20px'>B = [vo V1 v2]<br>stored column - wise</p>
+<table id='561' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMeshⓇ Iso/Aniso - 45 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 46</div>
+<p id='562' data-category='paragraph' style='font-size:18px'>The 3-D metric equivalent to an isotropic size of h writes:</p>
+<p id='563' data-category='equation'>$$M_{j}=\left[\begin{array}{c c c}{{1}}&{{0}}&{{0}}\\ {{h^{2}}}&{{0}}&{{0}}\\ {{0}}&{{0}}&{{0}}\\ {{0}}&{{0}}&{{\frac{1}{h^{2}}}}\end{array}\right]$$</p>
+<p id='564' data-category='paragraph' style='font-size:18px'>A null matrix would lead to infinite sizes in the three directions (infinite sphere).</p>
+<p id='565' data-category='paragraph' style='font-size:16px'>The two parameters max_ chordal_error and chordal_control_ type are used to limit the chordal error<br>between the mesh and the parametric surface. We don't use them in this tutorial (set to 0). Please refer to the<br>HTML reference manual for more information on them.</p>
+<p id='566' data-category='paragraph' style='font-size:18px'>This first example illustrates the use of the anisotropic mesh as the intermediate mesh. Here, the parametric<br>surface to be meshed is plane but its boundaries are curved (sinusoidal). The parameters' range is the unit<br>square [0 1] X [0 1].</p>
+<figure id='567'><img style='font-size:20px' alt="✓
++ P(x,y,z)
+Q(u,v)
+u" data-coord="top-left:(206,653); bottom-right:(1021,1013)" /></figure>
+<caption id='568' style='font-size:14px'>Figure 28 - Mapping between the reference space and the surface.</caption>
+<p id='569' data-category='paragraph' style='font-size:18px'>The source of this example is as follow:</p>
+<table id='570' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 46 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 47</div>
+<p id='571' data-category='paragraph' style='font-size:18px'>#include "stdafx.h"</p>
+<p id='572' data-category='paragraph' style='font-size:18px'>/*The Surface class implements the functions needed by mesh_surface_param* /<br>struct surface</p>
+<br><p id='573' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='574' data-category='paragraph' style='font-size:18px'>11 Constructor (parameters to define the surface should be passed here) ·<br>surface (double Lx, double Ly, double a = 0.5)</p>
+<br><p id='575' data-category='paragraph' style='font-size:18px'>_Lx(Lx) , _Ly(Ly) , _a(a) {</p>
+<br><p id='576' data-category='paragraph' style='font-size:14px'>:</p>
+<br><p id='577' data-category='paragraph' style='font-size:18px'>}</p>
+<p id='578' data-category='paragraph' style='font-size:18px'>11 Computes the 3D coordinates.<br>int get_3D_coordinates (const DoubleMat& pos2D, Doub leMat& pos3D) const</p>
+<br><p id='579' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='580' data-category='paragraph' style='font-size:16px'>const size_t NODS(pos2D.cols()) ;<br>double u, ✓ , X , y , z;</p>
+<p id='581' data-category='paragraph' style='font-size:18px'>if (pos2D.rows() != 2) return -1; 11 Error.</p>
+<p id='582' data-category='paragraph' style='font-size:18px'>if ((pos3D.rows() != 3) 11 (pos3D.cols() く NODS))<br>pos3D.resize(3, NODS) ;</p>
+<p id='583' data-category='paragraph' style='font-size:18px'>for (size_t j = 0; j く NODS; ++j)</p>
+<br><p id='584' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='585' data-category='paragraph' style='font-size:14px'>u = pos2D(0, j) ;<br>✓ = pos2D(1, j) ;<br>X = u * _Lx;<br>y = ✓ * _Ly * (1. + _a * : :sin(x)) ;<br>Z = 0. ;<br>pos3D(0, j) = x;<br>pos3D(1, j) = y;<br>pos3D(2, j) = z;</p>
+<br><p id='586' data-category='paragraph' style='font-size:18px'>}</p>
+<br><p id='587' data-category='paragraph' style='font-size:18px'>return 0; 11 OK.</p>
+<br><p id='588' data-category='paragraph' style='font-size:20px'>}</p>
+<p id='589' data-category='paragraph' style='font-size:18px'>11 Computes the reference coordinates (UV) · nodeIDs not used.<br>int get_2D_coordinates (const DoubleMat& pos3D, const UIntVec& nodeIDs,<br>DoubleMat& pos2D) const</p>
+<br><p id='590' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='591' data-category='paragraph' style='font-size:16px'>const size_t NODS(pos3D.cols()) ;<br>double u, ✓ , X , y;</p>
+<p id='592' data-category='paragraph' style='font-size:18px'>if (pos3D.rows() != 3) return -1; 11 Error.</p>
+<p id='593' data-category='paragraph' style='font-size:18px'>if ((pos2D.rows() != 2) 11 (pos2D.cols() く NODS))<br>pos2D.resize(2, NODS) ;</p>
+<p id='594' data-category='paragraph' style='font-size:18px'>for (size_t j = 0; j く NODS; ++j)</p>
+<br><p id='595' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='596' data-category='paragraph' style='font-size:16px'>X = pos3D(0, j) ;<br>y = pos3D(1, j);<br>u = X / Lx;<br>✓ = y / (_Ly * (1. + _a * : :sin(x))) ;<br>pos2D(0, j) = u;<br>pos2D(1, j) = V;</p>
+<br><p id='597' data-category='paragraph' style='font-size:18px'>}</p>
+<br><p id='598' data-category='paragraph' style='font-size:18px'>return 0; 11 OK.</p>
+<br><p id='599' data-category='paragraph' style='font-size:18px'>}</p>
+<p id='600' data-category='paragraph' style='font-size:20px'>111 Computes the local tangents.<br>int get_tangents (const DoubleMat& pos2D, Doub leMat& T) const</p>
+<br><p id='601' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='602' data-category='paragraph' style='font-size:18px'>const size_t NODS(pos2D.cols());<br>double u, ✓ , x;</p>
+<p id='603' data-category='paragraph' style='font-size:18px'>if (pos2D.rows() く 2) return -1; 11 Error.</p>
+<p id='604' data-category='paragraph' style='font-size:18px'>if ((T.rows() != 6) 11 (T.cols() く NODS))<br>T.resize(6, NODS) ;</p>
+<p id='605' data-category='paragraph' style='font-size:18px'>for (size_t j = 0; j く NODS; ++j)</p>
+<br><p id='606' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='607' data-category='paragraph' style='font-size:14px'>u = pos2D(0, j) ;<br>✓ = pos2D(1, j);<br>X = u * _Lx;<br>T(0, j) = _Lx;<br>T(1, j) = ✓ * _Ly * _a * _Lx * : :cos (x) ;</p>
+<table id='608' style='font-size:22px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMesh Ⓡ & CM2 QuadMeshⓇ Iso/Aniso - 47 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 48</div>
+<p id='609' data-category='paragraph' style='font-size:14px'>T(2, j) = ⊙ , ;<br>T(3, j) = 0. ;<br>T(4, j) = _Ly * (1. + _a * : :sin(x)) ;<br>T(5, j) = 0. ;</p>
+<br><p id='610' data-category='paragraph' style='font-size:18px'>}</p>
+<br><p id='611' data-category='paragraph' style='font-size:18px'>return 0; 11 OK.</p>
+<br><p id='612' data-category='paragraph' style='font-size:18px'>}</p>
+<p id='613' data-category='paragraph' style='font-size:18px'>111 Computes the local curvatures.<br>int get_curvatures (const DoubleMat& pos2D, Doub leMat& H) const</p>
+<br><p id='614' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='615' data-category='paragraph' style='font-size:18px'>const size_t NODS(pos2D.cols()) in</p>
+<p id='616' data-category='paragraph' style='font-size:18px'>if (pos2D.rows() く 2) return -1; 11 Error.</p>
+<p id='617' data-category='paragraph' style='font-size:18px'>if ((H. rows() != 3) 11 (H.cols() く NODS))<br>H. resize(3, NODS) ;</p>
+<p id='618' data-category='paragraph' style='font-size:14px'>H = ⊙ · ; 11 Null curvatures here (the surface is plane) ·<br>return 0;</p>
+<br><p id='619' data-category='paragraph' style='font-size:18px'>}</p>
+<p id='620' data-category='paragraph' style='font-size:18px'>111 Data members.<br>double _Lx, _Ly, _a;</p>
+<br><p id='621' data-category='paragraph' style='font-size:20px'>}; 11 surface</p>
+<p id='622' data-category='paragraph' style='font-size:20px'>111<br>int main()</p>
+<br><p id='623' data-category='paragraph' style='font-size:18px'>{</p>
+<br><table id='624' style='font-size:16px'><thead></thead><tbody><tr><td>const</td><td>DoubleVec2</td><td>PO(0. , -0.5)</td><td>;</td></tr><tr><td>const</td><td>DoubleVec2</td><td>P1(1 · , -0.5)</td><td>;</td></tr><tr><td>const</td><td>DoubleVec2</td><td>P2(1 . , +0.5) ;</td><td></td></tr><tr><td>const</td><td>DoubleVec2</td><td>P3(0 · , +0.5) ;</td><td></td></tr><tr><td>DoubleMat</td><td></td><td>pos;</td><td></td></tr><tr><td>UIntVec</td><td></td><td>indicesG, indices;</td><td></td></tr><tr><td>DoubleVec</td><td></td><td>Us;</td><td></td></tr><tr><td>UIntMat</td><td></td><td>connectE2, connectM;</td><td></td></tr><tr><td>DoubleVec</td><td></td><td>sizesG, sizes;</td><td></td></tr><tr><td>const</td><td>double</td><td>Lx (10.) ;</td><td></td></tr><tr><td>const</td><td>double</td><td>Ly(6.0) ;</td><td></td></tr><tr><td>const</td><td>double</td><td>h0 (0.25) ;</td><td></td></tr><tr><td>surface</td><td></td><td>S(Lx, Ly, 0.5) ; 11 The parametric surface to be</td><td></td></tr></tbody></table>
+<br><p id='625' data-category='paragraph' style='font-size:18px'>meshed.</p>
+<p id='626' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLLs.<br>triamesh_aniso: :registration("Licensed to SMART Inc. " "B657DA67QZ01") ;<br>,<br>triamesh_iso: : registration("Licensed to SMART Inc. " "F53EA108BCWX") ;<br>,</p>
+<p id='627' data-category='paragraph' style='font-size:14px'>pos . push_back(P0) ;<br>pos · push_back (P1) ;<br>pos · push_back (P2) ;<br>pos . push_back (P3) ;</p>
+<p id='628' data-category='paragraph' style='font-size:14px'>11 GEOMETRIC SUPPORT FOR THE EXTERNAL CONTOUR.<br>meshtools1d : : mesh_straight(pos, ⊙ , 1, 1 . /100 · , 1. /100 . , false, indicesG) ;<br>indicesG.pop_back() ;<br>meshtools1d: : mesh_straight(pos, 1, 2, 1 · /100 · , 1 . /100 · , false, indicesG) ;<br>indicesG.pop_back() ;<br>meshtools1d: : mesh_straight(pos, 2, 3, 1 . /100 · , 1 . /100 · , false, indicesG) ;<br>indicesG.pop_back() ;<br>meshtools1d: : mesh_straight(pos, 3, 日, 1./100 · , 1. /100. , false, indicesG) ;<br>S. get_3D_coordinates(pos, pos) ; 11 Map UV -> XYZ (same node IDs) ·</p>
+<p id='629' data-category='paragraph' style='font-size:18px'>11 MESH THE EXTERNAL CONTOUR WITH UNIFORM SIZE HO.<br>sizesG. clear() ;<br>sizesG. resize(indicesG.size() , h0) ; 11 Uniform mesh size.<br>meshtools1d: :mesh_line(pos, indicesG, sizesG, true,<br>1, UINT_MAX, O. , , indices, Us, sizes) ;<br>⊙ .<br>meshtools1d: : indices_to_connectE2(indices, connectE2) ;</p>
+<br><p id='630' data-category='paragraph' style='font-size:18px'>11 MESH THE SURFACE.</p>
+<br><p id='631' data-category='paragraph' style='font-size:18px'>triamesh_aniso: : mesher the_mesher, aux_mesher;<br>triamesh_aniso: : mesher: :data_type data(pos, connectE2) ;<br>meshtools2d : : mesh_surface_param(S, the_mesher, data, aux_mesher, 0. , 0. , 0) ;<br>data.extract(pos, connectM) ;</p>
+<table id='632' style='font-size:22px'><thead></thead><tbody><tr><td>TriaMesh CM2 QuadMeshⓇ Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 Ⓡ & Iso/Aniso - 48 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 49</div>
+<h1 id='633' style='font-size:18px'>data.print_info (&display_hdl) ;</h1>
+<p id='634' data-category='paragraph' style='font-size:14px'>/ / VISUALISATION.<br>meshtools : : medit_output ( " out. mesh" , data · pos , data · connectM, CM2_FACET3) ;</p>
+<p id='635' data-category='paragraph' style='font-size:16px'>return 0;<br>} / / main</p>
+<p id='636' data-category='paragraph' style='font-size:20px'>We present below the intermediate anisotropic meshes on the reference space (normally not shown) and the<br>final meshes on the parametric surface.</p>
+<table id='637' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. 6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 49 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 50</div>
+<figure id='638'><img alt="" data-coord="top-left:(116,117); bottom-right:(594,591)" /></figure>
+<br><figure id='639'><img alt="" data-coord="top-left:(649,118); bottom-right:(1124,591)" /></figure>
+<caption id='640' style='font-size:14px'>Figure 29 - 2-D anisotropic meshes in the reference space (UV).</caption>
+<br><figure id='641'><img style='font-size:20px' alt="↓ ↓" data-coord="top-left:(112,635); bottom-right:(1134,1238)" /></figure>
+<br><caption id='642' style='font-size:14px'>Figure 30 - Surface meshes (T3 and all-Q4) obtained via an anisotropic mesh in the reference space.</caption>
+<p id='643' data-category='paragraph' style='font-size:18px'>The next example is a true 3-D parametric surface (only the source code for the surface class is shown).</p>
+<table id='644' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - 50 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 51</div>
+<h1 id='645' style='font-size:20px'>#include "stdafx.h"</h1>
+<br><p id='646' data-category='paragraph' style='font-size:20px'>/*The Surface class implements the functions needed by mesh_surface_param* /<br>struct surface</p>
+<br><p id='647' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='648' data-category='paragraph' style='font-size:20px'>11 Constructor.<br>surface (double L, double H) : _L(L) , _H(H) { }</p>
+<br><p id='649' data-category='paragraph' style='font-size:20px'>11 Computes the 3D coordinates.<br>int get_3D_coordinates (const DoubleMat& pos2D, Doub leMat& pos3D) const</p>
+<br><p id='650' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='651' data-category='paragraph' style='font-size:18px'>const size_t NODS(pos2D.cols());<br>double u, V, x, y , z;</p>
+<br><p id='652' data-category='paragraph' style='font-size:20px'>if (pos2D.rows() く 2) return -1; 11 Error.</p>
+<br><p id='653' data-category='paragraph' style='font-size:20px'>if ((pos3D.rows() != 3) 11 (pos3D.cols() く NODS))<br>pos3D.resize(3, NODS) ;</p>
+<p id='654' data-category='paragraph' style='font-size:18px'>for (size_t j = 0; j く NODS; ++j)</p>
+<br><p id='655' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='656' data-category='paragraph' style='font-size:16px'>u = pos2D(0, j) ;<br>✓ = pos2D(1, j) ;<br>X = L * u;<br>y = 人 L * ✓;<br>Z = _H * : : cos (x) * : :cos (y) ;<br>pos3D(0, 1) = x;<br>pos3D(1, j) = y ;<br>pos3D(2, j) = z;</p>
+<br><p id='657' data-category='paragraph' style='font-size:20px'>}</p>
+<br><p id='658' data-category='paragraph' style='font-size:20px'>return 0; 11 OK.</p>
+<br><p id='659' data-category='paragraph' style='font-size:20px'>}</p>
+<br><p id='660' data-category='paragraph' style='font-size:20px'>11 Computes the reference coordinates (UV) . nodeIDs not used.<br>int get_2D_coordinates (const DoubleMat& pos3D, const UIntVec& nodeIDs,<br>DoubleMat& pos2D) const</p>
+<br><p id='661' data-category='paragraph' style='font-size:20px'>{</p>
+<br><p id='662' data-category='paragraph' style='font-size:20px'>const size_t NODS(pos3D.cols());<br>double u, V, x, y;</p>
+<br><p id='663' data-category='paragraph' style='font-size:18px'>if (pos3D.rows() く 2) return -1; 11 Error.</p>
+<p id='664' data-category='paragraph' style='font-size:20px'>if ((pos2D.rows() != 2) 11 (pos2D.cols() く NODS))<br>pos2D.resize(2, NODS) ;</p>
+<p id='665' data-category='paragraph' style='font-size:18px'>for (size_t j = 0; j く NODS; ++j)</p>
+<br><p id='666' data-category='paragraph' style='font-size:20px'>{</p>
+<br><p id='667' data-category='paragraph' style='font-size:18px'>X = pos3D(0, j) ;<br>y = pos3D(1, j) ;<br>u = X / _L;<br>✓ = y / _L :<br>pos2D(0, j) = u;<br>pos2D(1, j) = V;</p>
+<br><p id='668' data-category='paragraph' style='font-size:20px'>}</p>
+<br><p id='669' data-category='paragraph' style='font-size:20px'>return 0; 11 OK.</p>
+<br><p id='670' data-category='paragraph' style='font-size:20px'>}</p>
+<br><p id='671' data-category='paragraph' style='font-size:20px'>111 Computes the local tangents.<br>int get_tangents (const DoubleMat& pos2D, Doub leMat& T) const</p>
+<br><p id='672' data-category='paragraph' style='font-size:20px'>{</p>
+<br><p id='673' data-category='paragraph' style='font-size:18px'>const size_t</p>
+<br><p id='674' data-category='paragraph' style='font-size:22px'>NODS(pos2D.cols());</p>
+<br><p id='675' data-category='paragraph' style='font-size:20px'>double</p>
+<br><p id='676' data-category='paragraph' style='font-size:16px'>u, ✓ , X , y;</p>
+<br><p id='677' data-category='paragraph' style='font-size:20px'>if (pos2D.rows() く 2) return -1; 11 Error.</p>
+<p id='678' data-category='paragraph' style='font-size:20px'>if ((T.rows() != 6) 11 (T.cols() く NODS))<br>T.resize(6, NODS) ;</p>
+<p id='679' data-category='paragraph' style='font-size:18px'>for (size_t j = 0; j く NODS; ++j)</p>
+<br><p id='680' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='681' data-category='paragraph' style='font-size:18px'>u = pos2D(0, j) ;</p>
+<br><p id='682' data-category='paragraph' style='font-size:18px'>✓ = pos2D(1, j) ;</p>
+<br><p id='683' data-category='paragraph' style='font-size:14px'>X = L * u;</p>
+<br><p id='684' data-category='paragraph' style='font-size:16px'>L * V;</p>
+<br><p id='685' data-category='paragraph' style='font-size:14px'>y =</p>
+<br><p id='686' data-category='paragraph' style='font-size:18px'>T(O, j) =</p>
+<br><p id='687' data-category='paragraph' style='font-size:18px'>� ;</p>
+<br><p id='688' data-category='paragraph' style='font-size:18px'>T(1, ]</p>
+<br><p id='689' data-category='paragraph' style='font-size:16px'>= 0.</p>
+<br><p id='690' data-category='paragraph' style='font-size:20px'>T(2, ]</p>
+<br><p id='691' data-category='paragraph' style='font-size:16px'>= - H * _L * : :sin(x) * : :cos (y) ;</p>
+<br><p id='692' data-category='paragraph' style='font-size:14px'>,</p>
+<br><p id='693' data-category='paragraph' style='font-size:16px'>T(3, ] ) = 0. F</p>
+<br><p id='694' data-category='paragraph' style='font-size:14px'>= L ;</p>
+<br><p id='695' data-category='paragraph' style='font-size:20px'>T(4, J</p>
+<br><p id='696' data-category='paragraph' style='font-size:16px'>T(5, j) = - H * _L * : :cos (x) * : :sin(y) ;</p>
+<br><p id='697' data-category='paragraph' style='font-size:20px'>return 0;</p>
+<br><p id='698' data-category='paragraph' style='font-size:20px'>}</p>
+<br><p id='699' data-category='paragraph' style='font-size:20px'>11 OK.</p>
+<br><p id='700' data-category='paragraph' style='font-size:20px'>}</p>
+<table id='701' style='font-size:22px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMesh Ⓡ & CM2 QuadMeshⓇ Iso/Aniso - 51 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 52</div>
+<figure id='702'><img style='font-size:14px' alt="111 Computes the local curvatures.
+int get_curvatures (const DoubleMat& pos2D, Doub leMat& H) const
+{
+const size_t NODS(pos2D.cols ()) ;
+double u, V, x, y;
+if (pos2D.rows () く 2) return -1; 11 Error.
+if ((H.rows() != 3) 11 (H.cols() く NODS))
+H.resize(3, NODS) ;
+for (size_t j = ⌀; j く NODS; ++j)
+{
+u = pos2D (日, j) ;
+✓ = pos2D(1, j) ;
+X = _L * u;
+y = _L * ✓
+SX = : : sin(x) ; CX = ::cos(x) ;
+sy = : : sin(y) ; cy = : :cos (y) ;
+S = H * L*_L / : : sqrt(1. + _H*_H * (sx*sx*cy*cy + cx*cx*sy*sy)) ;
+H(0, j) cx*cy * s;
+H(1, j) = + sx*sy * s;
+H(2, j) = - cx*cy * s;
+}
+return 0;
+}
+11 Data members.
+double _L, _H;
+}; 11 surface." data-coord="top-left:(94,109); bottom-right:(1108,738)" /></figure>
+<table id='703' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TriaMesh Ⓡ & CM2 QuadMesh� Iso/Aniso - 52 tutorials</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 53</div>
+<figure id='704'><img alt="" data-coord="top-left:(116,116); bottom-right:(593,593)" /></figure>
+<br><figure id='705'><img alt="" data-coord="top-left:(648,117); bottom-right:(1123,592)" /></figure>
+<caption id='706' style='font-size:14px'>Figure 31 - 2-D anisotropic meshes in the reference space (UV).</caption>
+<br><figure id='707'><img style='font-size:20px' alt="↓ ↓" data-coord="top-left:(114,635); bottom-right:(1134,1242)" /></figure>
+<br><caption id='708' style='font-size:14px'>Figure 32 - 3-D surface meshes (T3 and all Q4).</caption>
+<p id='709' data-category='paragraph' style='font-size:16px'>Notes:</p>
+<p id='710' data-category='list' style='font-size:16px'>· This solution for 3-D surface meshing can be used only when a "mathematical" representation of the surface<br>is available (through a CAD kernel for instance). This method is implemented in CM2 SurfMeshⓇ T3 and CM2<br>SurfMeshⓇ Q4 (based also on the OpenCascadeⓇ OCCT kernel).<br>For more information, refer to CM2 SurfMesh T3/Q4 - tutorials and reference manual.<br>· When there is only a discrete representation of the surface available (such as a tessellated surface), a<br>different method can be used: 3-D patch remeshing implemented in CM2 SurfRemeshⓇ T3 and<br>CM2 SurfRemeshⓇ Q4, two other components of the CM2 MeshToolsⓇ library.<br>For more information, refer to CM2 SurfRemesh T3/Q4 - tutorials and reference manual.<br>· A similar template function (meshtools1d : : mesh_curve_param) is available for parametric curve meshing.</p>
+<table id='711' style='font-size:16px'><thead></thead><tbody><tr><td>CM2 Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>TriaMeshⓇ & CM2 QuadMesh� Iso/Aniso - tutorials</td><td>53</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 54</div>
+<h1 id='712' style='font-size:14px'>COMPUTING<br>OBJECTS</h1>
+</div>
+
+</body>
+</html>

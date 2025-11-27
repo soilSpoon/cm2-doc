@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .page {
+            page-break-after: always;
+            margin-bottom: 50px;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+        .page-header {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+        table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        pre, code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        pre {
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+<!-- Model: document-parse-250618 -->
+<div class="page">
+<div class="page-header">Page 1</div>
+<h1 id='0' style='font-size:20px'>CM2 MeshTools Core</h1>
+<br><h1 id='1' style='font-size:16px'>Version 5.6</h1>
+<p id='2' data-category='paragraph' style='font-size:18px'>overview</p>
+<p id='3' data-category='paragraph' style='font-size:14px'>Revision May 2025.<br>https://www.computing-objects.com<br>© Computing Objects SARL - 25 rue du Maréchal Foch, 78000 Versailles, France.</p>
+</div>
+<div class="page">
+<div class="page-header">Page 2</div>
+<h1 id='4' style='font-size:20px'>Forewords</h1>
+<p id='5' data-category='paragraph' style='font-size:16px'>This manual presents a mere listing of the functions and classes of the core libraries of the CM2 MeshTools®<br>SDK.</p>
+<br><p id='6' data-category='paragraph' style='font-size:16px'>For more information on each function or class, please refer to the HTML manual.</p>
+<table id='7' style='font-size:14px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>2</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 3</div>
+<h1 id='8' style='font-size:20px'>Table of contents</h1>
+<p id='9' data-category='index' style='font-size:16px'>Forewords ............................................................................................................................................... 2<br>cm2::meshtools functions (203) ........................................................................................................... 6<br>Points/mesh translation 6<br>Points/mesh rotation 6<br>Points/mesh zoom 6<br>Points/mesh copying 6<br>Points/mesh merging 7<br>Nodes/mesh simplifying 7<br>Ancestors, neighbors and boundaries 8<br>Nodes -> elements graph, nodes -> nodes graph, boundaries -> elements mappings 8<br>Sub-domains 8<br>Jacobians / shape qualities 8<br>Lengths / edge qualities 9<br>Ids checking / retrieving / permutation 9<br>Centroids 10<br>Metrics generation / bounding / checking / transformation (isotropic & anisotropic) 10<br>Eigen values and Eigen pairs of metrics 10<br>NASTRAN input/output 10<br>FEMAP input/output 11<br>STL input/output 11<br>VTK output 11<br>VIZIR output 11<br>cm2::meshtools class .......................................................................................................................... 12<br>node_detector 12<br>cm2::meshtools1d functions (59) ...................................................................................................... 13<br>Transformations / conversion 13<br>Extrude translate into an E2 mesh 13<br>Extrude rotate into an E2 mesh 13<br>CAD meshing on parametric curves. 14<br>Generates meshes along lines with internal specific sizes 14</p>
+<table id='10' style='font-size:14px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>3</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 4</div>
+<p id='11' data-category='index' style='font-size:18px'>Mesh splines 14<br>Mesh straight lines and broken lines 14<br>Remeshing of lines 15<br>Reorientation of E2 elements 15<br>Normals and curvatures computation routine along E2 meshes 15<br>Miscellaneous routines for E2 meshes 15<br>Anisotropic metrics generation routines along E2 meshes 16<br>Interpolation of metrics on E2 meshes 16<br>cm2::meshtools2d functions (97) ...................................................................................................... 17<br>Boolean operations 17<br>Transformations / conversion 17<br>Extrude translate into T3 or Q4 mesh 17<br>Extrude rotate into T3 or Q4 mesh 18<br>Extrudes with both rotation and translation into a T3 or Q4 mesh 18<br>Extrudes normal into a T3 or Q4 mesh 18<br>Fields interpolation on 2-D meshes 19<br>Structured T3 or Q4 mesh (regular grid) 19<br>Pseudo-structured disk (quarter or full, T3 or Q4) 19<br>Pseudo-structured sphere (1/8 or full, T3 or Q4) 19<br>Structured surface meshes on parallelepipeds (regular grids) 20<br>CAD meshing on parametric surfaces. 20<br>Offsets 20<br>Special transformation for degenerated quadrangles 20<br>Area computation for T3 and Q4 meshes (planar or not) 21<br>Voronoi cells for T3 meshes (planar or not) 21<br>Angle computation in T3 and Q4 meshes (planar or not) 21<br>Normal computations on surface meshes (triangles and quadrangles) 21<br>Curvature computations on surface meshes (triangles only) 21<br>Anisotropic metrics generation routines on 2-D triangle meshes 21<br>Interpolation of isotropic metrics on 2-D meshes 21<br>Interpolation of anisotropic metrics on 2-D meshes 21<br>Element localization in 2-D and surface meshes 21<br>cm2::meshtools3d functions (48) ...................................................................................................... 23</p>
+<table id='12' style='font-size:14px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>4</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 5</div>
+<p id='13' data-category='index' style='font-size:18px'>Boolean operations 23<br>Transformations / conversion 23<br>Extrude translate a 2-D mesh into a 3-D mesh 23<br>Extrude rotate a 2-D mesh into a 3-D mesh 23<br>Extrudes with both rotation and translation a 2-D mesh into a 3-D mesh 23<br>Extrudes a 2-D mesh along specific directions into a 3-D mesh 23<br>Extrudes a 2-D mesh along a line into a 3-D mesh 24<br>Interpolation of fields on 3-D tetrahedral meshes 24<br>Reorientation of 3-D elements 24<br>Special transformations of 3-D meshes 24<br>Volume computation 24<br>Voronoi cells for tetrahedron meshes 25<br>Angle computation 25<br>Interpolation of isotropic metrics on 3-D meshes 25<br>Interpolation of anisotropic metrics on 3-D meshes 25<br>Element localization in 3-D meshes 25</p>
+<table id='14' style='font-size:14px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>5</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 6</div>
+<h1 id='15' style='font-size:20px'>cm2::meshtools functions (203)</h1>
+<br><h1 id='16' style='font-size:18px'>Points/mesh translation</h1>
+<br><table id='17' style='font-size:14px'><thead></thead><tbody><tr><td>// Translates all nodes.</td></tr><tr><td>int translate (DoubleMat &pos, const DoubleVec2 &T); // Translates a batch</td></tr><tr><td>of nodes. int translate (DoubleMat &pos, const DoubleVec2</td></tr><tr><td>&T, const UIntVec &indices); // Translates the nodes of a mesh.</td></tr><tr><td>int translate (DoubleMat &pos, const DoubleVec2 &T, const UIntMat &connect); // Translates all nodes.</td></tr><tr><td>int translate (DoubleMat &pos, const DoubleVec3 &T);</td></tr><tr><td>// Translates a batch of nodes. const</td></tr><tr><td>int translate (DoubleMat &pos, DoubleVec3 &T, const UIntVec &indices); a mesh.</td></tr><tr><td></td></tr><tr><td>// Translates the nodes of int translate (DoubleMat &pos, const DoubleVec3 &T, const UIntMat &connect);</td></tr></tbody></table>
+<br><h1 id='18' style='font-size:18px'>Points/mesh rotation</h1>
+<table id='19' style='font-size:14px'><thead></thead><tbody><tr><td>// Rotates all nodes. DoubleVec2 &C, double R);</td><td>int rotate (DoubleMat &pos, const // Rotates a batch of nodes. int rotate (DoubleMat &pos, const DoubleVec2 &C, double R, const UIntVec &indices); // Rotates the nodes of a mesh. int rotate (DoubleMat &pos, const DoubleVec2 &C, double R, const UIntMat &connect); // Rotates all nodes. int rotate (DoubleMat &pos, const DoubleVec3 &C, const DoubleVec3 &R); // Rotates a batch of nodes. int rotate (DoubleMat &pos, const DoubleVec3 &C, const DoubleVec3 &R, const UIntVec &indices); // Rotates the nodes of a mesh. int rotate (DoubleMat &pos, const DoubleVec3 &C, const DoubleVec3 &R, const UIntMat &connect);</td></tr></tbody></table>
+<br><h1 id='20' style='font-size:18px'>Points/mesh zoom</h1>
+<p id='21' data-category='paragraph' style='font-size:14px'>// Zooms all nodes.</p>
+<br><table id='22' style='font-size:14px'><thead></thead><tbody><tr><td>int zoom (DoubleMat &pos, const DoubleVec2 &C, double Zv);</td></tr><tr><td>// Zooms a specific batch of nodes. int zoom (DoubleMat &pos, const DoubleVec2 &C, double Zv, const UIntVec &indices); // Zooms the nodes of a mesh. int zoom (DoubleMat &pos, const DoubleVec2 &C, double Zv, const UIntMat &connect); // Zooms all nodes. int zoom (DoubleMat &pos, const DoubleVec3 &C, double Zv); // Zooms a specific batch of nodes. int zoom (DoubleMat &pos, const DoubleVec3 &C, double Zv, const UIntVec &indices); // Zooms the nodes of a mesh. int zoom (DoubleMat &pos, const DoubleVec3 &C, double Zv, const UIntMat &connect);</td></tr></tbody></table>
+<br><h1 id='23' style='font-size:18px'>Points/mesh copying</h1>
+<br><p id='24' data-category='paragraph' style='font-size:14px'>// Copies a mesh (nodes and connectivity);<br>int copy_mesh (DoubleMat &pos, UIntMat &connect_tar, const UIntMat &connect_src);</p>
+<br><p id='25' data-category='paragraph' style='font-size:14px'>// Copies and symmetrises a mesh (nodes and connectivity).</p>
+<br><p id='26' data-category='paragraph' style='font-size:14px'>int copy_sym_mesh (DoubleMat &pos, UIntMat &connect_tar, const DoubleVec2 &C, const DoubleVec2 &D,<br>const UIntMat &connect_src);</p>
+<br><p id='27' data-category='paragraph' style='font-size:14px'>// Copies and symmetrises a mesh (nodes and connectivity).</p>
+<br><p id='28' data-category='paragraph' style='font-size:14px'>int copy_sym_mesh (DoubleMat &pos, UIntMat &connect_tar, const DoubleVec3 &C, const DoubleVec3 &D,<br>const UIntMat &connect_src);</p>
+<br><p id='29' data-category='paragraph' style='font-size:14px'>// Duplicates a mesh N-times (nodes and connectivity), translate and rotate each copy.<br>int copy_mesh (DoubleMat &pos, UIntMat &connect_tar, const DoubleVec2 &T, const DoubleVec2 &C, double<br>R, unsigned N, const UIntMat &connect_src);</p>
+<br><p id='30' data-category='paragraph' style='font-size:14px'>// Duplicates a mesh (nodes and connectivity).</p>
+<br><p id='31' data-category='paragraph' style='font-size:14px'>int copy_mesh (DoubleMat &pos, UIntMat &connect_tar, const DoubleVec3 &T, const DoubleVec3 &C, const<br>DoubleVec3 &R, unsigned N, const UIntMat &connect_src);</p>
+<table id='32' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>6</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 7</div>
+<h1 id='33' style='font-size:20px'>Points/mesh merging</h1>
+<br><p id='34' data-category='paragraph' style='font-size:14px'>// Merges points that are closer to each other than a given distance.</p>
+<br><p id='35' data-category='paragraph' style='font-size:14px'>int merge (DoubleMat &pos, UIntVec &new_node_IDs, double distance);</p>
+<br><p id='36' data-category='paragraph' style='font-size:14px'>// Same as above without the new_node_IDs parameter.</p>
+<br><p id='37' data-category='paragraph' style='font-size:14px'>int merge (DoubleMat &pos, double distance);</p>
+<br><p id='38' data-category='paragraph' style='font-size:14px'>// Merges points that are closer to each other than a given distance.</p>
+<br><p id='39' data-category='paragraph' style='font-size:14px'>int merge (const DoubleMat &pos, const UIntVec &src_node_IDs, const UIntVec &tgt_node_IDs, UIntVec</p>
+<br><h1 id='40' style='font-size:14px'>&new_node_IDs, double distance);</h1>
+<br><p id='41' data-category='paragraph' style='font-size:14px'>// Merges points that are closer to each other than a given distance.</p>
+<br><p id='42' data-category='paragraph' style='font-size:14px'>int merge (const DoubleMat &pos, const UIntVec &node_IDs, UIntVec &new_node_IDs, double distance);</p>
+<br><p id='43' data-category='paragraph' style='font-size:14px'>// Merges nodes in a mesh that are closer to each other than a given distance.<br>int merge (const DoubleMat &pos, UIntMat &connect, UIntVec &new_node_IDs, double distance, unsigned<br>merge_type);</p>
+<br><p id='44' data-category='paragraph' style='font-size:14px'>// Same as above without the new_node_IDs parameter.</p>
+<br><p id='45' data-category='paragraph' style='font-size:14px'>int merge (const DoubleMat &pos, UIntMat &connect, double distance, unsigned merge_type);</p>
+<br><p id='46' data-category='paragraph' style='font-size:14px'>// Merges nodes in two meshes that are closer to a given distance.<br>int merge (const DoubleMat &pos, UIntMat &connect1, UIntMat &connect2, UIntVec &new_node_IDs, double<br>distance, unsigned merge_type=0);</p>
+<br><p id='47' data-category='paragraph' style='font-size:14px'>// Same as above without the new_node_IDs parameter.</p>
+<br><p id='48' data-category='paragraph' style='font-size:14px'>int merge (const DoubleMat &pos, UIntMat &connect1, UIntMat &connect2, double distance, unsigned merge_</p>
+<br><h1 id='49' style='font-size:14px'>type=0);</h1>
+<br><p id='50' data-category='paragraph' style='font-size:14px'>// Merges nodes in several meshes that are closer to a given distance.<br>int merge (const DoubleMat &pos, UIntMat *connect_beg, UIntMat *connect_end, UIntVec &new_node_IDs,<br>double distance, unsigned merge_type=0);</p>
+<br><p id='51' data-category='paragraph' style='font-size:14px'>// Same as above without the new_node_IDs parameter.<br>int merge (const DoubleMat &pos, UIntMat *connect_beg, UIntMat *connect_end, double distance, unsigned<br>merge_type=0);</p>
+<br><h1 id='52' style='font-size:20px'>Nodes/mesh simplifying</h1>
+<br><p id='53' data-category='paragraph' style='font-size:14px'>// Gets the unique values in a vector of indices.<br>int unique_indices (UIntVec &indices_tar, const UIntVec &indices_src, const UIntVec remove_indices=cm2:<br>:UIntVec());<br>// Gets the unique values in a matrix of indices.<br>int unique_indices (UIntVec &indices_tar, const UIntMat &connect_src, const UIntVec remove_indices=cm2:<br>:UIntVec());<br>// Gets the unique values in several matrices of indices.<br>int unique_indices (UIntVec &indices_tar, const UIntMat* connect_src_beg, const UIntMat* connect_src_<br>end, const UIntVec remove_indices=cm2::UIntVec());<br>// Counts the nodes referenced in a connectivity matrix (except CM2_NONE), with no duplicates.<br>int count_unique_indices (const UIntMat &connect);<br>// Counts the nodes referenced in several matrices (except CM2_NONE), with no duplicates.<br>int count_unique_indices (const UIntMat *connect_beg, const UIntMat *connect_end);<br>// Eliminates the unreferenced nodes in several meshes.<br>int simplify (DoubleMat &pos, UIntMat *connect_beg, UIntMat *connect_end, UIntVec &new_node_IDs,<br>unsigned N0=0);<br>// Eliminates the unreferenced nodes in a mesh.<br>int simplify (DoubleMat &pos, UIntMat &connect, UIntVec &new_node_IDs, unsigned N0=0);<br>// Eliminates the unreferenced nodes in a mesh.<br>int simplify (DoubleMat &pos, UIntMat &connect, unsigned N0=0);<br>// Eliminates the unreferenced nodes simultaneously in two meshes.<br>int simplify (DoubleMat &pos, UIntMat &connect0, UIntMat &connect1, unsigned N0=0);<br>// Eliminates the duplicate elements (keep only one).<br>int unique_elements (UIntMat &connect, cm2::element_type FE_type, bool orient_sensitive_flag);<br>// Eliminates the elements with multiple identical node IDs.<br>int remove_degenerated (UIntMat &connect, bool aggress_flag=true);<br>// Eliminates the elements with multiple identical node IDs.<br>int remove_degenerated (UIntMat &connect, UIntVec &new_element_IDs, bool aggress_flag=true);<br>// Clipping of a mesh (ecorche).<br>int clip (const DoubleMat &pos, const UIntMat &connect_src, const DoubleVec3 &P0, const DoubleVec3 &D,<br>UIntMat &connect_tar);</p>
+<table id='54' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>7</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 8</div>
+<h1 id='55' style='font-size:20px'>Ancestors, neighbors and boundaries</h1>
+<br><p id='56' data-category='paragraph' style='font-size:14px'>// For each node in a mesh finds an element connected to it.</p>
+<br><p id='57' data-category='paragraph' style='font-size:14px'>int get_ancestors (const UIntMat &connect, UIntVec &ancestors);</p>
+<br><p id='58' data-category='paragraph' style='font-size:14px'>// Computes the neighbors matrix of a mesh given by a connectivity matrix.<br>int get_neighbors (const UIntMat &connect, cm2::element_type FE_type, bool accept_multiple_neighbors,<br>UIntMat &neighbors);</p>
+<br><p id='59' data-category='paragraph' style='font-size:14px'>// Computes the boundaries of a mesh (boundaries connected to only one element).<br>int get_mesh_boundaries (const UIntMat &connect, const UIntMat &neighbors, cm2::element_type FE_type,<br>UIntMat &boundaries);</p>
+<br><p id='60' data-category='paragraph' style='font-size:14px'>// Computes the boundaries of a mesh (boundaries connected to only one element).<br>int get_mesh_bounding_elements (const UIntMat &connect, const UIntMat &neighbors, cm2::element_type FE_<br>type, UIntVec &KBs, unsigned &nbr_elfe_boundaries);</p>
+<br><p id='61' data-category='paragraph' style='font-size:14px'>// Computes the boundaries of all elements in a mesh.</p>
+<br><p id='62' data-category='paragraph' style='font-size:14px'>int get_element_boundaries (const UIntMat &connect, cm2::element_type FE_type, UIntMat &boundaries);</p>
+<br><h1 id='63' style='font-size:20px'>Nodes -> elements graph, nodes -> nodes graph, boundaries -> elements<br>mappings</h1>
+<br><p id='64' data-category='paragraph' style='font-size:14px'>// Computes the elements connected to each node.</p>
+<br><p id='65' data-category='paragraph' style='font-size:14px'>int get_connected_elements (const UIntMat &connect, UIntVec &xadj, UIntVec &adjncy);</p>
+<br><p id='66' data-category='paragraph' style='font-size:14px'>// Computes the nodes connected to each node (nodal graph).<br>int get_node_graph (const UIntMat &connect, UIntVec &xadj, UIntVec &adjncy, cm2::element_type FE_type);</p>
+<br><p id='67' data-category='paragraph' style='font-size:14px'>// Retrieves the elements sharing at least one specified boundary.<br>int get_elements_on_boundaries (const UIntMat &connectB, const UIntMat &connectM, const UIntMat<br>&neighbors, const UIntVec &ancestors, cm2::element_type FE_type, UIntVec &KBs, unsigned &nbr_elfe_<br>boundaries);</p>
+<br><h1 id='68' style='font-size:20px'>Sub-domains</h1>
+<p id='69' data-category='paragraph' style='font-size:14px'>// Finds the groups of connected elements.</p>
+<br><p id='70' data-category='paragraph' style='font-size:14px'>int get_subdomains (const UIntMat &neighbors, UIntVec &ordered_elements, UIntVec &begin_parts);</p>
+<br><p id='71' data-category='paragraph' style='font-size:14px'>// Reorders the elements in a mesh.</p>
+<br><p id='72' data-category='paragraph' style='font-size:14px'>int get_subdomains (UIntMat &connect, UIntMat &neighbors, UIntVec &begin_parts);</p>
+<br><p id='73' data-category='paragraph' style='font-size:14px'>// Finds the boundaries between elements of different colors.<br>int get_colors_boundaries (const UIntMat &connect, const UIntMat &neighbors, const UIntVec &colors,<br>cm2::element_type FE_type, bool sym_flag, bool colored_only_flag, UIntMat &boundaries);</p>
+<br><p id='74' data-category='paragraph' style='font-size:14px'>// Reorders a mixed connectivity matrix according to the number of nodes of the elements.<br>int sort_elfes (UIntMat &connect, UIntVec &nbr_nodes, UIntVec &past_group, UIntVec &permutation_IDs);</p>
+<br><p id='75' data-category='paragraph' style='font-size:14px'>// Reorders a mixed connectivity matrix according to the number of nodes of the elements, with</p>
+<br><h1 id='76' style='font-size:14px'>neighbors matrix.</h1>
+<br><p id='77' data-category='paragraph' style='font-size:14px'>int sort_elfes (UIntMat &connect, UIntMat &neighbors, UIntVec &nbr_nodes, UIntVec &past_group, UIntVec<br>&permutation_IDs);</p>
+<br><h1 id='78' style='font-size:20px'>Jacobians / shape qualities</h1>
+<p id='79' data-category='paragraph' style='font-size:14px'>// Computes the jacobians of all elements of a mesh.</p>
+<br><p id='80' data-category='paragraph' style='font-size:14px'>int jacobians (const DoubleMat &pos, const UIntMat &connect, cm2::element_type FE_type, DoubleVec &J);<br>// The elemnent Ids with at least one negative or null jacobian in the quadrature.<br>int invalid_jacobians (const DoubleMat &pos, const UIntMat &connect, cm2::element_type FE_type, UIntVec<br>&invalid_IDs);<br>// Computes the shape qualities of all elements of a mesh.<br>int shape_qualities (const DoubleMat &pos, const UIntMat &connect, cm2::element_type FE_type, DoubleVec<br>&Qs);<br>// Finds the element with minimum shape quality in a mesh.<br>int min_quality (const DoubleMat &pos, const UIntMat &connect, cm2::element_type FE_type, double &qmin,<br>unsigned &jmin);<br>// Adds in an histogram the shape qualities of all elements of a mesh (very simple function provided<br>for convenience).<br>int shape_qualities (const DoubleMat &pos, const UIntMat &connect, cm2::element_type FE_type, misc:<br>:histogram &histo_Qs);</p>
+<table id='81' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>8</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 9</div>
+<h1 id='82' style='font-size:20px'>Lengths / edge qualities</h1>
+<br><p id='83' data-category='paragraph' style='font-size:14px'>// Gets all the edges (unique) in a mesh.</p>
+<br><p id='84' data-category='paragraph' style='font-size:14px'>int copy_edges (const UIntMat &connectM, cm2::element_type FE_type, UIntMat &connectE, const UintMat<br>&excludedE = UintMat());</p>
+<br><p id='85' data-category='paragraph' style='font-size:14px'>// Gets all the edges (unique) in several meshes.<br>int copy_edges (const UIntMat *connect_beg, const UIntMat *connect_end, const IntVec &FE_types, UIntMat<br>&connectE, const UintMat &excludedE = UintMat());</p>
+<br><p id='86' data-category='paragraph' style='font-size:14px'>// Computes the length measure of a segment with two size values at its summits.<br>int edge_quality (double L, double h0, double h1, double &qh);</p>
+<br><p id='87' data-category='paragraph' style='font-size:14px'>// Adds in an histogram the qualities of a batch of edges (isotropic version).<br>int edge_qualities (const DoubleMat &pos, const UIntMat &connectM, cm2::element_type FE_type, const<br>DoubleVec &metrics, misc::histogram &histo_Qh, const UIntMat &excludedE=UIntMat());</p>
+<br><p id='88' data-category='paragraph' style='font-size:14px'>// Adds in an histogram the qualities of a batch of edges (anisotropic version).<br>int edge_qualities (const DoubleMat &pos, const UIntMat &connectM, cm2::element_type FE_type, const<br>DoubleMat &metrics, misc::histogram &histo_Qh, const UIntMat &excludedE=UIntMat());</p>
+<br><p id='89' data-category='paragraph' style='font-size:14px'>// Adds in an histogram the qualities of a batch of edges (isotropic version).<br>int edge_qualities (const DoubleMat &pos, const UIntMat *connect_beg, const UIntMat *connect_end, const<br>IntVec &FE_types, const DoubleVec &metrics, misc::histogram &histo_Qh, const UIntMat<br>&excludedE=UIntMat());</p>
+<br><p id='90' data-category='paragraph' style='font-size:14px'>// Adds in an histogram the qualities of a batch of edges (anisotropic version).</p>
+<br><p id='91' data-category='paragraph' style='font-size:14px'>int edge_qualities (const DoubleMat &pos, const UIntMat *connect_beg, const UIntMat *connect_end, const<br>IntVec &FE_types, const DoubleMat &metrics, misc::histogram &histo_Qh, const UIntMat<br>&excludedE=UIntMat());</p>
+<br><p id='92' data-category='paragraph' style='font-size:14px'>// Computes the H-shock in a mesh (isotropic version).</p>
+<br><p id='93' data-category='paragraph' style='font-size:14px'>int H_shock (const DoubleMat &pos, const UIntMat &connectE, const DoubleVec &metrics, DoubleVec<br>&Hshock);</p>
+<br><p id='94' data-category='paragraph' style='font-size:14px'>// Computes the H-shock in a mesh (anisotropic version).</p>
+<br><p id='95' data-category='paragraph' style='font-size:14px'>int H_shock (const DoubleMat &pos, const UIntMat &connectE, const DoubleMat &metrics, DoubleVec<br>&Hshock);</p>
+<br><h1 id='96' style='font-size:20px'>Ids checking / retrieving / permutation</h1>
+<br><p id='97' data-category='paragraph' style='font-size:14px'>// The highest ID different than CM2_NONE.</p>
+<br><p id='98' data-category='paragraph' style='font-size:14px'>unsigned max_ID (const UIntVec &indices);</p>
+<br><p id='99' data-category='paragraph' style='font-size:14px'>// The highest ID different than CM2_NONE.<br>unsigned max_ID (const UIntMat &connect);<br>// Checks that all the input indices are lesser than a given value.<br>bool check_IDs (const UIntVec &indices, unsigned lesser_than);<br>// Checks that all the indices in a connectivity matrix are lesser than a given value.<br>bool check_IDs (const UIntMat &connect, unsigned lesser_than);<br>// Checks that a connectivity matrix is valid and that all its indices are lesser than a given value.<br>bool check_IDs (const UIntMat &connect, cm2::element_type FE_type, unsigned lesser_than);<br>// Finds positions of values in two vectors.<br>int get_IDs (const UIntVec &V0, const UIntVec &V1, UIntVec &IDs, UIntVec &inv_IDs);<br>// Finds positions of columns in two matrices.<br>int get_IDs (const UIntMat &M0, const UIntMat &M1, UIntVec &IDs, UIntVec &inv_IDs, bool strict_compare_<br>flag);<br>// Shifts indices in a vector (for instance before appending a new mesh to an old one).<br>int shift_indices (UIntVec &IDs, int shift);<br>// Shifts indices in a connectivity matrix (for instance before appending a new mesh to an old one).<br>int shift_indices (UIntMat &connect, int shift, cm2::element_type FE_type);<br>// Changes the values in a 1-D array.<br>void change_indices (UIntVec &vals, const UIntVec &new_vals);<br>// Changes the values in a 2-D array.<br>void change_indices (UIntMat &vals, const UIntVec &new_vals);<br>// Permutes the values in a 1-D array (UintVec version).<br>int permutation (UIntVec &vals, const UIntVec &new_indices);<br>// Permutes the values in a 1-D array (DoubleVec version).<br>int permutation (DoubleVec &vals, const UIntVec &new_indices);<br>// Gets the order of elements according to their values.<br>int get_sorted_order (const UIntVec &values, UIntVec &order, UIntVec &xOrder);</p>
+<table id='100' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>9</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 10</div>
+<h1 id='101' style='font-size:20px'>Bounding box</h1>
+<br><p id='102' data-category='paragraph' style='font-size:14px'>// Enlarges a 2-D bounding box to enclose a set of points.<br>int inc_bounding_box (const DoubleMat &pos, DoubleVec2 &minBox, DoubleVec2 &maxBox);</p>
+<br><p id='103' data-category='paragraph' style='font-size:14px'>// Enlarges a 2-D bounding box to enclose a set of points.<br>int inc_bounding_box (const DoubleMat &pos, const UIntVec &indices, DoubleVec2 &minBox, DoubleVec2<br>&maxBox);</p>
+<br><p id='104' data-category='paragraph' style='font-size:14px'>// Enlarges a 2-D bounding box to enclose a mesh.<br>int inc_bounding_box (const DoubleMat &pos, const UIntMat &connect, DoubleVec2 &minBox, DoubleVec2<br>&maxBox);</p>
+<br><p id='105' data-category='paragraph' style='font-size:14px'>// Enlarges a 3-D bounding box to enclose a set of points.<br>int inc_bounding_box (const DoubleMat &pos, DoubleVec3 &minBox, DoubleVec3 &maxBox);</p>
+<br><p id='106' data-category='paragraph' style='font-size:14px'>// Enlarges a 3-D bounding box to enclose a set of points.<br>int inc_bounding_box (const DoubleMat &pos, const UIntVec &indices, DoubleVec3 &minBox, DoubleVec3<br>&maxBox);</p>
+<br><p id='107' data-category='paragraph' style='font-size:14px'>// Enlarges a 3-D bounding box to enclose a mesh.<br>int inc_bounding_box (const DoubleMat &pos, const UIntMat &connect, DoubleVec3 &minBox, DoubleVec3<br>&maxBox);</p>
+<br><h1 id='108' style='font-size:20px'>Centroids</h1>
+<br><p id='109' data-category='paragraph' style='font-size:14px'>// The centroid of all elements of a mesh.<br>int centroids (const DoubleMat &pos, const UIntMat &connect, DoubleMat &PC, cm2::element_type FE_type);</p>
+<br><p id='110' data-category='paragraph' style='font-size:20px'>Metrics generation / bounding / checking / transformation<br>(isotropic & anisotropic)</p>
+<br><p id='111' data-category='paragraph' style='font-size:14px'>// Generates isotropic metrics on the nodes of a given mesh (1-D, 2-D or 3-D).<br>int metrics_gen_iso (const DoubleMat &pos, const UIntMat &connectM, cm2::element_type FE_type,<br>DoubleVec &H, double w);</p>
+<br><p id='112' data-category='paragraph' style='font-size:14px'>...</p>
+<br><h1 id='113' style='font-size:20px'>Eigen values and Eigen pairs of metrics</h1>
+<br><p id='114' data-category='paragraph' style='font-size:14px'>// The Eigen values (increasing order) of a 2x2 symmetric matrix.<br>void eigen_values (const DoubleSym2 &A, DoubleVec2 &eigenvalues);<br>// The Eigen values (increasing order) of a 3x3 symmetric definitive positive matrix.<br>void eigen_values (const DoubleSym3 &A, DoubleVec3 &eigenvalues);<br>// The Eigen values (increasing order) and Eigen vectors of a 2x2 symmetric matrix.<br>bool eigen_pairs (const DoubleSym2 &A, DoubleVec2 &eigenvalues, DoubleMat2x2 &eigenvectors);<br>// The Eigen values (increasing order) and eigen vectors of a 3x3 symmetric definitive positive matrix.<br>bool eigen_pairs (const DoubleSym3 &A, DoubleVec3 &eigenvalues, DoubleMat3x3 &eigenvectors);<br>// The Eigen pairs (Eigen vectors and Eigen values) of the matrix A-1 * B.<br>bool eigen_pairs (const DoubleSym2 &A, const DoubleSym2 &B, DoubleVec2 &eigenvalues, DoubleMat2x2<br>&eigenvectors);<br>// The Eigen pairs (Eigen vectors and Eigen values) of the matrix A-1 * B.<br>bool eigen_pairs (const DoubleSym3 &A, const DoubleSym3 &B, DoubleVec3 &eigenvalues, DoubleMat3x3<br>&eigenvectors);</p>
+<br><h1 id='115' style='font-size:20px'>NASTRAN input/output</h1>
+<p id='116' data-category='paragraph' style='font-size:14px'>// NASTRAN input of a mesh.<br>int NASTRAN_input (FILE *file, DoubleMat &pos, UIntMat &connect, cm2::element_type &FE_type);<br>// NASTRAN input of a mesh (two types of element).<br>int NASTRAN_input (FILE *file, DoubleMat &pos, UIntMat &connect0, UIntMat &connect1, cm2::element_type<br>&FE_type0, cm2::element_type &FE_type1);<br>// NASTRAN input of a mesh (many types of element).<br>int NASTRAN_input (FILE *file, DoubleMat &pos, UIntMat &connect, UIntVec &xConnect, IntVec &fe_types,<br>UIntVec &refs);<br>// NASTRAN input of a mesh (const char* version).<br>int NASTRAN_input (const char *filename, DoubleMat &pos, UIntMat &connect, cm2::element_type &FE_type);<br>// NASTRAN output of a mesh (single type of element).<br>int NASTRAN_output (FILE *file, const DoubleMat &pos, const UIntMat &connect, cm2::element_type FE_<br>type);<br>// NASTRAN output of a mesh (two types of element).<br>int NASTRAN_output (FILE *file, const DoubleMat &pos, const UIntMat &connect0, const UIntMat &connect1,</p>
+<table id='117' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>10</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 11</div>
+<p id='118' data-category='paragraph' style='font-size:14px'>cm2::element_type FE_type0, cm2::element_type FE_type1);</p>
+<br><p id='119' data-category='paragraph' style='font-size:14px'>// NASTRAN output of a mesh (many types of element).</p>
+<br><p id='120' data-category='paragraph' style='font-size:14px'>int NASTRAN_output (FILE *file, const DoubleMat &pos, const UIntMat &connect, const UIntVec &xConnect,<br>const IntVec &fe_types, const UIntVec &refs);</p>
+<br><p id='121' data-category='paragraph' style='font-size:14px'>// NASTRAN output of a mesh (const char* version, single type of element).<br>int NASTRAN_output (const char *filename, const DoubleMat &pos, const UIntMat &connect, cm2::element_<br>type FE_type);</p>
+<br><p id='122' data-category='paragraph' style='font-size:14px'>...</p>
+<br><h1 id='123' style='font-size:20px'>FEMAP input/output</h1>
+<br><p id='124' data-category='paragraph' style='font-size:14px'>// FEMAP input of a mesh (single type of element).<br>int NASTRAN_input (FILE *file, DoubleMat &pos, UIntMat &connect, cm2::element_type &FE_type);</p>
+<br><p id='125' data-category='paragraph' style='font-size:14px'>// FEMAP output of a mesh (single type of element).<br>int NASTRAN_output (FILE *file, const DoubleMat &pos, const UIntMat &connect, cm2::element_type FE_<br>type);</p>
+<br><p id='126' data-category='paragraph' style='font-size:14px'>...</p>
+<br><h1 id='127' style='font-size:20px'>STL input/output</h1>
+<p id='128' data-category='paragraph' style='font-size:14px'>// STL input of a triangle mesh.<br>int STL_input (FILE *file, DoubleMat &pos, UIntMat &connect);<br>// STL output of a triangle mesh.<br>int STL_output (FILE *file, const DoubleMat &pos, const UIntMat &connect, bool ASCII_flag=true);</p>
+<br><p id='129' data-category='paragraph' style='font-size:14px'>...</p>
+<br><h1 id='130' style='font-size:20px'>Wavefront OBJ input/output</h1>
+<br><p id='131' data-category='paragraph' style='font-size:14px'>// Wavefront OBJ input of a mesh.</p>
+<br><p id='132' data-category='paragraph' style='font-size:14px'>int WavefrontOBJ_input (const char *filename, DoubleMat &pos, DoubleMat &normals, DoubleMat &textures,<br>UIntMat &connectT, UIntMat &connectQ);</p>
+<br><p id='133' data-category='paragraph' style='font-size:14px'>// Wavefront obj output of a mesh.</p>
+<br><p id='134' data-category='paragraph' style='font-size:14px'>int WavefrontOBJ_output (const char *filename, const DoubleMat &pos, const UIntMat &connect, cm2:<br>:element_type FE_type);</p>
+<br><p id='135' data-category='paragraph' style='font-size:14px'>...</p>
+<br><h1 id='136' style='font-size:20px'>VTK output</h1>
+<br><p id='137' data-category='paragraph' style='font-size:14px'>// VTK output of a mesh (format version 2.0).<br>int vtk_output (const char *filename, const DoubleMat &pos, const UIntMat &connect, cm2::element_type<br>FE_type);</p>
+<br><p id='138' data-category='paragraph' style='font-size:14px'>...</p>
+<br><h1 id='139' style='font-size:20px'>VIZIR output</h1>
+<br><p id='140' data-category='paragraph' style='font-size:14px'>// VIZIR output of a mesh (INRIA's ASCII format).<br>int vizir_output (const char *filename, const DoubleMat &pos, const UIntMat &connect, cm2::element_type<br>FE_type);<br>// VIZIR output of solutions (INRIA's ASCII format).<br>int vizir_sols (const char *filename, unsigned dim, const UIntVec& sol_types, const DoubleMat& M);<br>// VIZIR output of a scalar solution (INRIA's ASCII format).<br>int vizir_scalar (const char *filename, unsigned dim, const DoubleVec& V);<br>// VIZIR output of a vector solution (INRIA's ASCII format).<br>int vizir_vector (const char *filename, unsigned dim, const DoubleMat& M);<br>// VIZIR output of a tennor solution (INRIA's ASCII format).<br>int vizir_tensor (const char *filename, unsigned dim, const DoubleMat& M);</p>
+<table id='141' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>11</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 12</div>
+<h1 id='142' style='font-size:22px'>cm2::meshtools class</h1>
+<br><h1 id='143' style='font-size:20px'>node_detector</h1>
+<br><p id='144' data-category='paragraph' style='font-size:18px'>node_detector<br>{. ..</p>
+<p id='145' data-category='paragraph' style='font-size:14px'>// Clears the bisection tree and reinitializes it with new points.</p>
+<br><p id='146' data-category='paragraph' style='font-size:14px'>int reinit (const DoubleMat &pos);</p>
+<br><p id='147' data-category='paragraph' style='font-size:14px'>// Clears the bisection tree and reinitializes it with new points.</p>
+<br><p id='148' data-category='paragraph' style='font-size:14px'>int reinit (const DoubleMat &pos, const UIntVec &indices);</p>
+<br><p id='149' data-category='paragraph' style='font-size:14px'>// Clears the bisection tree and reinitialize it with new nodes.<br>int reinit (const DoubleMat &pos, const UIntMat &connect);</p>
+<br><p id='150' data-category='paragraph' style='font-size:14px'>// Clears the bisection tree and reinitializes it with new points.<br>int reinit (const DoubleMat &pos, const UIntMat *connect_beg, const UIntMat *connect_end);</p>
+<br><p id='151' data-category='paragraph' style='font-size:14px'>// Inserts new nodes in the bisection tree.</p>
+<br><h1 id='152' style='font-size:14px'>unsigned</h1>
+<br><p id='153' data-category='paragraph' style='font-size:14px'>insert (const UIntVec &indices);</p>
+<br><p id='154' data-category='paragraph' style='font-size:14px'>// Inserts new nodes in the bisection tree.</p>
+<br><p id='155' data-category='paragraph' style='font-size:14px'>unsigned insert (const UIntMat &connect);</p>
+<br><p id='156' data-category='paragraph' style='font-size:14px'>// A node close to a given point (not always the closest).</p>
+<br><p id='157' data-category='paragraph' style='font-size:14px'>unsigned find_close (const DoubleVec2 &P) const;</p>
+<br><p id='158' data-category='paragraph' style='font-size:14px'>// A node close to a given point (not always the closest).</p>
+<br><p id='159' data-category='paragraph' style='font-size:14px'>unsigned find_closest (const DoubleVec3 &P) const;</p>
+<br><p id='160' data-category='paragraph' style='font-size:14px'>// A node close to a given node (not always the closest).</p>
+<br><p id='161' data-category='paragraph' style='font-size:14px'>unsigned find_closest (unsigned N) const;</p>
+<br><p id='162' data-category='paragraph' style='font-size:14px'>// The closest node to a given point.</p>
+<br><p id='163' data-category='paragraph' style='font-size:14px'>unsigned find_closest (const DoubleVec2 &P) const;</p>
+<br><p id='164' data-category='paragraph' style='font-size:14px'>// The closest node to a given point.<br>unsigned find_closest (const DoubleVec3 &P) const;</p>
+<br><p id='165' data-category='paragraph' style='font-size:14px'>// The closest node to a given node.</p>
+<br><p id='166' data-category='paragraph' style='font-size:14px'>unsigned find_closest (unsigned N) const;</p>
+<br><p id='167' data-category='paragraph' style='font-size:14px'>// Gets the nodes located in a given 2-D box.</p>
+<br><p id='168' data-category='paragraph' style='font-size:14px'>void find_in_box (const DoubleVec2 &MinBox, const DoubleVec2 &MaxBox, UIntVec &nodes) const;</p>
+<br><p id='169' data-category='paragraph' style='font-size:14px'>// Gets the nodes located in a given 3-D box.<br>void find_in_box (const DoubleVec3 &MinBox, const DoubleVec3 &MaxBox, UIntVec &nodes) const;<br>};</p>
+<table id='170' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>12</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 13</div>
+<h1 id='171' style='font-size:20px'>cm2::meshtools1d functions (59)</h1>
+<br><h1 id='172' style='font-size:18px'>Transformations / conversion</h1>
+<br><p id='173' data-category='paragraph' style='font-size:14px'>// Transforms a series of node indices into a mesh of E2 elements.<br>int indices_to_connectE2 (const UIntVec &indices, UIntMat &connectE2);<br>// Transforms a series of node indices into a mesh of EDGE3 elements.<br>int indices_to_connectE3 (const UIntVec &indices, UIntMat &connectE3);<br>// Transforms a series of node indices into a mesh of EDGE4’ elements.<br>int indices_to_connectE4 (const UIntVec &indices, UIntMat &connectE4);<br>// Converts E2 elements into higher degree elements (E3, E4 and over), creating new high-order nodes.<br>int convert_into_high_order (DoubleMat &pos, const UIntMat &connectL, unsigned Ne, UIntMat &connectQ);<br>// Converts in-place E2 elements into high-order elements (EDGE3 and over) creating new high-order<br>nodes.<br>int convert_into_high_order (DoubleMat &pos, UIntMat &connectM, unsigned Ne);<br>// Converts in-place E2 elements into EDGE3 elements creating new high-order nodes.<br>int convert_into_quadratic (DoubleMat &pos, UIntMat &connectM);<br>// Converts in-place E2 elements into EDGE4 elements creating new high-order nodes.<br>int convert_into_cubic (DoubleMat &pos, UIntMat &connectM);<br>// Converts in-place high-order elements (EDGE3 or higher) into linear elements.<br>int convert_into_linear (UIntMat &connectM);<br>// Transforms a 3-node edge connectivity matrix into a 2-node edge connectivity matrix (doubled).<br>int split_into_linear (const UIntMat &connectE3, UIntMat &connectE2);</p>
+<br><h1 id='174' style='font-size:18px'>Extrude translate into an E2 mesh</h1>
+<br><p id='175' data-category='paragraph' style='font-size:14px'>// Creates a straight line mesh from a node and a translation (2-D version).<br>int extrude_translate (DoubleMat &pos, unsigned N0, const DoubleVec2 &T, unsigned NE, UIntVec<br>&indices);</p>
+<br><p id='176' data-category='paragraph' style='font-size:14px'>// Creates a straight line mesh from a node and a translation (3-D version).<br>int extrude_translate (DoubleMat &pos, unsigned N0, const DoubleVec3 &T, unsigned NE, UIntVec<br>&indices);</p>
+<br><p id='177' data-category='paragraph' style='font-size:14px'>// Creates a straight line mesh from a point and a translation (2-D version).<br>int extrude_translate (DoubleMat &pos, const DoubleVec2 &P0, const DoubleVec2 &T, unsigned NE, UIntVec<br>&indices);</p>
+<br><p id='178' data-category='paragraph' style='font-size:14px'>// Creates a straight line mesh from a point and a translation (3-D version).<br>int extrude_translate (DoubleMat &pos, const DoubleVec3 &P0, const DoubleVec3 &T, unsigned NE, UIntVec<br>&indices);</p>
+<br><p id='179' data-category='paragraph' style='font-size:14px'>// Creates a straight line mesh from a node and a translation with specific sizes (2-D version).<br>int extrude_translate (DoubleMat &pos, unsigned N0, const DoubleVec2 &T, double h0, double h1, bool<br>force_even, UIntVec &indices);</p>
+<br><p id='180' data-category='paragraph' style='font-size:14px'>// Creates a straight line mesh from a node and a translation with specific sizes (3-D version).<br>int extrude_translate (DoubleMat &pos, unsigned N0, const DoubleVec3 &T, double h0, double h1, bool<br>force_even, UIntVec &indices);</p>
+<br><p id='181' data-category='paragraph' style='font-size:14px'>// Creates a straight line mesh from a point and a translation with specific sizes (2-D version).<br>int extrude_translate (DoubleMat &pos, const DoubleVec2 &P0, const DoubleVec2 &T, double h0, double h1,<br>bool force_even, UIntVec &indices);</p>
+<br><p id='182' data-category='paragraph' style='font-size:14px'>// Creates a straight line mesh from a point and a translation with specific sizes (3-D version).<br>int extrude_translate (DoubleMat &pos, const DoubleVec3 &P0, const DoubleVec3 &T, double h0, double h1,<br>bool force_even, UIntVec &indices);</p>
+<br><h1 id='183' style='font-size:18px'>Extrude rotate into an E2 mesh</h1>
+<br><p id='184' data-category='paragraph' style='font-size:14px'>// Creates an arc mesh from a node and a rotation.<br>int extrude_rotate (DoubleMat &pos, unsigned N0, const DoubleVec3 &C, const DoubleVec3 &R, unsigned NE,<br>UIntVec &indices);</p>
+<br><p id='185' data-category='paragraph' style='font-size:14px'>// Creates an arc mesh from a node and a rotation in the XY plane (2-D version).<br>int extrude_rotate (DoubleMat &pos, unsigned N0, const DoubleVec2 &C, double Rz, unsigned NE, UIntVec<br>&indices);</p>
+<br><p id='186' data-category='paragraph' style='font-size:14px'>// Creates an arc mesh from a point and a rotation (3-D version).<br>int extrude_rotate (DoubleMat &pos, const DoubleVec3 &P0, const DoubleVec3 &C, const DoubleVec3 &R,<br>unsigned NE, UIntVec &indices);</p>
+<br><p id='187' data-category='paragraph' style='font-size:14px'>// Creates an arc mesh from a point and a rotation (2-D version).<br>int extrude_rotate (DoubleMat &pos, const DoubleVec2 &P0, const DoubleVec2 &C, double Rz, unsigned NE,<br>UIntVec &indices);</p>
+<table id='188' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>13</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 14</div>
+<p id='189' data-category='paragraph' style='font-size:14px'>// Creates an arc mesh from a node and a rotation with specific sizes (3-D version).<br>int extrude_rotate (DoubleMat &pos, unsigned N0, const DoubleVec3 &C, const DoubleVec3 &R, double h0,<br>double h1, bool force_even, UIntVec &indices);</p>
+<br><p id='190' data-category='paragraph' style='font-size:14px'>// Creates an arc mesh from a node and a rotation with specific sizes (2-D version).<br>int extrude_rotate (DoubleMat &pos, unsigned N0, const DoubleVec2 &C, double Rz, double h0, double h1,<br>bool force_even, UIntVec &indices);</p>
+<br><p id='191' data-category='paragraph' style='font-size:14px'>// Creates an arc mesh from a point and a rotation with specific sizes (3D version).<br>int extrude_rotate (DoubleMat &pos, const DoubleVec3 &P0, const DoubleVec3 &C, const DoubleVec3 &R,<br>double h0, double h1, bool force_even, UIntVec &indices);</p>
+<br><p id='192' data-category='paragraph' style='font-size:14px'>// Creates an arc mesh from a point and a rotation with specific sizes (2-D version).<br>int extrude_rotate (DoubleMat &pos, const DoubleVec2 &P0, const DoubleVec2 &C, double Rz, double h0,<br>double h1, bool force_even, UIntVec &indices);</p>
+<br><h1 id='193' style='font-size:20px'>CAD meshing on parametric curves.</h1>
+<br><p id='194' data-category='paragraph' style='font-size:14px'>// Meshes a parametric 3-D curve (isotropic version).</p>
+<br><p id='195' data-category='paragraph' style='font-size:14px'>template <class Curve></p>
+<br><p id='196' data-category='paragraph' style='font-size:14px'>int mesh_curve_param (const Curve &C, DoubleMat &pos, const UIntVec &nodes, DoubleVec &pos1D, DoubleVec<br>&H, UIntMat &connectE, double target_h, bool force_even, unsigned min_n, unsigned max_n, double max_<br>chordal_error, double min_h, unsigned chordal_control_type, double max_gradation, unsigned high_order_<br>type=0, unsigned high_order_mode=2, unsigned max_bgm_remeshings=4, bool update_metrics_flag=true);</p>
+<br><p id='197' data-category='paragraph' style='font-size:14px'>// Meshes a parametric 3-D curve (anisotropic version).</p>
+<br><p id='198' data-category='paragraph' style='font-size:14px'>template <class Curve></p>
+<br><p id='199' data-category='paragraph' style='font-size:14px'>int mesh_curve_param (const Curve &C, DoubleMat &pos, const UIntVec &nodes, DoubleVec &pos1D, DoubleMat<br>&metrics, UIntMat &connectE, double target_h, bool force_even, unsigned min_n, unsigned max_n, double<br>max_chordal_error, double min_h, unsigned chordal_control_type, double max_gradation, unsigned high_<br>order_type=0, unsigned high_order_mode=1, unsigned max_bgm_remeshings=4, bool update_metrics_<br>flag=true);</p>
+<br><h1 id='200' style='font-size:20px'>Generates meshes along lines with internal specific sizes</h1>
+<br><p id='201' data-category='paragraph' style='font-size:14px'>// Creates a mesh along a line defined by several geometric points and isotropic metrics.<br>int mesh_line (DoubleMat &pos, const UIntVec &geo_nodes, const DoubleVec &metricsG, bool force_even,<br>unsigned min_n, unsigned max_n, double max_chordal_error, double min_h, UIntVec &indices, DoubleVec<br>&Us, DoubleVec &metrics);</p>
+<br><p id='202' data-category='paragraph' style='font-size:14px'>// Creates a mesh along a line defined by several geometric points and isotropic metrics.<br>int mesh_line (DoubleMat &pos, const UIntVec &geo_nodes, const DoubleVec &UG, const DoubleVec<br>&metricsG, bool force_even, unsigned min_n, unsigned max_n, double max_chordal_error, double min_h,<br>UIntVec &indices, DoubleVec &Us, DoubleVec &metrics);</p>
+<br><p id='203' data-category='paragraph' style='font-size:14px'>// Creates a mesh along a line defined by several geometric points and anisotropic metrics.<br>int mesh_line (DoubleMat &pos, const UIntVec &geo_nodes, const DoubleMat &metricsG, bool force_even,<br>unsigned min_n, unsigned max_n, double max_chordal_error, double min_h, UIntVec &indices, DoubleVec<br>&Us, DoubleMat &metrics);</p>
+<br><p id='204' data-category='paragraph' style='font-size:14px'>// Creates a mesh along a line defined by several geometric points, with an anisotropic metric given at<br>some specific soft nodes.<br>int mesh_line (DoubleMat &pos, const UIntVec &geo_nodes, const DoubleVec &UG, const DoubleMat<br>&metricsG, bool force_even, unsigned min_n, unsigned max_n, double max_chordal_error, double min_h,<br>UIntVec &indices, DoubleVec &Us, DoubleMat &metrics);</p>
+<br><h1 id='205' style='font-size:20px'>Mesh splines</h1>
+<br><p id='206' data-category='paragraph' style='font-size:14px'>// Computes a point's coordinates on a spline (2-D version).</p>
+<br><p id='207' data-category='paragraph' style='font-size:14px'>int spline_point (const DoubleMat &pos, unsigned ia, unsigned ib, unsigned ic, unsigned id, double s,<br>DoubleVec2 &Ps);</p>
+<br><p id='208' data-category='paragraph' style='font-size:14px'>// Computes a point's coordinates on a spline (3-D version).</p>
+<br><p id='209' data-category='paragraph' style='font-size:14px'>int spline_point (const DoubleMat &pos, unsigned ia, unsigned ib, unsigned ic, unsigned id, double s,<br>DoubleVec3 &Ps);</p>
+<br><p id='210' data-category='paragraph' style='font-size:14px'>// Creates a mesh on a poly-spline with specific isotropic sizes defined at the spline points.<br>int mesh_spline (DoubleMat &pos, const UIntVec &spline_nodes, const DoubleVec &spline_metrics, bool<br>force_even, unsigned min_n, unsigned max_n, double max_chordal_err, double min_h, double target_metric,<br>double max_gradation, UIntVec &indices, DoubleVec &Us, DoubleVec &metrics, double &G_distance);</p>
+<br><p id='211' data-category='paragraph' style='font-size:14px'>// Creates a mesh on a poly-spline with specific anisotropic sizes.</p>
+<br><p id='212' data-category='paragraph' style='font-size:14px'>int mesh_spline (DoubleMat &pos, const UIntVec &spline_nodes, const DoubleMat &spline_metrics, bool<br>force_even, unsigned min_n, unsigned max_n, double max_chordal_err, double min_h, double target_metric,<br>double max_gradation, UIntVec &indices, DoubleVec &Us, DoubleMat &metrics, double &G_distance);</p>
+<br><h1 id='213' style='font-size:20px'>Mesh straight lines and broken lines</h1>
+<br><p id='214' data-category='paragraph' style='font-size:14px'>// Creates a straight mesh between two nodes.<br>int mesh_straight (DoubleMat &pos, unsigned N0, unsigned N1, unsigned NE, UIntVec &indices);</p>
+<table id='215' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>14</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 15</div>
+<p id='216' data-category='paragraph' style='font-size:14px'>// Creates a straight mesh between three nodes.</p>
+<br><p id='217' data-category='paragraph' style='font-size:14px'>int mesh_straight (DoubleMat &pos, unsigned N0, unsigned N1, unsigned N2, unsigned NE, UIntVec<br>&indices);</p>
+<br><p id='218' data-category='paragraph' style='font-size:14px'>// Creates a straight mesh between two nodes with specific sizes.<br>int mesh_straight (DoubleMat &pos, unsigned N0, unsigned N1, double h0, double h1, bool force_even,<br>UIntVec &indices);</p>
+<br><p id='219' data-category='paragraph' style='font-size:14px'>// Creates a broken-line mesh between some imposed nodes (hard nodes).<br>int mesh_straight (DoubleMat &pos, const UIntVec &hard_nodes, unsigned NE, bool force_even, UIntVec<br>&indices);</p>
+<br><p id='220' data-category='paragraph' style='font-size:14px'>// Creates a broken-line mesh between some imposed nodes (hard nodes) with specific (isotropic) sizes.<br>int mesh_straight (DoubleMat &pos, const UIntVec &hard_nodes, const DoubleVec &sizes, bool force_even,<br>UIntVec &indices);</p>
+<br><p id='221' data-category='paragraph' style='font-size:14px'>// Creates a broken-line mesh between some imposed nodes (hard nodes) with specific anisotropic</p>
+<br><h1 id='222' style='font-size:14px'>metrics.</h1>
+<br><p id='223' data-category='paragraph' style='font-size:14px'>int mesh_straight (DoubleMat &pos, const UIntVec &hard_nodes, const DoubleMat &metrics, bool force_<br>even, UIntVec &indices);</p>
+<br><h1 id='224' style='font-size:20px'>Remeshing of lines</h1>
+<br><p id='225' data-category='paragraph' style='font-size:14px'>// Remeshes lines, connected or not, with possibly user-defined hard nodes and colors. Similar to CM2<br>SurfRemesh T3/Q4 but for edge meshes.<br>int remesh_lines (DoubleMat& pos, UIntMat& connectE, double target_h, const DoubleVec& metrics,<br>UIntVec& colors, UIntVec& hard_nodes, const UIntVec& hard_edges, bool force_even = false, double angle_<br>tol = 20., double max_chordal_error = -0.02, double max_gradation = 0.5, double min_h = 0., unsigned<br>min_n = 1, unsigned max_n = UINT_MAX);<br>// Remeshes lines, connected or not, with possibly user-defined colors. Simplified version. Same as<br>above without the metrics, hard_nodes and hard_edges arrays.<br>int remesh_lines (DoubleMat& pos, UIntMat& connectE, double target_h, UIntVec& colors, bool force_even<br>= false, double angle_tol = 20., double max_chordal_error = -0.02, double max_gradation = 0.5, double<br>min_h = 0., unsigned min_n = 1, unsigned max_n = UINT_MAX);<br>/// Remeshes lines, connected or not. Simplified version. Same as above without the metrics, colors,<br>hard_nodes and hard_edges arrays.<br>int remesh_lines (DoubleMat& pos, UIntMat& connectE, double target_h, bool force_even = false, double<br>angle_tol = 20., double max_chordal_error = -0.02, double max_gradation = 0.5, double min_h = 0.,<br>unsigned min_n = 1, unsigned max_n = UINT_MAX);</p>
+<br><h1 id='226' style='font-size:20px'>Reorientation of E2 elements</h1>
+<br><p id='227' data-category='paragraph' style='font-size:14px'>// Changes the orientation of the edges in a connectivity matrix (considered as edges).<br>int flip (UIntMat &connectE);</p>
+<br><p id='228' data-category='paragraph' style='font-size:14px'>// Changes the orientation of the edges so that all elements have similar orientation.<br>int mesh_reorient (UIntMat &connect, UIntMat &neighbors, unsigned ref_element, int code);</p>
+<br><h1 id='229' style='font-size:20px'>Normals and curvatures computation routine along E2 meshes</h1>
+<br><p id='230' data-category='paragraph' style='font-size:14px'>// The averaged nodal normals along a line mesh (2-D only).<br>int normals (const DoubleMat &pos, const UIntMat &connectE, double w, bool normalize_flag, DoubleMat<br>&D);</p>
+<br><p id='231' data-category='paragraph' style='font-size:14px'>// Approximate nodal curvatures (inverse of radius) along a line mesh.<br>int curvatures (const DoubleMat &pos, const UIntVec &nodes, DoubleVec &invR);</p>
+<br><p id='232' data-category='paragraph' style='font-size:14px'>// Approximative nodal curvatures (inverse of radius) at each node along a line mesh.<br>int parametric_curvatures (const DoubleVec &pos1D, const UIntMat &connectE, const DoubleMat &local_<br>bases, DoubleVec &curvatures);</p>
+<br><h1 id='233' style='font-size:20px'>Miscellaneous routines for E2 meshes</h1>
+<br><p id='234' data-category='paragraph' style='font-size:14px'>// Length of a line mesh.</p>
+<br><p id='235' data-category='paragraph' style='font-size:14px'>int length (const DoubleMat &pos, const UIntVec &nodes, double &L);</p>
+<br><p id='236' data-category='paragraph' style='font-size:14px'>// Length of a line mesh.</p>
+<br><p id='237' data-category='paragraph' style='font-size:14px'>int length (const DoubleMat &pos, const UIntMat &connectE, double &L);</p>
+<br><p id='238' data-category='paragraph' style='font-size:14px'>// Interpolates nodes onto a polyline.<br>int interpolate_coordinates (DoubleMat &pos, const UIntVec &nodes0, const DoubleVec &U0, const UIntVec<br>&nodes1, const DoubleVec &U1);</p>
+<br><p id='239' data-category='paragraph' style='font-size:14px'>// Sorts nodes by increasing curvilinear coordinates.<br>int sort (DoubleVec &Us, UIntVec &nodes);</p>
+<br><p id='240' data-category='paragraph' style='font-size:14px'>// Subdivides a 1-D line.</p>
+<br><p id='241' data-category='paragraph' style='font-size:14px'>int subdivide (DoubleVec &pos, DoubleVec &metrics, const UIntVec &nodes, bool force_up, bool force_<br>even, unsigned min_n, unsigned max_n, UIntVec &indices);</p>
+<table id='242' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>15</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 16</div>
+<h1 id='243' style='font-size:20px'>Anisotropic metrics generation routines along E2 meshes</h1>
+<br><p id='244' data-category='paragraph' style='font-size:14px'>// Generates 2-D anisotropic metrics for a given set of edges.<br>int metrics_gen_aniso2d (const DoubleMat &pos, const UIntMat &connectE, double hn, DoubleMat &M);</p>
+<br><p id='245' data-category='paragraph' style='font-size:14px'>// Generates 2-D anisotropic metrics for a given set of nodes.<br>int metrics_gen_aniso2d (const DoubleMat &normals, const UIntVec &node_IDs, double hn, double ht,<br>DoubleMat &M);</p>
+<br><p id='246' data-category='paragraph' style='font-size:14px'>// Generates 3-D anisotropic metrics for a given line mesh.<br>int metrics_gen_aniso3d (const DoubleMat &pos, const UIntMat &connectE, double hn, DoubleMat &M);</p>
+<br><p id='247' data-category='paragraph' style='font-size:14px'>// Generates 3-D anisotropic metrics for a given line mesh (different sizes along normal and binormal).<br>int metrics_gen_aniso3d (const DoubleMat &pos, const UIntMat &connectE, double hn, double hb, DoubleMat<br>&M);</p>
+<br><h1 id='248' style='font-size:20px'>Interpolation of metrics on E2 meshes</h1>
+<br><p id='249' data-category='paragraph' style='font-size:14px'>// Interpolates a field of scalar metrics on a line mesh.</p>
+<br><p id='250' data-category='paragraph' style='font-size:14px'>int interpolate_metrics (const DoubleVec &Us, const DoubleVec &Smetrics, const DoubleVec &Ug, DoubleVec<br>&Gmetrics);</p>
+<br><p id='251' data-category='paragraph' style='font-size:14px'>// Interpolates a field of tensorial metrics on a line mesh.<br>int interpolate_metrics (const DoubleVec &Us, const DoubleMat &Smetrics, const DoubleVec &Ug, DoubleMat<br>&Gmetrics);</p>
+<table id='252' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>16</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 17</div>
+<h1 id='253' style='font-size:20px'>cm2::meshtools2d functions (97)</h1>
+<br><h1 id='254' style='font-size:18px'>Boolean operations</h1>
+<br><p id='255' data-category='paragraph' style='font-size:14px'>// Computes differences, intersection and union between (usually) two 2-D domains defined by their<br>boundary edges.<br>template <class IntersectorE2, class MesherT3><br>int boolean_ops (IntersectorE2& intersector, MesherT3& mesher2D, typename IntersectorE2::data_type&<br>data, UIntMat& connectMU);</p>
+<br><h1 id='256' style='font-size:18px'>Transformations / conversion</h1>
+<br><p id='257' data-category='paragraph' style='font-size:14px'>// Converts T3 and Q4 elements into high-order elements (T6 and over, Q8 and over), creating new high-<br>order nodes.<br>int convert_into_high_order (DoubleMat &pos, const UIntMat &connectL, unsigned Ne, unsigned Nqi,<br>unsigned Nti, UIntMat &connectQ, const UIntMat &connectE);</p>
+<br><p id='258' data-category='paragraph' style='font-size:14px'>// Converts in-place T3 and Q4 elements into high-order elements (T6 and over, Q8 and over), creating<br>new high-order nodes.</p>
+<br><p id='259' data-category='paragraph' style='font-size:14px'>int convert_into_high_order (DoubleMat &pos, UIntMat &connectM, unsigned Ne, unsigned Nqi, unsigned</p>
+<br><p id='260' data-category='paragraph' style='font-size:14px'>Nti, const UIntMat &connectE);</p>
+<br><p id='261' data-category='paragraph' style='font-size:14px'>// Converts in-place T3 and Q4 elements into T6 and Q9 elements, creating new high-order nodes.<br>int convert_into_quadratic (DoubleMat &pos, UIntMat &connectM, const UIntMat &connectE3);</p>
+<br><p id='262' data-category='paragraph' style='font-size:14px'>// Converts in-place T3 and Q4 elements into T6 and Q9 elements, creating new high-order nodes.<br>nt convert_into_quadratic (DoubleMat &pos, UIntMat &connectM);</p>
+<br><p id='263' data-category='paragraph' style='font-size:14px'>// Converts in-place high-order face elements (T6, Q8 or Q9) into linear elements (T3, Q4).<br>int convert_into_linear (UIntMat &connectM);</p>
+<br><p id='264' data-category='paragraph' style='font-size:14px'>// Splits T6 and Q9 elements into linear elements (T3 and Q4).<br>int split_into_linear (const UIntMat &connectQ, UIntMat &connectL);</p>
+<br><p id='265' data-category='paragraph' style='font-size:14px'>// Splits quads into triangles (2 triangles each).</p>
+<br><p id='266' data-category='paragraph' style='font-size:14px'>int split_Q4_into_T3 (const UIntMat &connectM, UIntMat &connectT);</p>
+<br><p id='267' data-category='paragraph' style='font-size:14px'>// Splits quads into triangles (2 triangles each).</p>
+<br><p id='268' data-category='paragraph' style='font-size:14px'>int split_Q4_into_T3 (const DoubleMat &pos, const UIntMat &connectM, UIntMat &connectT);</p>
+<br><p id='269' data-category='paragraph' style='font-size:14px'>// Splits bad quads into triangles (2 triangles each).<br>int split_Q4_into_T3 (const DoubleMat &pos, const UIntMat &connectM0, double min_Q4_shape_quality,<br>double min_Q4_angle_quality, double min_Q4_warp_quality, int split_criterion, UIntVec &good_IDs,<br>UIntVec &bad_IDs, UIntMat &connectM1);</p>
+<br><p id='270' data-category='paragraph' style='font-size:14px'>// Transforms a mixed linear 2-D mesh into a all-quad linear mesh by splitting each triangle into three<br>sub-quads and each quad into four sub-quads.<br>int split_into_Q4 (DoubleMat &pos, const UIntMat &connectM, UIntMat &connectQ4, const UIntMat<br>&connectE3);</p>
+<br><h1 id='271' style='font-size:18px'>Extrude translate into T3 or Q4 mesh</h1>
+<br><p id='272' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with translation a E2 mesh into a structured Q4 mesh (2-D version).<br>int extrude_translate_Q4 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec2 &T, unsigned N1,<br>UIntMat &connectQ4);</p>
+<br><p id='273' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with translation a E2 mesh into a structured Q4 mesh (3-D version).<br>int extrude_translate_Q4 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &T, unsigned N1,<br>UIntMat &connectQ4);</p>
+<br><p id='274' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with translation a E2 mesh into a structured Q4 mesh with specific sizes at the<br>beginning and at the end of the translation (2-D version).<br>int extrude_translate_Q4 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec2 &T, double h0,<br>double h1, bool force_even, UIntMat &connectQ4);</p>
+<br><p id='275' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with translation a E2 mesh into a structured Q4 mesh with specific sizes at the<br>beginning and at the end of the translation (3-D version).<br>int extrude_translate_Q4 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &T, double h0,<br>double h1, bool force_even, UIntMat &connectQ4);</p>
+<br><p id='276' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with translation a E2 mesh into a structured T3 mesh (2-D version).<br>int extrude_translate_T3 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec2 &T, unsigned N1,<br>int pattern, UIntMat &connectT3);</p>
+<br><p id='277' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with translation a E2 mesh into a structured T3 mesh (3-D version).<br>int extrude_translate_T3 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &T, unsigned N1,<br>int pattern, UIntMat &connectT3);</p>
+<table id='278' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>17</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 18</div>
+<p id='279' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with translation a E2 mesh into a structured T3 mesh with specific sizes at the<br>beginning and at the end of the translation (2-D version).<br>int extrude_translate_T3 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec2 &T, double h0,<br>double h1, int pattern, bool force_even, UIntMat &connectT3);<br>// Extrudes (sweeps) with translation a E2 mesh into a structured T3 mesh with specific sizes at the<br>beginning and at the end of the translation (3-D version).<br>int extrude_translate_T3 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &T, double h0,<br>double h1, int pattern, bool force_even, UIntMat &connectT3);</p>
+<br><h1 id='280' style='font-size:20px'>Extrude rotate into T3 or Q4 mesh</h1>
+<br><p id='281' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with rotation a E2 mesh into a structured T3 mesh.<br>int extrude_rotate_T3 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &C, const DoubleVec3<br>&R, unsigned N1, int pattern, UIntMat &connectT3);<br>// Extrudes (sweeps) with rotation a E2 mesh into a structured T3 mesh.<br>int extrude_rotate_T3 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec2 &C, double Rz,<br>unsigned N1, int pattern, UIntMat &connectT3);<br>// Extrudes (sweeps) with rotation a E2 mesh into a structured T3 mesh with specific sizes at the<br>beginning and at the end of the rotation.<br>int extrude_rotate_T3 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &C, const DoubleVec3<br>&R, double h0, double h1, int pattern, bool force_even, UIntMat &connectT3);<br>// Extrudes (sweeps) with rotation a E2 mesh into a structured T3 mesh with specific sizes at the<br>beginning and at the end of the rotation.<br>int extrude_rotate_T3 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec2 &C, double Rz, double<br>h0, double h1, int pattern, bool force_even, UIntMat &connectT3);<br>// Extrudes (sweeps) with rotation a E2 mesh into a structured Q4 mesh.<br>int extrude_rotate_Q4 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &C, const DoubleVec3<br>&R, unsigned N1, UIntMat &connectQ4);<br>// Extrudes (sweeps) with rotation a E2 mesh into a structured Q4 mesh.<br>int extrude_rotate_Q4 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec2 &C, double Rz,<br>unsigned N1, UIntMat &connectQ4);<br>// Extrudes (sweeps) with rotation a E2 mesh into a structured Q4 mesh with specific sizes at the<br>beginning and at the end of the rotation.<br>int extrude_rotate_Q4 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &C, const DoubleVec3<br>&R, double h0, double h1, bool force_even, UIntMat &connectQ4);<br>// Extrudes (sweeps) with rotation a E2 mesh into a structured Q4 mesh with specific sizes at the<br>beginning and at the end of the rotation.<br>int extrude_rotate_Q4 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec2 &C, double Rz, double<br>h0, double h1, bool force_even, UIntMat &connectQ4);</p>
+<br><h1 id='282' style='font-size:20px'>Extrudes with both rotation and translation into a T3 or Q4 mesh</h1>
+<br><p id='283' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with rotation and translation a E2 mesh into a structured T3 mesh.<br>int extrude_spiral_T3 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &C, const DoubleVec3<br>&R, const DoubleVec3 &T, unsigned N1, int pattern, UIntMat &connectT3);</p>
+<br><p id='284' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) a E2 mesh with rotation and translation into a structured T3 mesh.<br>int extrude_spiral_T3 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &C, const DoubleVec3<br>&R, const DoubleVec3 &T, double h0, double h1, int pattern, bool force_even, UIntMat &connectT3);</p>
+<br><p id='285' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with rotation and translation a E2 mesh into a structured Q4 mesh.<br>int extrude_spiral_Q4 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &C, const DoubleVec3<br>&R, const DoubleVec3 &T, unsigned N1, UIntMat &connectQ4);</p>
+<br><p id='286' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with rotation and translation a E2 mesh into a structured Q4 mesh.<br>int extrude_spiral_Q4 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &C, const DoubleVec3<br>&R, const DoubleVec3 &T, double h0, double h1, bool force_even, UIntMat &connectQ4);</p>
+<br><h1 id='287' style='font-size:20px'>Extrudes normal into a T3 or Q4 mesh</h1>
+<br><p id='288' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) a E2 mesh along specific directions into a structured T3 mesh.<br>int extrude_normal_T3 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &D, unsigned N1, int<br>pattern, UIntMat &connectT3);<br>// Extrudes (sweeps) a E2 mesh along the normal directions into a structured T3 mesh.<br>int extrude_normal_T3 (DoubleMat &pos, const UIntMat &connectE2, double T, unsigned N1, int pattern,<br>UIntMat &connectT3);<br>// Extrudes (sweeps) a E2 mesh along the normal directions into a structured T3 mesh.<br>int extrude_normal_T3 (DoubleMat &pos, const UIntMat &connectE2, double T, double h0, double h1, bool<br>force_even, int pattern, UIntMat &connectT3);<br>// Extrudes (sweeps) a E2 mesh along specific directions into a structured Q4 mesh.<br>int extrude_normal_Q4 (DoubleMat &pos, const UIntMat &connectE2, const DoubleVec3 &D, unsigned N1,<br>UIntMat &connectT3);</p>
+<table id='289' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>18</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 19</div>
+<p id='290' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) a E2 mesh along the normal directions into a structured Q4 mesh.<br>int extrude_normal_Q4 (DoubleMat &pos, const UIntMat &connectE2, double T, unsigned N1, UIntMat<br>&connectT3);</p>
+<br><p id='291' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) a E2 mesh along the normal directions into a structured Q4 mesh.<br>int extrude_normal_Q4 (DoubleMat &pos, const UIntMat &connectE2, double T, double h0, double h1, bool<br>force_even, UIntMat &connectT3);</p>
+<br><h1 id='292' style='font-size:20px'>Fields interpolation on 2-D meshes</h1>
+<br><p id='293' data-category='paragraph' style='font-size:14px'>// Interpolates a scalar field (doubles) defined on the nodes of a 2-D mesh.<br>int interpolate (const DoubleMat &pos, const UIntMat &connectM, const UIntMat &neighbors, const UIntVec<br>&ancestors, DoubleVec &field, const UIntVec &nodes, cm2::element_type FE_type);<br>// Interpolates a vectorial field (doubles) defined on the nodes of a 2-D mesh.<br>int interpolate (const DoubleMat &pos, const UIntMat &connectM, const UIntMat &neighbors, const UIntVec<br>&ancestors, DoubleMat &field, const UIntVec &nodes, cm2::element_type FE_type);</p>
+<br><h1 id='294' style='font-size:20px'>Structured T3 or Q4 mesh (regular grid)</h1>
+<br><p id='295' data-category='paragraph' style='font-size:14px'>// Makes structured T3 mesh (regular grid).<br>int mesh_struct_T3 (DoubleMat &pos, const UIntVec &indices, unsigned N1, int pattern, UIntMat<br>&connectT3);<br>// Makes structured Q4 mesh (regular grid).<br>int mesh_struct_Q4 (DoubleMat &pos, const UIntVec &indices, unsigned N1, UIntMat &connectQ4);<br>// Computes metrics inside a regular grid by double interpolation (isotropic version).<br>int metrics_struct (const UIntVec &indices, unsigned N1, DoubleVec &metrics);<br>// Computes metrics inside a regular grid by double interpolation (anisotropic version).<br>int metrics_struct (const UIntVec &indices, unsigned N1, DoubleMat &metrics);</p>
+<br><h1 id='296' style='font-size:20px'>Pseudo-structured disk (quarter or full, T3 or Q4)</h1>
+<br><p id='297' data-category='paragraph' style='font-size:14px'>// Makes a pseudo-structured mesh on a disk quarter (upper-right quarter) with Q4 elements.<br>int mesh_disk_UR_Q4 (DoubleMat& pos, const DoubleVec2& C, double R, unsigned N, UIntMat& connectM,<br>UIntMat& connectE);</p>
+<br><p id='298' data-category='paragraph' style='font-size:14px'>// Makes a pseudo-sstructured mesh on a disk quarter (upper-right quarter) with T3 elements.<br>int mesh_disk_UR_T3 (DoubleMat& pos, const DoubleVec2& C, double R, unsigned N, int pattern, UIntMat&<br>connectM, UIntMat& connectE);</p>
+<br><p id='299' data-category='paragraph' style='font-size:14px'>// Makes a pseudo-structured mesh on a full disk with Q4 elements.<br>int mesh_disk_Q4 (DoubleMat& pos, const DoubleVec2& C, double R, unsigned N, UIntMat& connectM,<br>UIntMat& connectE);</p>
+<br><p id='300' data-category='paragraph' style='font-size:14px'>// Makes a pseudo-structured mesh on a full disk with T3 elements.<br>int mesh_disk_T3 (DoubleMat& pos, const DoubleVec2& C, double R, unsigned N, int pattern, UIntMat&<br>connectM, UIntMat& connectE);</p>
+<br><h1 id='301' style='font-size:20px'>Pseudo-structured sphere (1/8 or full, T3 or Q4)</h1>
+<br><p id='302' data-category='paragraph' style='font-size:14px'>// Makes a pseudo-structured shell mesh on a 1/8 sphere ("positive" quadrant) with T3 elements.<br>int mesh_sphere_UR_T3 (DoubleMat& pos, const DoubleVec3& C, double R, unsigned N, int pattern, UIntMat&<br>connectM, UIntMat& connectE);</p>
+<br><p id='303' data-category='paragraph' style='font-size:14px'>// Makes a pseudo-structured shell mesh on a 1/8 sphere ("positive" quadrant) with Q4 elements.<br>int mesh_sphere_UR_Q4 (DoubleMat& pos, const DoubleVec3& C, double R, unsigned N, UIntMat& connectM,<br>UIntMat& connectE);</p>
+<br><p id='304' data-category='paragraph' style='font-size:14px'>// Makes a pseudo-structured shell mesh on a full sphere with T3 elements.<br>int mesh_sphere_T3 (DoubleMat& pos, const DoubleVec3& C, double R, unsigned N, int pattern, UIntMat&<br>connectM, UIntMat& connectE, UIntMat& connectG);</p>
+<br><p id='305' data-category='paragraph' style='font-size:14px'>// Makes a pseudo-structured shell mesh on a full sphere with T3 elements.<br>int mesh_sphere_T3 (DoubleMat& pos, const DoubleVec3& C, double R, unsigned N, int pattern, UIntMat&<br>connectM);</p>
+<br><p id='306' data-category='paragraph' style='font-size:14px'>// Makes a pseudo-structured shell mesh on a full sphere with Q4 elements.<br>int mesh_sphere_Q4 (DoubleMat& pos, const DoubleVec3& C, double R, unsigned N, UIntMat& connectM,<br>UIntMat& connectE, UIntMat& connectG);</p>
+<br><p id='307' data-category='paragraph' style='font-size:14px'>// Makes a pseudo-structured shell mesh on a full sphere with Q4 elements.<br>int mesh_sphere_Q4 (DoubleMat& pos, const DoubleVec3& C, double R, unsigned N, UIntMat& connectM);</p>
+<table id='308' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>19</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 20</div>
+<h1 id='309' style='font-size:20px'>Structured surface meshes on parallelepipeds (regular grids)</h1>
+<br><p id='310' data-category='paragraph' style='font-size:14px'>/// Makes a structured surface mesh on a parallelepiped with Q4 elements.<br>int mesh_parallelepiped_Q4 (DoubleMat& pos, const matrix_fixed<double, 3, 8>& P07, unsigned N0,<br>unsigned N1, unsigned N2, UIntMat& connectM);</p>
+<br><p id='311' data-category='paragraph' style='font-size:14px'>/// Makes a structured surface mesh on a XYZ-aligned parallelepiped with Q4 elements.<br>int mesh_parallelepiped_Q4 (DoubleMat& pos, const DoubleVec3& P0, const DoubleVec3& P6, unsigned Nx,<br>unsigned Ny, unsigned Nz, UIntMat& connectM);</p>
+<br><p id='312' data-category='paragraph' style='font-size:14px'>/// Makes a structured surface mesh on a parallelepiped with T3 elements.<br>int mesh_parallelepiped_T3 (DoubleMat& pos, const matrix_fixed<double, 3, 8>& P07, unsigned N0,<br>unsigned N1, unsigned N2, int pattern, UIntMat& connectM);</p>
+<br><p id='313' data-category='paragraph' style='font-size:14px'>/// Makes a structured surface mesh on a XYZ-aligned parallelepiped with T3 elements.<br>int mesh_parallelepiped_T3 (DoubleMat& pos, const DoubleVec3& P0, const DoubleVec3& P6, unsigned Nx,<br>unsigned Ny, unsigned Nz, int pattern, UIntMat& connectM);</p>
+<br><h1 id='314' style='font-size:20px'>CAD meshing on parametric surfaces.</h1>
+<br><p id='315' data-category='paragraph' style='font-size:14px'>// Meshes a parametric 3-D surface using a 2-D anisotropic mesher and mappings.</p>
+<br><p id='316' data-category='paragraph' style='font-size:14px'>template <class Surface, class AnisoMesher, class AuxMesher><br>int mesh_surface_param (const Surface &S, AnisoMesher &mesher2D, typename AnisoMesher::data_type<br>&data3D, AuxMesher &aux_mesher, double max_chordal_error, double min_h, unsigned chordal_control_type,<br>unsigned high_order_type=0, unsigned high_order_mode=2, double max_chordal_error_ratio=0.10, bool dry_<br>run_flag=false, unsigned max_bgm_remeshings=4, bool recompute_Qs_flag=true, bool compute_area_<br>flag=true);</p>
+<br><h1 id='317' style='font-size:20px'>Offsets</h1>
+<br><p id='318' data-category='paragraph' style='font-size:14px'>// Offsets a surface mesh in specific directions. Spherical offset.</p>
+<br><p id='319' data-category='paragraph' style='font-size:14px'>int offset (DoubleMat& pos, const UIntMat& connectM, const DoubleMat& D, double h);</p>
+<br><p id='320' data-category='paragraph' style='font-size:14px'>// Offsets a surface mesh in directions normal to the surface. Spherical offset.</p>
+<br><p id='321' data-category='paragraph' style='font-size:14px'>int offset (DoubleMat& pos, const UIntMat& connectM, double h);</p>
+<br><p id='322' data-category='paragraph' style='font-size:14px'>// Duplicates and offsets a surface mesh in specific directions. Spherical offset.<br>int copy_with_offset (DoubleMat& pos, const UIntMat& connectM0, const DoubleMat& D, double h, UIntMat&<br>connectM1);</p>
+<br><p id='323' data-category='paragraph' style='font-size:14px'>// Duplicates and offsets a surface mesh in directions normal to the surface. Spherical offset.<br>int copy_with_offset (DoubleMat& pos, const UIntMat& connectM0, double h, UIntMat& connectM1);</p>
+<br><p id='324' data-category='paragraph' style='font-size:14px'>// Offsets a surface mesh in specific directions. Anisotropic offset.<br>int offset (DoubleMat& pos, const UIntMat& connectM, const DoubleMat& D, const DoubleSym3& M);</p>
+<br><p id='325' data-category='paragraph' style='font-size:14px'>// Offsets a surface mesh in directions normal to the surface. Anisotropic offset.<br>int offset (DoubleMat& pos, const UIntMat& connectM, const DoubleSym3& M);</p>
+<br><p id='326' data-category='paragraph' style='font-size:14px'>// Duplicates and offsets a surface mesh in specific directions. Anisotropic offset.<br>int copy_with_offset (DoubleMat& pos, const UIntMat& connectM0, const DoubleMat& D, const DoubleSym3&<br>M, UIntMat& connectM1);</p>
+<br><p id='327' data-category='paragraph' style='font-size:14px'>// Duplicates and offsets a surface mesh in directions normal to the surface. Anisotropic offset.<br>int copy_with_offset (DoubleMat& pos, const UIntMat& connectM0, const DoubleSym3& M, UIntMat&<br>connectM1);</p>
+<br><h1 id='328' style='font-size:20px'>Reorientation of 2-D elements</h1>
+<br><p id='329' data-category='paragraph' style='font-size:14px'>// Changes the orientation of the faces in a 2-D mesh (T3, Q4, mixed).<br>int flip (UIntMat &connect);</p>
+<br><p id='330' data-category='paragraph' style='font-size:14px'>// Changes the orientation of the faces in a 2-D mesh (T3, Q4, mixed, T6, Q8 or Q9).</p>
+<br><p id='331' data-category='paragraph' style='font-size:14px'>int flip (UIntMat &connect, cm2::element_type FE_type);</p>
+<br><p id='332' data-category='paragraph' style='font-size:14px'>// Changes the orientation of the triangles in a 2-D mesh (T3, Q4 or mixed) so that all elements have<br>similar orientation as a reference element.<br>int mesh_reorient (UIntMat &connectM, UIntMat &neighbors, unsigned ref_element, int code);</p>
+<br><p id='333' data-category='paragraph' style='font-size:20px'>Special transformation for degenerated quadrangles</p>
+<br><p id='334' data-category='paragraph' style='font-size:14px'>// Transforms the degenerated quads with two consecutive identical node IDs into CM2-compliant<br>triangles stored in a mixed mesh.</p>
+<br><p id='335' data-category='paragraph' style='font-size:14px'>int convert_degenerated_Q4 (UIntMat &connect);</p>
+<br><p id='336' data-category='paragraph' style='font-size:14px'>// Transforms the degenerated quads with two consecutive identical node IDs into CM2-compliant<br>triangles stored in a mixed mesh.<br>int convert_degenerated_Q (UIntMat &connect, UIntVec &modified_IDs);</p>
+<table id='337' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>20</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 21</div>
+<h1 id='338' style='font-size:20px'>Area computation for T3 and Q4 meshes (planar or not)</h1>
+<br><p id='339' data-category='paragraph' style='font-size:14px'>// The area of a triangle or quadrangle mesh (planar or not).<br>int area (const DoubleMat &pos, const UIntMat &connectM, double &s);</p>
+<br><h1 id='340' style='font-size:20px'>Voronoi cells for T3 meshes (planar or not)</h1>
+<br><p id='341' data-category='paragraph' style='font-size:14px'>// The circumcenters (Voronoi points) of triangles (2D or 3-D).<br>int circumcenters (const DoubleMat &pos, const UIntMat &connect, DoubleMat &PC);</p>
+<br><p id='342' data-category='paragraph' style='font-size:14px'>// Computes the connected faces around nodes (triangles or quads).<br>int get_connected_elements (const UIntMat &connect, const UIntMat &neighbors, const UIntVec &ancestors,<br>UIntVec &xadj, UIntVec &adjncy);</p>
+<br><h1 id='343' style='font-size:20px'>Angle computation in T3 and Q4 meshes (planar or not)</h1>
+<br><p id='344' data-category='paragraph' style='font-size:14px'>// The angles (min and max) at nodes of each element in a triangle or quadrangle mesh (planar or not).<br>int angles (const DoubleMat &pos, const UIntMat &connectM, bool normalized, DoubleVec &min_angles,<br>DoubleVec &max_angles);</p>
+<br><h1 id='345' style='font-size:20px'>Normal computations on surface meshes (triangles and quadrangles)</h1>
+<br><p id='346' data-category='paragraph' style='font-size:14px'>// The element directors/normals on a 3-D surface (at centre of elements).<br>int normals (const DoubleMat &pos, const UIntMat &connectM, bool normalize_flag, DoubleMat &D);</p>
+<br><p id='347' data-category='paragraph' style='font-size:14px'>// The averaged nodal normals on a 3-D surface mesh (triangles and/or quadrangles).<br>int normals (const DoubleMat &pos, const UIntMat &connectM, double w, bool normalize_flag, DoubleMat<br>&D);</p>
+<br><h1 id='348' style='font-size:20px'>Curvature computations on surface meshes (triangles only)</h1>
+<br><p id='349' data-category='paragraph' style='font-size:14px'>// Computes the two approximative principal curvatures (directions and inverse of radii) at each node<br>of a triangle 3-D surface mesh.<br>int principal_curvatures (const DoubleMat &pos, const UIntMat &connectM, const UIntMat &neighbors,<br>double R, double angle_max, unsigned max_nefs_in_disks, const UIntMat &boundaries, DoubleMat<br>&curvatures);</p>
+<br><p id='350' data-category='paragraph' style='font-size:14px'>// Approximative nodal curvature tensor (2x2 tensors) of a mesh.<br>int parametric_curvatures (const DoubleMat &pos2D, const UIntMat &connectM, const DoubleMat &local_<br>bases, DoubleMat &curvatures);</p>
+<br><h1 id='351' style='font-size:20px'>Anisotropic metrics generation routines on 2-D triangle meshes</h1>
+<br><p id='352' data-category='paragraph' style='font-size:14px'>// Generates a set of 3-D anisotropic metrics for a given 3-D surface triangle mesh.<br>int metrics_gen_aniso3d (const DoubleMat &pos, const UIntMat &connectT3, double hn, DoubleMat &M);</p>
+<br><h1 id='353' style='font-size:20px'>Interpolation of isotropic metrics on 2-D meshes</h1>
+<br><p id='354' data-category='paragraph' style='font-size:14px'>// Interpolates a field of isotropic metrics defined on a planar mesh.<br>int interpolate_metrics (const DoubleMat &pos, const UIntMat &connectM, const UIntMat &neighbors, const<br>UIntVec &ancestors, DoubleVec &metrics, bool invalid_metrics_only, cm2::element_type FE_type);</p>
+<br><p id='355' data-category='paragraph' style='font-size:14px'>// Interpolates a field of isotropic metrics defined on a planar mesh.<br>int interpolate_metrics (const DoubleMat &pos, const UIntMat &connectM, const UIntMat &neighbors, const<br>UIntVec &ancestors, DoubleVec &metrics, const UIntVec &nodes, bool invalid_metrics_only, cm2::element_<br>type FE_type);</p>
+<br><h1 id='356' style='font-size:20px'>Interpolation of anisotropic metrics on 2-D meshes</h1>
+<br><p id='357' data-category='paragraph' style='font-size:14px'>// Interpolates a field of 2-D or 3-D anisotropic metrics defined on a planar mesh.<br>int interpolate_metrics (const DoubleMat &pos, const UIntMat &connectM, const UIntMat &neighbors, const<br>UIntVec &ancestors, DoubleMat &metrics, bool invalid_metrics_only, cm2::element_type FE_type);</p>
+<br><p id='358' data-category='paragraph' style='font-size:14px'>// Interpolates a field of 2-D or 3-D anisotropic metrics defined on a planar mesh.<br>int interpolate_metrics (const DoubleMat &pos, const UIntMat &connectM, const UIntMat &neighbors, const<br>UIntVec &ancestors, DoubleMat &metrics, const UIntVec &nodes, bool invalid_metrics_only, cm2::element_<br>type FE_type);</p>
+<br><h1 id='359' style='font-size:20px'>Element localization in 2-D and surface meshes</h1>
+<br><p id='360' data-category='paragraph' style='font-size:14px'>// Finds an element containig a point in a plane mesh (all-triangle, all-quad or mixed).<br>int get_element_containing_point (const DoubleMat &pos, const UIntMat &connectM, const UIntMat<br>&neighbors, const UIntVec &ancestors, const meshtools::node_localizer& localizer,<br>element_type FE_type, const DoubleVec2& Pi, unsigned& Ki, DoubleVec2& Qi, double tol = 1E-6);</p>
+<table id='361' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>21</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 22</div>
+<p id='362' data-category='paragraph' style='font-size:14px'>// Finds an element containig a point in a surface mesh (all-triangle, all-quad or mixed).<br>int get_element_containing_point (const DoubleMat &pos, const UIntMat &connectM, const UIntMat<br>&neighbors, const UIntVec &ancestors, const meshtools::node_localizer& localizer,<br>element_type FE_type, const DoubleVec2& Pi, unsigned& Ki, DoubleVec3& Qi, double tol = 1E-6);<br>// Finds the elements containig a set of points in a plane or surface mesh (all-triangle, all-quad or<br>mixed).<br>int get_elements_containing_points (const DoubleMat &pos, const UIntMat &connectM, const UIntMat<br>&neighbors, const UIntVec &ancestors, const meshtools::node_localizer& localizer,<br>element_type FE_type, const DoubleMat& Ps, UIntVec& Ks, DoubleMat& Qs, double tol = 1E-6);<br>// Finds the elements containig a set of nodes in a plane or surface mesh (all-triangle, all-quad or<br>mixed).<br>int get_elements_containing_nodes (const DoubleMat &pos, const UIntMat &connectM,<br>element_type FE_type, const UIntVec& nodes, UIntVec& Ks, DoubleMat& Qs, double tol = 1E-6);</p>
+<table id='363' style='font-size:18px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>22</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 23</div>
+<h1 id='364' style='font-size:20px'>cm2::meshtools3d functions (48)</h1>
+<br><h1 id='365' style='font-size:18px'>Boolean operations</h1>
+<br><p id='366' data-category='paragraph' style='font-size:14px'>// Computes differences, intersection and union between two solids defined by their boundary faces.<br>template <class IntersectorT3, class MesherTH4><br>int boolean_ops (IntersectorT3& intersector, MesherTH4& mesher3D, typename IntersectorT3::data_type&<br>data, UIntMat& connectMU);</p>
+<br><h1 id='367' style='font-size:18px'>Transformations / conversion</h1>
+<br><p id='368' data-category='paragraph' style='font-size:14px'>// Converts TETRA4, PYRAMID5, WEDGE6 and HEXA8 elements into higher degree elements (TETRA10,<br>PYRAMID14, WEDGE18 and HEXA20 and over), creating new high-order nodes.<br>int convert_into_high_order (DoubleMat &pos, const UIntMat &connectL, unsigned Ne, unsigned Nfq,<br>unsigned Nft, unsigned Nhi, unsigned Nwi, unsigned Npi, unsigned Nti, UIntMat &connectQ, const UIntMat<br>&connectB, const UIntMat &connectE);<br>// Converts in-place TETRA4, PYRAMID5, WEDGE6 and HEXA8 elements into higher degree elements (TETRA10,<br>PYRAMID14, WEDGE18 and HEXA20 and over), creating new high-order nodes.<br>int convert_into_high_order (DoubleMat &pos, UIntMat &connectM, unsigned Ne, unsigned Nfq, unsigned<br>Nft, unsigned Nhi, unsigned Nwi, unsigned Npi, unsigned Nti, const UIntMat &connectB, const UIntMat<br>&connectE);<br>// Converts in-place TETRA4, PYRAMID5, WEDGE6 and HEXA8 elements into TETRA10 elements, PYRAMID14,<br>WEDGE18 and HEXA27, creating new high-order nodes.<br>int convert_into_quadratic (DoubleMat &pos, UIntMat &connectM, const UIntMat &connectB, const UIntMat<br>&connectE3);<br>// Converts in-place TETRA4, PYRAMID5, WEDGE6 and HEXA8 elements into TETRA10 elements, PYRAMID14,<br>WEDGE18 and HEXA27, creating new high-order nodes.<br>int convert_into_quadratic (DoubleMat &pos, UIntMat &connectM);</p>
+<br><p id='369' data-category='paragraph' style='font-size:14px'>// Converts in-place high-order solid elements (TETRA10, PYRAMID13, PYRAMID14, WEDGE15, WEDGE18, HEXA20<br>or HEXA27) into linear elements (TETRA4, PYRAMID5, WEDGE6, HEXA8).<br>int convert_into_linear (UIntMat &connectM);</p>
+<br><p id='370' data-category='paragraph' style='font-size:14px'>// Transforms a mixed 3-D mesh (without any pyramid!) into a all-hex mesh by splitting each tetrahedron<br>into four sub-hexes, each wedge into six sub-hexes and each hexahedron into eight sub-hexes.<br>int split_into_H8 (DoubleMat &pos, const UIntMat &connectM, UIntMat &connectH8, const UIntMat<br>&connectBQ, const UIntMat &connectE3);</p>
+<br><h1 id='371' style='font-size:18px'>Extrude translate a 2-D mesh into a 3-D mesh</h1>
+<br><p id='372' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with translation a 2-D mesh into a structured 3-D mesh.<br>int extrude_translate (DoubleMat &pos, const UIntMat &connect2D, const DoubleVec3 &T, unsigned N1,<br>UIntMat &connect3D);</p>
+<br><p id='373' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with translation a 2-D mesh into a structured 3-D mesh, with specific sizes.<br>int extrude_translate (DoubleMat &pos, const UIntMat &connect2D, const DoubleVec3 &T, double h0, double<br>h1, bool force_even, UIntMat &connect3D);</p>
+<br><h1 id='374' style='font-size:18px'>Extrude rotate a 2-D mesh into a 3-D mesh</h1>
+<br><p id='375' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with rotation a 2-D mesh into a structured 3-D mesh.<br>int extrude_rotate (DoubleMat &pos, const UIntMat &connect2D, const DoubleVec3 &C, const DoubleVec3 &R,<br>unsigned N1, UIntMat &connect3D);<br>// Extrudes (sweeps) with rotation a 2-D mesh into a structured 3-D mesh, with specific sizes.<br>int extrude_rotate (DoubleMat &pos, const UIntMat &connect2D, const DoubleVec3 &C, const DoubleVec3 &R,<br>double h0, double h1, bool force_even, UIntMat &connect3D);</p>
+<br><h1 id='376' style='font-size:18px'>Extrudes with both rotation and translation a 2-D mesh into a 3-D mesh</h1>
+<br><p id='377' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) with rotation and translation a 2-D mesh into a structured 3-D mesh.<br>int extrude_spiral (DoubleMat &pos, const UIntMat &connect2D, const DoubleVec3 &C, const DoubleVec3 &R,<br>const DoubleVec3 &T, unsigned N1, UIntMat &connect3D);<br>// Extrudes (sweeps) with rotation a 2-D mesh into a structured 3-D mesh, with specific sizes.<br>int extrude_spiral (DoubleMat &pos, const UIntMat &connect2D, const DoubleVec3 &C, const DoubleVec3 &R,<br>const DoubleVec3 &T, double h0, double h1, bool force_even, UIntMat &connect3D);</p>
+<br><p id='378' data-category='paragraph' style='font-size:18px'>Extrudes a 2-D mesh along specific directions into a 3-D mesh</p>
+<br><p id='379' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) a 2-D mesh along specific directions into a structured 3-D mesh.<br>int extrude_normal (DoubleMat& pos, const UIntMat& connectBase, const DoubleMat& D, unsigned N1,<br>UIntMat& connect3D, const UIntMat& connectE, UIntMat& connectSide, UIntMat& connectTop);</p>
+<br><p id='380' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) a 2-D mesh along a specific line into a structured 3-D mesh. Spherical expansions.<br>int extrude_normal (DoubleMat& pos, const UIntMat& connectBase, const DoubleMat& D, unsigned N1,<br>UIntMat& connect3D);</p>
+<table id='381' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>23</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 24</div>
+<p id='382' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) a 2-D mesh along the node normals into a structured 3-D mesh.<br>int extrude_normal (DoubleMat& pos, const UIntMat& connectBase, double T, unsigned N1, UIntMat&<br>connect3D, const UIntMat& connectE, UIntMat& connectSide, UIntMat& connectTop);</p>
+<br><p id='383' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) a 2-D mesh along the node normals into a structured 3-D mesh.<br>int extrude_normal (DoubleMat& pos, const UIntMat& connectBase, double T, unsigned N1, UIntMat&<br>connect3D);</p>
+<br><p id='384' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) a 2-D mesh along the node normals into a structured 3-D mesh.<br>int extrude_normal (DoubleMat& pos, const UIntMat& connectBase, double T, double h0, double h1, bool<br>force_even, UIntMat& connect3D, const UIntMat& connectE, UIntMat& connectSide, UIntMat& connectTop);</p>
+<br><p id='385' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) a 2-D mesh along the node normals into a structured 3-D mesh.<br>int extrude_normal (DoubleMat& pos, const UIntMat& connectBase, double T, double h0, double h1, bool<br>force_even, unsigned N1, UIntMat& connect3D);</p>
+<br><h1 id='386' style='font-size:20px'>Extrudes a 2-D mesh along a line into a 3-D mesh</h1>
+<br><p id='387' data-category='paragraph' style='font-size:14px'>// Extrudes (sweeps) a 2-D mesh along a specific line into a structured 3-D mesh. Spherical expansions.<br>int extrude_line (DoubleMat& pos, const UIntMat& connectBase, const UIntVec& line_nodes, const<br>DoubleVec3& D0, const DoubleVec& expansion_H, UIntMat& connect3D, const UIntMat& connectE, UIntMat&<br>connectSide, UIntMat& connectTop);<br>// Extrudes (sweeps) a 2-D mesh along a specific line into a structured 3-D mesh. Spherical expansions.<br>int extrude_line (DoubleMat& pos, const UIntMat& connectBase, const UIntVec& line_nodes, const<br>DoubleVec3& D0, const DoubleVec& expansion_H, UIntMat& connect3D);<br>// Extrudes (sweeps) a 2-D mesh along a specific line into a structured 3-D mesh. Anisotropic<br>expansions.<br>int extrude_line (DoubleMat& pos, const UIntMat& connectBase, const UIntVec& line_nodes, const<br>DoubleVec3& D0, const DoubleMa& expansion_M, UIntMat& connect3D, const UIntMat& connectE, UIntMat&<br>connectSide, UIntMat& connectTop);<br>// Extrudes (sweeps) a 2-D mesh along a specific line into a structured 3-D mesh. Anisotropic<br>expansions.<br>int extrude_line (DoubleMat& pos, const UIntMat& connectBase, const UIntVec& line_nodes, const<br>DoubleVec3& D0, const DoubleMat& expansion_M, UIntMat& connect3D);</p>
+<br><h1 id='388' style='font-size:20px'>Interpolation of fields on 3-D tetrahedral meshes</h1>
+<br><p id='389' data-category='paragraph' style='font-size:14px'>// Interpolates a scalar field (doubles) defined on the nodes of a tetrahedral mesh.<br>int interpolate (const DoubleMat &pos, const UIntMat &connectTH4, const UIntMat &neighbors, const<br>UIntVec &ancestors, DoubleVec &field, const UIntVec &nodes);</p>
+<br><p id='390' data-category='paragraph' style='font-size:14px'>// Interpolates a vectorial field (doubles) defined on the nodes of a tetrahedral mesh.<br>int interpolate (const DoubleMat &pos, const UIntMat &connectTH4, const UIntMat &neighbors, const<br>UIntVec &ancestors, DoubleMat &field, const UIntVec &nodes);</p>
+<br><h1 id='391' style='font-size:20px'>Reorientation of 3-D elements</h1>
+<br><p id='392' data-category='paragraph' style='font-size:14px'>// Changes the orientation of tetrahedrons (TH4).</p>
+<br><p id='393' data-category='paragraph' style='font-size:14px'>int flip_TH4 (UIntMat &connectM);</p>
+<br><p id='394' data-category='paragraph' style='font-size:14px'>// Changes the orientation of wedges (W6).<br>int flip_W6 (UIntMat &connectM);</p>
+<br><p id='395' data-category='paragraph' style='font-size:14px'>// Changes the orientation of hexahedrons (H8).<br>int flip_H8 (UIntMat &connectM);</p>
+<br><p id='396' data-category='paragraph' style='font-size:14px'>// Changes the orientation of the solid elements in a 3-D mesh (TH4, P5, WE6, H8, mixed, TH10, P14,<br>W18, H27, mixed).</p>
+<br><p id='397' data-category='paragraph' style='font-size:14px'>int flip (UIntMat &connect, cm2::element_type FE_type);</p>
+<br><h1 id='398' style='font-size:20px'>Special transformations of 3-D meshes</h1>
+<br><p id='399' data-category='paragraph' style='font-size:14px'>// Duplicates the nodes of a surface mesh embedded inside a solid mesh and change accordingly the<br>connectivity of the solids over/under the surface.<br>int duplicate_surface_nodes (DoubleMat &pos, UIntMat &connectM, const UIntMat &neighbors, const UIntVec<br>&ancestors, const UIntMat &connectB, const UIntVec &except_nodes, bool upper_nodes_flag, bool lower_<br>nodes_flag, cm2::element_type FE_type);</p>
+<br><p id='400' data-category='paragraph' style='font-size:14px'>// Splits the input solid elements having a Q4 face in the input list.<br>int split_solid_Q4 (DoubleMat &pos, const UIntMat &connectM, const UIntMat &connectQ4, const UIntVec<br>&diagonals, double min_qx, UIntVec &failed_indices, UIntMat &connectOut);</p>
+<br><h1 id='401' style='font-size:20px'>Volume computation</h1>
+<br><p id='402' data-category='paragraph' style='font-size:14px'>// Computes the volume of a 3-D mesh.<br>int volume (const DoubleMat &pos, const UIntMat &connectM, double &v);</p>
+<table id='403' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>24</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 25</div>
+<h1 id='404' style='font-size:20px'>Voronoi cells for tetrahedron meshes</h1>
+<br><p id='405' data-category='paragraph' style='font-size:14px'>// Computes the circumcenters (Voronoi points) of tetrahedron.<br>int circumcenters (const DoubleMat &pos, const UIntMat &connect, DoubleMat &PC);</p>
+<br><h1 id='406' style='font-size:20px'>Angle computation</h1>
+<p id='407' data-category='paragraph' style='font-size:14px'>// Computes the solid angles (min and max) at nodes of each element in a 3-D mesh.<br>int solid_angles (const DoubleMat &pos, const UIntMat &connectM, bool normalized, DoubleVec &min_<br>angles, DoubleVec &max_angles);<br>// Computes the dihedral angles (min and max) at edges of each element in a 3-D mesh.<br>int dihedral_angles (const DoubleMat &pos, const UIntMat &connectM, bool normalized, DoubleVec &min_<br>angles, DoubleVec &max_angles);</p>
+<br><h1 id='408' style='font-size:20px'>Interpolation of isotropic metrics on 3-D meshes</h1>
+<br><p id='409' data-category='paragraph' style='font-size:14px'>// Interpolates a field of isotropic metrics defined on a tetrahedral mesh.<br>int interpolate_metrics (const DoubleMat &pos, const UIntMat &connectTH4, const UIntMat &neighbors,<br>const UIntVec &ancestors, DoubleVec &metrics, bool invalid_metrics_only);</p>
+<br><p id='410' data-category='paragraph' style='font-size:14px'>// Interpolates a field of isotropic metrics defined on a tetrahedral mesh.<br>int interpolate_metrics (const DoubleMat &pos, const UIntMat &connectTH4, const UIntMat &neighbors,<br>const UIntVec &ancestors, DoubleVec &metrics, const UIntVec &nodes, bool invalid_metrics_only);</p>
+<br><h1 id='411' style='font-size:20px'>Interpolation of anisotropic metrics on 3-D meshes</h1>
+<br><p id='412' data-category='paragraph' style='font-size:14px'>// Interpolates a field of 3-D anisotropic metrics defined on a tetrahedral mesh.<br>int interpolate_metrics (const DoubleMat &pos, const UIntMat &connectTH4, const UIntMat &neighbors,<br>const UIntVec &ancestors, DoubleMat &metrics, bool invalid_metrics_only);</p>
+<br><p id='413' data-category='paragraph' style='font-size:14px'>// Interpolates a field of 3-D anisotropic metrics defined on a tetrahedral mesh.<br>int interpolate_metrics (const DoubleMat &pos, const UIntMat &connectTH4, const UIntMat &neighbors,<br>const UIntVec &ancestors, DoubleMat &metrics, const UIntVec &nodes, bool invalid_metrics_only);</p>
+<br><h1 id='414' style='font-size:20px'>Element localization in 3-D meshes</h1>
+<br><p id='415' data-category='paragraph' style='font-size:14px'>// Finds an element containig a point in a solid mesh (tetrahedrons only).<br>int get_element_containing_point (const DoubleMat &pos, const UIntMat &connectM, const UIntMat<br>&neighbors, const UIntVec &ancestors, const meshtools::node_localizer& localizer,<br>element_type FE_type, const DoubleVec3& Pi, unsigned& Ki, DoubleVec3& Qi, double tol = 1E-6);<br>// Finds the elements containig a set of points in a solid mesh (tetrahedrons only).<br>int get_elements_containing_points (const DoubleMat &pos, const UIntMat &connectM, const UIntMat<br>&neighbors, const UIntVec &ancestors, const meshtools::node_localizer& localizer,<br>element_type FE_type, const DoubleMat& Ps, UIntVec& Ks, DoubleMat& Qs, double tol = 1E-6);<br>// Finds the elements containig a set of nodes in a solid mesh (tetrahedrons only).<br>int get_elements_containing_nodes (const DoubleMat &pos, const UIntMat &connectM,<br>element_type FE_type, const UIntVec& nodes, UIntVec& Ks, DoubleMat& Qs, double tol = 1E-6);</p>
+<table id='416' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. May 2025</td><td>CM2 MeshTools Core - overview</td><td>25</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 26</div>
+<p id='417' data-category='paragraph' style='font-size:14px'>https://www.computing-objects.com</p>
+<br><p id='418' data-category='paragraph' style='font-size:14px'>© Computing Objects SARL - 25 rue du Maréchal Foch, 78000 Versailles, France.</p>
+<br><p id='419' data-category='paragraph' style='font-size:14px'>Limited Liability Company with a capital of 100 000 €.<br>Registered at Versailles RCS under SIRET number 422 791 038 00033.<br>EU VAT registration FR59422791038.</p>
+</div>
+
+</body>
+</html>

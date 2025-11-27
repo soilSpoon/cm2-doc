@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .page {
+            page-break-after: always;
+            margin-bottom: 50px;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+        .page-header {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+        table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        pre, code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        pre {
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+<!-- Model: document-parse-250618 -->
+<div class="page">
+<div class="page-header">Page 1</div>
+<h1 id='0' style='font-size:20px'>COMPUTING<br>OBJECTS</h1>
+<h1 id='1' style='font-size:22px'>CM2 SurfRemesh � T3/Q4</h1>
+<br><h1 id='2' style='font-size:16px'>Version 5.6</h1>
+<p id='3' data-category='paragraph' style='font-size:18px'>tutorials</p>
+<p id='4' data-category='paragraph' style='font-size:14px'>Revision February 2025.<br>https://www.computing-objects.com<br>Ⓒ Computing Objects SARL - 25 rue du Marechal Foch, 78000 Versailles, France.</p>
+</div>
+<div class="page">
+<div class="page-header">Page 2</div>
+<h1 id='5' style='font-size:20px'>Forewords</h1>
+<p id='6' data-category='paragraph' style='font-size:14px'>This manual describes the 3-D surface remeshers of the CM2 MeshToolsⓇ SDK: CM2 SurfRemesh� T3 and<br>CM2 SurfRemesh� Q4.</p>
+<p id='7' data-category='paragraph' style='font-size:16px'>CM2 SurfRemesh T3 and CM2 SurfRemesh Q4 address the problem of regenerating a mesh on a 3-D surface<br>defined by a discrete representation (initial surface mesh). This initial discrete representation may have<br>elements with very high aspect ratio such as in STL meshes and even some topological errors (degenerated<br>elements, holes, overlapping elements).</p>
+<p id='8' data-category='paragraph' style='font-size:16px'>These remeshers can generate a mesh finer than the initial mesh (refinement) or coarser (decimation). They<br>can also be used to regularize a 3-D surface mesh (node-smoothing only, local node inserting, local node<br>removal...).</p>
+<p id='9' data-category='paragraph' style='font-size:16px'>CM2 SurfRemesh Q4 can generate mixed quad-dominant meshes (the default) or all-quad meshes. The former<br>mode is recommended since it usually gives better meshes.</p>
+<p id='10' data-category='paragraph' style='font-size:14px'>If the surface to be remeshed is closed, the solid mesh generators CM2 TetraMesh� Iso, CM2 TetraMeshⓇ Aniso<br>and even CM2 HexaMeshⓇ Iso can be used after CM2 SurfRemesh T3 to fill the domain with solid elements.<br>After CM2 SurfRemesh Q4, only CM2 HexaMeshⓇ Iso can be used to fill the domain with solid elements.<br>The reader can read more about CM2 TetraMesh Iso/Aniso in the manual CM2 TetraMesh Iso/Aniso - tutorials<br>and about CM2 HexaMeshⓇ Iso in the manual CM2 HexaMesh Iso- tutorials.</p>
+<p id='11' data-category='paragraph' style='font-size:16px'>Like many other meshers of the library, CM2 SurfRemesh T3/Q4 are multi-threaded (you can select in the<br>settings the maximum number of threads the generator can use).<br>The generated meshes are reproducible (same mesh with same input data and same mesh with any number of<br>threads).</p>
+<p id='12' data-category='paragraph' style='font-size:16px'>Data are exchanged with the CM2 mesh generators through vector and matrix objects (no file). Beginners<br>should start by reading the manual CM2 Math1 - overview to get first views on these mathematical containers.</p>
+<p id='13' data-category='paragraph' style='font-size:16px'>For a complete description of the data and settings structures used with these meshers please refer to the<br>CM2 SurfRemesh T3/Q4 - reference manual.</p>
+<p id='14' data-category='paragraph' style='font-size:16px'>The source code of the CM2 MeshToolsⓇ SDK (full library) has been registered with the APP under Inter Deposit<br>number IDDN.FR.001 .260002.00.R.P.1998.000.20700 (22/06/1 998) and IDDN.<br>FR.001.250030.00.S.P.1999.000.20700 (16/06/1999) is regularly deposited since then.</p>
+<p id='15' data-category='paragraph' style='font-size:16px'>The source code specific to CM2 SurfRemeshⓇ T3, together with this manual, has been registered with the APP<br>under Inter Deposit number IDDN.FR.001.450010.000.S.P.2007.000.20600 (9/1 1/2007) and is regularly<br>deposited since then.</p>
+<p id='16' data-category='paragraph' style='font-size:16px'>The source code specific to CM2 SurfRemeshⓇ Q4, together with this manual, has been registered with the APP<br>under Inter Deposit number IDDN.FR.001.440018.000.R.P.2008.000.20700 (31/10/2008) and is regularly<br>deposited since then.</p>
+<table id='17' style='font-size:14px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4 tutorials</td><td>2</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 3</div>
+<h1 id='18' style='font-size:20px'>Table of contents</h1>
+<p id='19' data-category='index' style='font-size:14px'>Forewords 2<br>1. Getting started - default mode remeshing......... ············ 5<br>Some declarations. ········ 7<br>Authorization of the library ............ 7<br>The initial mesh 7<br>The new mesh ................. ········· 7<br>Output information ·········· 8<br>2. Limiting the range of the elements' size ........... ············ 15<br>3. User's specified punctual sizes ...........<br>....... 20<br>4. Patches. ...... 22<br>5. Remeshing with quadrangles (CM2 SurfRemesh Q4)........... ....... 26<br>6. Keeping the skeleton lines ...... ......... 29<br>Mesh gallery ··· ····· 35</p>
+<table id='20' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemeshⓇ T3/Q4-tutorials</td><td>3</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 4</div>
+<p id='21' data-category='paragraph' style='font-size:20px'>This manual shows examples of surface remeshing illustrating along the way some of the major options of the<br>remeshers.</p>
+<p id='22' data-category='paragraph' style='font-size:20px'>Each example starts with including the file stdafx.h (can be a pre-compiled header) giving access to the<br>required classes and the functions of the library (API).</p>
+<p id='23' data-category='paragraph' style='font-size:18px'>The general namespace cm2 has nested namespaces such as cm2 : : vecscal, cm2 : : vecvec, cm2:<br>: meshtools or cm2 : : surfremesh_ t3. The user can add a using namespace cm2 directive in this<br>stdafx. h file. Keeping namespaces in the user's source code can however be useful to improve the legibility<br>and to avoid name conflicts. In the rest of this document we assume such a using namespace cm2 directive.</p>
+<p id='24' data-category='paragraph' style='font-size:18px'>File stdafx. h:</p>
+<p id='25' data-category='paragraph' style='font-size:18px'>11 CM2 MESHTOOLS</p>
+<br><table id='26' style='font-size:16px'><thead></thead><tbody><tr><td>#include</td><td>"meshtools.h" General purpose mesh routines.</td></tr><tr><td>#include</td><td>" surfremesh_t3. h" CM2 SurfRemesh T3.</td></tr><tr><td>#include</td><td>"surfremesh_q4. h" /  CM2 SurfRemesh Q4.</td></tr></tbody></table>
+<br><p id='27' data-category='paragraph' style='font-size:18px'>using namespace cm2;</p>
+<br><p id='28' data-category='paragraph' style='font-size:14px'>/ Main cm2 namespace can now be omi tted.</p>
+<p id='29' data-category='paragraph' style='font-size:22px'>Required libraries1:</p>
+<p id='30' data-category='list' style='font-size:14px'>· cm2math1<br>· cm2misc<br>· cm2meshtools<br>· cm2meshtools1d<br>· cm2meshtools2d<br>· cm2surfremesh_t3<br>· cm2surfremesh_q4</p>
+<p id='31' data-category='paragraph' style='font-size:16px'>1 The lib names end with ($platform)  ($ver). For instance cm2surfremesh_ t3_x64_56.dll.<br>On Windows, file extensions for the libraries are - lib and . dll. On Linux/Unix/macOS platforms, file extensions are usually .a (static<br>archive), .SO or .dylib (dynamic lib).</p>
+<table id='32' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>4</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 5</div>
+<h1 id='33' style='font-size:20px'>1. Getting started - default mode remeshing</h1>
+<p id='34' data-category='paragraph' style='font-size:18px'>This first example is a regular cylinder with circular base. The diameter and the height of this cylinder are 100.<br>The input mesh is a STL-mesh provided by a CAD modeler (Figure 1).</p>
+<figure id='35'><img alt="" data-coord="top-left:(365,302); bottom-right:(875,919)" /></figure>
+<br><caption id='36' style='font-size:14px'>Figure 1 - Initial mesh of the cylinder (H = 100, D = 100).</caption>
+<p id='37' data-category='paragraph' style='font-size:18px'>Many triangles have high aspect ratio making this initial mesh not suited for FEA computations. The program to<br>generate a new better mesh on this tessellated surface is shown below. Figure 2 shows the resulting mesh.</p>
+<table id='38' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>5</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 6</div>
+<figure id='39'><img alt="" data-coord="top-left:(358,114); bottom-right:(877,720)" /></figure>
+<caption id='40' style='font-size:16px'>Figure 2 - The cylinder remeshed with default settings.</caption>
+<p id='41' data-category='paragraph' style='font-size:16px'>#include "stdafx.h"<br>#include <iostream></p>
+<p id='42' data-category='paragraph' style='font-size:16px'>11 Simple optional display handler.<br>static void display_hdl (void*, unsigned, const char* msg) { std : : cout << msg; }</p>
+<p id='43' data-category='paragraph' style='font-size:16px'>int main()</p>
+<br><p id='44' data-category='paragraph' style='font-size:14px'>{</p>
+<br><p id='45' data-category='paragraph' style='font-size:18px'>surfremesh_t3 : :mesher the_remesher;<br>surfremesh_t3: :mesher: :data_type data;</p>
+<p id='46' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>surfremesh_t3: :registration("Licensed to SMART Inc. " "0BEE453363E8") ;<br>,</p>
+<p id='47' data-category='paragraph' style='font-size:14px'>11 READ THE INITIAL MESH (STL FORMAT) .<br>meshtools : :STL_input("cylinder .stl" , data . pos, data . connectM) ;</p>
+<br><p id='48' data-category='paragraph' style='font-size:16px'>11 REMESH THE SURFACE.<br>the_remesher run(data) ; / / Remesh the surface with default settings.</p>
+<br><p id='49' data-category='paragraph' style='font-size:14px'>11 SOME OUTPUT INFO (OPTIONAL) .<br>data.print_info(&display_hdl) ;</p>
+<p id='50' data-category='paragraph' style='font-size:14px'>11 VISUALIZATION (OPTIONAL) .<br>meshtools : :medit_output("out.mesh" , data . pos, data . connectM, CM2_FACET3) ;</p>
+<br><p id='51' data-category='paragraph' style='font-size:16px'>return 0;<br>} 11 main</p>
+<p id='52' data-category='paragraph' style='font-size:22px'>Let us explain this program line by line.</p>
+<table id='53' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>6</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 7</div>
+<h1 id='54' style='font-size:20px'>Some declarations</h1>
+<p id='55' data-category='paragraph' style='font-size:16px'>the_ remesher is an instance of surfremesh_ t3 : : mesher.</p>
+<br><p id='56' data-category='paragraph' style='font-size:18px'>data is a key structure for the remesher. It stores, among others, the matrix pos which contains all the points'<br>coordinates and the matrix connectM which is the connectivity matrix of the mesh.</p>
+<p id='57' data-category='paragraph' style='font-size:18px'>data · pos stores all the nodes involved in the meshing process: the nodes of the initial mesh and the nodes of<br>the final mesh (some of them may be in both). It is stored as a DoubleMat matrix (variable-sized matrix of<br>doubles)2.</p>
+<p id='58' data-category='paragraph' style='font-size:18px'>data · connectM stores the connectivity matrix of the meshes (first of the initial mesh then of the final mesh<br>after remeshing) as UIntMat matrices (natural integers). connectM (i , j) is the ith local node of the jth<br>initial element. This integer is the column number in matrix pos where the coordinates of this node can be<br>found3.</p>
+<h1 id='59' style='font-size:22px'>Authorization of the library</h1>
+<p id='60' data-category='paragraph' style='font-size:18px'>The library needs to be unlocked through a call to surfremesh_ t3 : : registration. Two strings must be<br>provided for each library: the name of your company or organization that has acquired the license and a secret<br>code4. Note that both strings are case sensitive and the registration call must be made each time the library is<br>loaded into memory and before the first run of the remesher.</p>
+<p id='61' data-category='paragraph' style='font-size:14px'>surfremesh_t3 : : registration("Licensed to SMART Inc. " " F5BEA10ABCWX") ;<br>,</p>
+<h1 id='62' style='font-size:22px'>The initial mesh</h1>
+<p id='63' data-category='paragraph' style='font-size:18px'>In this example, the initial mesh is read from a STL file (ASCII). The meshtools : : STL_ input function reads<br>the points' coordinates, the nodes indices of the triangles and merge together any coincident nodes.</p>
+<p id='64' data-category='paragraph' style='font-size:14px'>meshtools: :STL_input("cylinder.stl" , data. pos, data . connectM) ;</p>
+<h1 id='65' style='font-size:20px'>The new mesh</h1>
+<p id='66' data-category='paragraph' style='font-size:16px'>the_remesher run(data) ;</p>
+<p id='67' data-category='paragraph' style='font-size:18px'>Upon exit, the matrix data . pos is bigger and contains the new nodes generated on the surface by the<br>remesher. These new points are appended to the original matrix. The initial points of the input mesh are<br>unchanged. The connectivity of the final mesh is stored in the matrix data.connectM, each column storing<br>the indices of the nodes for an element.</p>
+<p id='68' data-category='list' style='font-size:14px'>2 See manual CM2 Math1 - overview.<br>3 Recall that array indices are zero based (from 0 to N-1).<br>4 Contact license@computing-objects.com for any licensing inquiry.</p>
+<table id='69' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh Ⓡ T3/Q4 - tutorials</td><td>7</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 8</div>
+<h1 id='70' style='font-size:22px'>Output information</h1>
+<p id='71' data-category='paragraph' style='font-size:16px'>Printed information about the generated mesh and a MEDITS output file are obtained with:</p>
+<p id='72' data-category='paragraph' style='font-size:14px'>data.print_info(&display_hdl) ;<br>meshtoo ls : : medit_output("out.mesh" , data. pos, data . connectM, CM2_FACET3) ;</p>
+<p id='73' data-category='paragraph' style='font-size:20px'>Figure 3 shows the output of data.print_ info (&display_hdl):</p>
+<p id='74' data-category='paragraph' style='font-size:18px'>The new mesh has 98 nodes and 192 triangles and its quality is much better. In the initial mesh, the average<br>quality was 0.042. In the final mesh, it is 0.88.</p>
+<p id='75' data-category='paragraph' style='font-size:16px'>The max error _distance is a measure of the Hausdorff distance between the two meshes. The nodes of<br>the new mesh are located exactly onto the initial surface. It is not the case however for the centroid of the new<br>elements or for the initial nodes. If the surface is not flat, the new mesh may indeed be some distance away<br>from it. The max  error _distance is a measure of this maximum distance (so-called Hausdorff distance).</p>
+<p id='76' data-category='paragraph' style='font-size:18px'>The times spent in the several steps of the meshing process are given in seconds6.</p>
+<p id='77' data-category='paragraph' style='font-size:20px'>The first step is for cleaning the initial mesh (node merging and edges swapping).</p>
+<p id='78' data-category='paragraph' style='font-size:18px'>In the second step, the mesh is partitioned into groups of connected triangles (so-called patches) that can be<br>remeshed individually. The boundaries of the patches are located where the angle between two adjacent<br>triangles is greater than a prescribed value7 (patch_ angle_ tolerance - see Example 4). The boundaries of<br>these patches are called the skeleton lines. The singular nodes among the skeleton lines (nodes connected to<br>one or three or more skeleton lines) are called skeleton nodes.</p>
+<p id='79' data-category='paragraph' style='font-size:16px'>The skeleton lines and the patches are remeshed during the third step. The skeleton nodes remain present in<br>the new mesh.</p>
+<p id='80' data-category='paragraph' style='font-size:20px'>Finally, geometrical and topological optimizations are performed to improve the quality of the elements.</p>
+<p id='81' data-category='list' style='font-size:14px'>5 MEDIT is a free visualization program (link). Other output formats are: Ensight, FEMAP (neutral), Nastran, STL (ASCII or binary), VTK and<br>Wavefront OBJ.</p>
+<p id='82' data-category='list' style='font-size:14px'>6 All runs were done with x64 CM2 libs (VS 2017 MD build) on WindowsⓇ 8.1 x64 with IntelⓇ XeonⓇ E3-1270 V2 3.5 Ghz (4 cores with hyper-<br>threading, turbo boost disabled).</p>
+<p id='83' data-category='list' style='font-size:14px'>7 For the sake of clarity, we can consider that the angle between adjacent triangles is the only parameter used by the algorithm (it is indeed<br>not the only one, but the most important).</p>
+<table id='84' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4 tutorials</td><td>8</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 9</div>
+<figure id='85'><img style='font-size:14px' alt="* *** * * *
+* SurfRemesh (R) T3 (5 0) *
+* ******* * **** * *********** **** 大大 * 大 ****
+Initial Mesh
+Nodes : 256
+Triangles : 508
+Area : 4. 711434E+04
+Qavg : 4. 163685E-02
+Qmin : 2. 128816E-02
+New Mesh
+Nodes : 98
+Triangles : 192
+Area : 4.613917E+04
+Qavg : 8.838215E-01
+Qmin : 7. 037609E-01
+Max error dist. : 1. 758797E+00
+Cleaning time - 0.00 s.
+Partition time : 0.02 s.
+Remesh time : 0.01 s.
+Optim time 0.00 S.
+Total time : 0.03 s. (6997.00 t/s . )
+* * ** ******** HISTOGRAM QS * ********** *
+Total number of bins : 11
+Total number of counts : 192
+Number of larger values : ⊙
+Number of sma ller values : ⊙
+V max : 9. 987371E-01
+V mean : 8.838215E-01
+V min : 7.037609E-01
+Bin number -- Bin boundaries -- Hits
+10 0.90 1.00 112
+9 0.80 0.90 32
+8 0.70 0.80 48
+7 0.60 0.70 ⊙
+6 0.50 0.60 ⊙
+5 0.40 0.50 ⊙
+4 0.30 0.40 ⊙
+3 0.20 0.30 ⊙
+2 0.10 0.20 ⊙
+1 0.01 0.10 ⊙
+⊙ 0.00 0.01 ⊙" data-coord="top-left:(107,121); bottom-right:(1141,828)" /></figure>
+<caption id='86' style='font-size:16px'>Figure 3 - Output info for the cylinder example.</caption>
+<table id='87' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>9</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 10</div>
+<p id='88' data-category='paragraph' style='font-size:20px'>Note that the initial connectivity matrix is overwritten by the new one in matrix data . connectM and some<br>nodes in data . pos are no longer referenced8. To keep the initial mesh, the following code should be used<br>instead:</p>
+<p id='89' data-category='paragraph' style='font-size:16px'>#include "stdafx.h"<br>#include <iostream></p>
+<p id='90' data-category='paragraph' style='font-size:16px'>11 Simple optional display handler.<br>static void display_hdl (void*, unsigned, const char* msg) { std : : cout << msg; }</p>
+<p id='91' data-category='paragraph' style='font-size:16px'>int main()</p>
+<br><p id='92' data-category='paragraph' style='font-size:16px'>{</p>
+<br><table id='93' style='font-size:16px'><thead></thead><tbody><tr><td>surfremesh_t3 : : mesher</td><td>the_remesher;</td></tr><tr><td>surfremesh_t3 : : mesher: :data_type UIntMat</td><td>data; connectMi;</td></tr></tbody></table>
+<p id='94' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>surfremesh_t3: :registration("Licensed to SMART Inc. " "0BEE453363E8") ;<br>,</p>
+<p id='95' data-category='paragraph' style='font-size:14px'>11 READ THE INITIAL MESH (STL FORMAT)<br>meshtools : : STL_input("cylinder stl" data . pos, data. connectM) ;<br>connectMi · copy(data.connectM) ; 11 Save initial mesh. Hard copy.</p>
+<p id='96' data-category='paragraph' style='font-size:14px'>11 REMESH THE SURFACE.<br>the_remesher . run(data) ; 11 Remesh the surface.</p>
+<p id='97' data-category='paragraph' style='font-size:14px'>11 SOME OUTPUT INFO (OPTIONAL) .<br>data. print_info (&display_hdl) ;</p>
+<p id='98' data-category='paragraph' style='font-size:14px'>11 VISUALIZATION (OPTIONAL) ·<br>meshtools : :medit_output("in.mesh" , data.pos, connectMi, CM2_FACET3) ;<br>meshtools : : medit_output("out. mesh" , data.pos, data.connectM, CM2_FACET3) ;</p>
+<br><p id='99' data-category='paragraph' style='font-size:16px'>return 0;<br>} 11 main</p>
+<p id='100' data-category='paragraph' style='font-size:20px'>The initial mesh is in connectMi and the new mesh in data  connectM. Indices in both matrices refer to<br>columns in data. pos (containing nodes of the old and the new mesh).</p>
+<p id='101' data-category='paragraph' style='font-size:20px'>Another way to do this could be:</p>
+<p id='102' data-category='paragraph' style='font-size:14px'>8 You can get ride of the nodes unused anymore with cm2 : : meshtools::simplify. Please refer to the HTML reference manual of<br>CM2 MeshTools.</p>
+<table id='103' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>10</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 11</div>
+<p id='104' data-category='paragraph' style='font-size:16px'>#include "stdafx.h"<br>#include <iostream></p>
+<p id='105' data-category='paragraph' style='font-size:16px'>11 Simple optional display handler.<br>static void display_hdl (void*, unsigned, const char* msg) { std : : cout くく msg; }</p>
+<p id='106' data-category='paragraph' style='font-size:16px'>int main()</p>
+<br><p id='107' data-category='paragraph' style='font-size:16px'>{</p>
+<br><table id='108' style='font-size:16px'><thead></thead><tbody><tr><td>surfremesh_t3 : : mesher</td><td>the_remesher;</td></tr><tr><td>surfremesh_t3: : mesher : :data_type</td><td>data;</td></tr><tr><td>DoubleMat</td><td>pos;</td></tr><tr><td>UIntMat</td><td>connectMi, connectMr;</td></tr></tbody></table>
+<p id='109' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>surfremesh_t3: :registration("Licensed to SMART Inc . " "0BEE453363E8") ;<br>,</p>
+<p id='110' data-category='paragraph' style='font-size:14px'>11 READ THE INITIAL MESH (STL FORMAT) .<br>meshtools : : STL_input("cylinder .stl" , pos, connectMi) ;</p>
+<table id='111' style='font-size:16px'><thead></thead><tbody><tr><td>11 REMESH THE SURFACE.</td><td></td></tr><tr><td>data · pos = pos;</td><td>/ / Shallow copy.</td></tr><tr><td>data · connectM. copy (connectMi);</td><td>Hard copy.</td></tr><tr><td>the_remesher . run (data) ;</td><td>/ Remesh the surface.</td></tr><tr><td>pos = data. pos;</td><td>/ Shallow copy.</td></tr><tr><td>connectMr = data.connectM;</td><td>/ Shallow copy.</td></tr></tbody></table>
+<p id='112' data-category='paragraph' style='font-size:16px'>11 SOME OUTPUT INFO (OPTIONAL) .<br>data. print_ info (&display_hdl) ;</p>
+<p id='113' data-category='paragraph' style='font-size:16px'>11 VISUALIZATION (OPTIONAL) ·<br>meshtools : :medit_output("in. mesh" pos, connectMi , CM2_FACET3) ;<br>meshtools : : medit_output("out. mesh" , pos, connectMr, CM2_FACET3) ;</p>
+<br><p id='114' data-category='paragraph' style='font-size:16px'>return 0;<br>} 11 main</p>
+<p id='115' data-category='paragraph' style='font-size:18px'>In the following example (part #1), the skeleton lines found by the algorithm are the natural ridges of the solid<br>(and some lines inside the circular holes).</p>
+<p id='116' data-category='paragraph' style='font-size:18px'>Here also, we do not specify any size value for the new mesh. We let the remesher compute default values<br>based on the distance between each skeleton node.</p>
+<p id='117' data-category='paragraph' style='font-size:18px'>Concerning the program, the main difference with the previous one concerns the reading of the initial mesh.<br>The coordinates and the connectivity matrices are no longer in a STL format file, but are read with matio:<br>: transpose_read from a "matrix-formatted" file.</p>
+<p id='118' data-category='paragraph' style='font-size:18px'>Here the expected format for the matrices is:</p>
+<p id='119' data-category='paragraph' style='font-size:14px'>n X m L</p>
+<br><p id='120' data-category='paragraph' style='font-size:16px'>d</p>
+<br><p id='121' data-category='paragraph' style='font-size:14px'>0 ·</p>
+<br><p id='122' data-category='paragraph' style='font-size:18px'>d</p>
+<br><p id='123' data-category='paragraph' style='font-size:16px'>d</p>
+<br><p id='124' data-category='paragraph' style='font-size:16px'>0,1</p>
+<br><p id='125' data-category='paragraph' style='font-size:18px'>。</p>
+<br><p id='126' data-category='paragraph' style='font-size:22px'>d1,1</p>
+<br><p id='127' data-category='paragraph' style='font-size:14px'>2</p>
+<br><p id='128' data-category='paragraph' style='font-size:22px'>do,m-1</p>
+<br><p id='129' data-category='paragraph' style='font-size:20px'>d1,2</p>
+<br><p id='130' data-category='paragraph' style='font-size:20px'>d1,m-1</p>
+<p id='131' data-category='paragraph' style='font-size:18px'>n-1,0</p>
+<br><p id='132' data-category='paragraph' style='font-size:18px'>d</p>
+<br><p id='133' data-category='paragraph' style='font-size:20px'>dn-1,1 dn-1,2 ·</p>
+<br><p id='134' data-category='paragraph' style='font-size:18px'>· dn-1,m-1</p>
+<br><p id='135' data-category='paragraph' style='font-size:16px'>]</p>
+<p id='136' data-category='paragraph' style='font-size:18px'>The format for each component of the matrix is free.</p>
+<table id='137' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>11</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 12</div>
+<p id='138' data-category='paragraph' style='font-size:22px'>For instance for the coordinate matrix (4 nodes, 3 coordinates per node):</p>
+<p id='139' data-category='paragraph' style='font-size:16px'>4 X 3 [<br>0 0 5 2.0<br>0 1 1<br>1E-3 -7 1.0<br>3.4 -2.1 -1.0 ]</p>
+<p id='140' data-category='paragraph' style='font-size:16px'>#include "stdafx.h"<br>#include <iostream><br>#include <fstream></p>
+<br><p id='141' data-category='paragraph' style='font-size:14px'>11 Simple optional display handler.<br>static void display_hdl (void*, unsigned, const char* msg) { std : : cout << msg; }</p>
+<p id='142' data-category='paragraph' style='font-size:18px'>int main()</p>
+<br><p id='143' data-category='paragraph' style='font-size:16px'>{</p>
+<br><p id='144' data-category='paragraph' style='font-size:18px'>surfremesh_t3 : :mesher the_remesher;<br>surfremesh_t3: :mesher: :data_type data;</p>
+<p id='145' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>" "0BEE453363E8") ;<br>surfremesh_t3 : : registration("Licensed to SMART Inc .<br>,</p>
+<br><p id='146' data-category='paragraph' style='font-size:16px'>11 READ THE INITIAL MESH.<br>std: :ifstream istrm("part1.dat");<br>matio: :transpose_read(istrm, data.pos) ;<br>matio::transpose_read(istrm, data.connectM) ;</p>
+<p id='147' data-category='paragraph' style='font-size:18px'>the_remesher  run(data) ;<br>REMESH THE SURFACE.</p>
+<p id='148' data-category='paragraph' style='font-size:14px'>11 SOME OUTPUT INFO (OPTIONAL) .<br>data.print_info(&display_hdl) ;</p>
+<p id='149' data-category='paragraph' style='font-size:14px'>11 VISUALIZATION (OPTIONAL) .<br>meshtools : : medit_output("out.mesh" , data. pos, data. connectM, CM2_FACET3) ;</p>
+<br><p id='150' data-category='paragraph' style='font-size:16px'>return 0;<br>} 11 main</p>
+<table id='151' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>12</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 13</div>
+<figure id='152'><img alt="" data-coord="top-left:(315,99); bottom-right:(934,705)" /></figure>
+<caption id='153' style='font-size:18px'>Figure 4 - Part #1 - Initial mesh (bounding box X: 0.10, Y: 0.10, Z: 0.15).</caption>
+<p id='154' data-category='paragraph' style='font-size:16px'>New Mesh</p>
+<br><table id='155' style='font-size:14px'><thead></thead><tbody><tr><td></td><td></td><td></td></tr><tr><td>Nodes</td><td>:</td><td>3051</td></tr><tr><td>Triangles</td><td>:</td><td>6126</td></tr><tr><td>Area</td><td>:</td><td>4. 427879E-02</td></tr><tr><td>Qavg</td><td>:</td><td>8. 308896E-01</td></tr><tr><td>Qmin</td><td>:</td><td>1.598984E-01</td></tr></tbody></table>
+<p id='156' data-category='paragraph' style='font-size:14px'>Max error dist. : 1.947421E-04</p>
+<table id='157' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4 tutorials</td><td>13</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 14</div>
+<figure id='158'><img alt="" data-coord="top-left:(316,96); bottom-right:(934,708)" /></figure>
+<caption id='159' style='font-size:16px'>Figure 5 - Part #1 remeshed with default settings.</caption>
+<table id='160' style='font-size:14px'><thead></thead><tbody><tr><td>New Mesh</td><td></td><td></td></tr><tr><td>Nodes</td><td>:</td><td>3051</td></tr><tr><td>Triangles</td><td>:</td><td>6126</td></tr><tr><td>Area</td><td>:</td><td>4.427879E-02</td></tr><tr><td>Qavg</td><td>:</td><td>8. 308896E-01</td></tr><tr><td>Qmin</td><td>:</td><td>1.598984E-01</td></tr></tbody></table>
+<br><p id='161' data-category='paragraph' style='font-size:14px'>Max error dist. : 1.947421E-04</p>
+<p id='162' data-category='paragraph' style='font-size:20px'>In this example where most of the patches are flat, there is a very small geometric (Hausdorff) error between the<br>two meshes.</p>
+<p id='163' data-category='paragraph' style='font-size:20px'>Note also the variations of the elements' size in the new mesh. It is a typical result with the default settings of<br>the surface remesher. The next example addresses this point.</p>
+<table id='164' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>14</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 15</div>
+<h1 id='165' style='font-size:22px'>2. Limiting the range of the elements' size</h1>
+<p id='166' data-category='paragraph' style='font-size:20px'>Usually, the default elements' size does not give satisfactory meshes. They are either too fine or too coarse. For<br>this matter, the user can limit the range of the elements' size with two settings: min_h and max_h. In the<br>default settings, min_h = 0 and max_h = DBL_MAX.</p>
+<p id='167' data-category='paragraph' style='font-size:20px'>Let us use again the cylinder example. We now set the two bounds to the same value: 10.</p>
+<p id='168' data-category='paragraph' style='font-size:20px'>This will give a uniform mesh in which all elements' edges have a length of 10 on average.</p>
+<p id='169' data-category='paragraph' style='font-size:18px'>#include "stdafx.h"<br>#include <iostream><br>#include <fstream></p>
+<p id='170' data-category='paragraph' style='font-size:18px'>11 simple-id display_hdl (void*, unsi gned, const char* msg) { std : : cout << msg; }<br>optional display handler.<br>static</p>
+<p id='171' data-category='paragraph' style='font-size:18px'>int main()</p>
+<br><p id='172' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='173' data-category='paragraph' style='font-size:18px'>surfremesh_t3 : : mesher the_remesher;<br>surfremesh_t3: : mesher: :data_type data;</p>
+<p id='174' data-category='paragraph' style='font-size:16px'>11 UNLOCK THE DLL.<br>surfremesh_t3: :registration("Licensed to SMART Inc. " "0BEE453363E8") ;<br>,</p>
+<br><p id='175' data-category='paragraph' style='font-size:18px'>11 READ THE INITIAL MESH.<br>std: :ifstream istrm("part1.dat");<br>matio: : transpose_read (istrm, data. pos) ;<br>matio: : transpose_read (istrm, data. connectM) ;</p>
+<p id='176' data-category='paragraph' style='font-size:14px'>11 REMESH THE SURFACE.<br>the_remesher · settings.min_h = 10. ;<br>the_remesher · settings.max_h = 10. ;<br>the_remesher · run(data) ;</p>
+<br><p id='177' data-category='paragraph' style='font-size:18px'>11 SOME OUTPUT INFO (OPTIONAL)<br>data.print_info(&display_hdl) ;</p>
+<br><p id='178' data-category='paragraph' style='font-size:14px'>·</p>
+<p id='179' data-category='paragraph' style='font-size:16px'>11 VISUALIZATION (OPTIONAL) .<br>meshtools : : medit_output("out.mesh" , data.pos, data · connectM, CM2_FACET3) ;</p>
+<br><p id='180' data-category='paragraph' style='font-size:18px'>return 0;<br>} 11 main</p>
+<p id='181' data-category='paragraph' style='font-size:20px'>A third parameter (target_h) can also be used. This value is the size of the elements inside the patches (away<br>from the skeleton lines). If left to its default (zero), the mesh size inside patches is driven by the edge sizes of<br>the skeleton lines (between min_h and max_h)<br>We recommend usually to set target_h = max_h. This can give meshes inside the patches somewhat coarser<br>than with the default null value (if min_h < max_h).</p>
+<table id='182' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>15</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 16</div>
+<figure id='183'><img alt="" data-coord="top-left:(368,113); bottom-right:(871,704)" /></figure>
+<caption id='184' style='font-size:16px'>Figure 6 - Cylinder remeshed with min_h = 10 and max_h = 10.</caption>
+<figure id='185'><img style='font-size:14px' alt="Initial Mesh
+Nodes : 256
+Triangles : 508
+Area : 4. 711434E+04
+Qavg : 4. 163685E-02
+Qmin : 2. 128816E-02
+New Mesh
+Nodes : 554
+Triangles : 1104
+Area : 4. 697452E+04
+Qavg : 9. 381782E-01
+Qmin : 7 . 172157E-01
+Max error dist. : 2.986012E-01" data-coord="top-left:(104,815); bottom-right:(1141,1072)" /></figure>
+<p id='186' data-category='paragraph' style='font-size:18px'>The values min_h = max_h = 5 give the mesh shown in Figure 7.</p>
+<p id='187' data-category='paragraph' style='font-size:20px'>Note that the Hausdorff distance between the initial STL mesh and the new mesh decreases as the latter gets<br>finer.</p>
+<table id='188' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>16</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 17</div>
+<figure id='189'><img alt="" data-coord="top-left:(371,118); bottom-right:(870,703)" /></figure>
+<caption id='190' style='font-size:16px'>Figure 7 - Cylinder remeshed with min_h = 5 and max_h = 5.</caption>
+<figure id='191'><img style='font-size:14px' alt="Initial Mesh
+Nodes : 256
+Triangles : 508
+Area : 4. 711434E+04
+Qavg : 4. 163685E-02
+Qmin : 2. 128816E-02
+New Mesh
+Nodes : 2172
+Triangles : 4340
+Area : 4. 708151E+04
+Qavg : 9. 547583E-01
+Qmin · 7 . 996002E-01
+Max error dist. : 6.471375E-02" data-coord="top-left:(105,807); bottom-right:(1144,1062)" /></figure>
+<table id='192' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4 - tutorials</td><td>17</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 18</div>
+<header id='193' style='font-size:20px'>Below are two resulting meshes for the Part #1 example with different values for min_h and max h:</header>
+<figure id='194'><img alt="" data-coord="top-left:(366,165); bottom-right:(884,672)" /></figure>
+<caption id='195' style='font-size:16px'>Figure 8 - Part #1 remeshed with min_h = 0.005 and max _h = DBL_MAX.</caption>
+<p id='196' data-category='paragraph' style='font-size:16px'>Initial Mesh</p>
+<br><table id='197' style='font-size:14px'><thead></thead><tbody><tr><td>Nodes</td><td>:</td><td>379</td></tr><tr><td>Triangles</td><td>:</td><td>782</td></tr><tr><td>Area</td><td>:</td><td>4. 428174E-02</td></tr><tr><td>Qavg</td><td>:</td><td>3. 987199E-01</td></tr><tr><td>Qmin</td><td>:</td><td>9. 139058E-04</td></tr><tr><td>New Mesh</td><td></td><td></td></tr><tr><td>Nodes</td><td>:</td><td>1290</td></tr><tr><td>Triangles</td><td>:</td><td>2604</td></tr><tr><td>Area</td><td>:</td><td>4. 427485E-02</td></tr><tr><td>Qavg</td><td>:</td><td>7 823978E-01</td></tr><tr><td>Qmin</td><td>:</td><td>1. 598984E-01</td></tr><tr><td>Max error dist.</td><td>:</td><td>4. 184950E-04</td></tr></tbody></table>
+<table id='198' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. 6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>18</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 19</div>
+<figure id='199'><img alt="" data-coord="top-left:(364,105); bottom-right:(880,614)" /></figure>
+<caption id='200' style='font-size:16px'>Figure 9 - Part #1 remeshed with min_h = 0.005 and max h = 0.005.</caption>
+<table id='201' style='font-size:14px'><thead></thead><tbody><tr><td>Initial Mesh</td><td></td><td></td></tr><tr><td>Nodes</td><td>:</td><td>379</td></tr><tr><td>Triangles</td><td>:</td><td>782</td></tr><tr><td>Area</td><td>:</td><td>4. 428174E-02</td></tr><tr><td>Qavg</td><td>:</td><td>3. 987199E-01</td></tr><tr><td>Qmin</td><td>:</td><td>9. 139058E-04</td></tr><tr><td>New Mesh</td><td></td><td></td></tr><tr><td>Nodes</td><td>:</td><td>2136</td></tr><tr><td>Triangles</td><td>:</td><td>4296</td></tr><tr><td>Area</td><td>:</td><td>4. 428039E-02</td></tr><tr><td>Qavg</td><td>:</td><td>8. 711093E-01</td></tr><tr><td>Qmin</td><td>:</td><td>2. 734789E-01</td></tr><tr><td>Max error dist.</td><td>:</td><td>2. 760341E-04</td></tr></tbody></table>
+<p id='202' data-category='paragraph' style='font-size:20px'>Note that in this last example where min_h = max_h most of the domain is meshed uniformly. But due to the<br>constraints on patches some areas such as the high-curvature fillets are remeshed finer.</p>
+<table id='203' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>19</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 20</div>
+<h1 id='204' style='font-size:22px'>3. User's specified punctual sizes</h1>
+<p id='205' data-category='paragraph' style='font-size:20px'>Until now, we have seen two fields in the data_ type structure used to exchange data with the mesher:</p>
+<p id='206' data-category='list' style='font-size:20px'>· The pos matrix for the points' coordinates.<br>· The connectM matrix for the connectivity of the 3-D meshes (same matrix used for the initial mesh and for<br>the final mesh).</p>
+<p id='207' data-category='paragraph' style='font-size:20px'>We have seen also the effects of two global settings: min_h and max_h. In a more specific way, the user can set<br>elements' size values at some nodes of the initial mesh. This is done using the metrics field of the data_<br>type structure.</p>
+<p id='208' data-category='paragraph' style='font-size:20px'>To illustrate this feature let us use again the Part #1 example with min_h = 0.05 and max_h =0.05. We now<br>specify a size value of 0.001 at nodes #68 and #79. At these nodes9, these values supersede the settings<br>bounds min_h and max_h and the new mesh follows locally these sizes.</p>
+<p id='209' data-category='paragraph' style='font-size:18px'>#include "stdafx.h"<br>#include <iostream><br>#include <fstream></p>
+<p id='210' data-category='paragraph' style='font-size:18px'>11 Simple optional display handler.<br>static void display_hdl (void*, unsi gned, const char* msg) { std : : cout << msg; }</p>
+<p id='211' data-category='paragraph' style='font-size:18px'>int main()</p>
+<br><p id='212' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='213' data-category='paragraph' style='font-size:16px'>surfremesh_t3 : : mesher the_remesher;<br>surfremesh_t3 : : mesher: :data_type data;</p>
+<p id='214' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>surfremesh_t3 : : registration ("Licensed to SMART Inc. " "0BEE453363E8") ;<br>,</p>
+<p id='215' data-category='paragraph' style='font-size:16px'>11 READ THE INITIAL MESH.<br>std: : ifstream istrm("part1.dat");<br>matio: : transpose_read (istrm, data · pos) ;<br>matio: : transpose_read (istrm, data · connectM) ;</p>
+<br><p id='216' data-category='paragraph' style='font-size:16px'>/ / REMESH THE SURFACE.</p>
+<br><p id='217' data-category='paragraph' style='font-size:14px'>the_remesher · settings · min_h = 0. 005;<br>the_remesher · settings · max_h = 0. 005;<br>the_remesher · settings · target_ h = 0.005;<br>data · metrics · resize(pos. cols() , 0.) ;<br>data · metrics[68] = 0. 001;<br>data · metrics[79] = 0. 001;<br>the_remesher. run(data) ;</p>
+<p id='218' data-category='paragraph' style='font-size:18px'>11 SOME OUTPUT INFO (OPTIONAL)<br>data.print_info (&display_hdl) ;</p>
+<br><p id='219' data-category='paragraph' style='font-size:14px'>·</p>
+<p id='220' data-category='paragraph' style='font-size:16px'>11 VISUALIZATION (OPTIONAL) .<br>meshtools : : medit_output("out.mesh" , data. pos, data . connectM, CM2_FACET3) ;</p>
+<br><p id='221' data-category='paragraph' style='font-size:18px'>return 0;<br>11 main</p>
+<br><p id='222' data-category='paragraph' style='font-size:16px'>}</p>
+<p id='223' data-category='paragraph' style='font-size:20px'>The result is a new mesh with uniform size of 0.005 everywhere on the surface except near these four nodes<br>where the elements' size drops to 0.001.</p>
+<p id='224' data-category='paragraph' style='font-size:16px'>9 The node IDs can also be found with the help of cm2 : :meshtools: :node_detector. This class can find the closest node to a point or all<br>nodes inside a box.</p>
+<table id='225' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh Ⓡ T3/Q4 - tutorials</td><td>20</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 21</div>
+<figure id='226'><img style='font-size:20px' alt="User's specific mesh
+sizes at corners" data-coord="top-left:(324,95); bottom-right:(1109,616)" /></figure>
+<caption id='227' style='font-size:14px'>Figure 10 - Part #1 remeshed with h = 0.001 at four nodes (min_h = 0.005, max_h = 0.005).</caption>
+<p id='228' data-category='paragraph' style='font-size:20px'>Specific mesh sizes can be set on any node of the initial mesh. In the following example, we set a sinus variation<br>in data .metrics for all initial nodes (we used mesh at Figure 9 as initial mesh):</p>
+<figure id='229'><img alt="" data-coord="top-left:(370,812); bottom-right:(878,1308)" /></figure>
+<caption id='230' style='font-size:16px'>Figure 11 - Part #1 remeshed with user metrics on all initial nodes.</caption>
+<p id='231' data-category='paragraph' style='font-size:18px'>Hence, surface meshes can be coarsened in some areas and refined in some others.</p>
+<table id='232' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials 21</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 22</div>
+<h1 id='233' style='font-size:22px'>4. Patches</h1>
+<p id='234' data-category='paragraph' style='font-size:18px'>The algorithm of the remeshers has three major steps. First the initial mesh is partitioned into patches/sub-<br>domains, second the patch boundaries (called "skeleton lines" or "skeleton edges") are remeshed and finally<br>the patches are remeshed one by one. This third step is divided into three sub steps: each patch of the initial<br>mesh, called an initial patch, is unfolded to the Z = 0 plane, remeshed into a new patch and then mapped back<br>to the initial surface making a final patch. Similarly we define initial skeleton lines and final skeleton lines.</p>
+<p id='235' data-category='paragraph' style='font-size:18px'>The partition algorithm is based mostly on the angle between adjacent triangles. Starting with some element<br>seeds, the patches are grown by neighboring traversal until the angle between two adjacent triangles is greater<br>than a fixed parameter (patch_ angle_ tolerance in the remeshers' settings)10 or when a user-specified<br>edge is encountered or when the patch can no longer be unfolded within the strain_tolerance limit (see<br>reference manual).</p>
+<p id='236' data-category='paragraph' style='font-size:20px'>When patch_angle_ tolerance is low the patches tend to be small, with somehow degraded elements<br>quality but small Hausdorff distance (small chordal error). With a larger patch_angle_ tolerance value, the<br>patches tend to be bigger with better elements quality but larger Hausdorff distance (i.e. higher chordal error).<br>The following example illustrates this point.</p>
+<h1 id='237' style='font-size:18px'>"Curved" surfaces</h1>
+<br><figure id='238'><img alt="" data-coord="top-left:(291,592); bottom-right:(844,898)" /></figure>
+<caption id='239' style='font-size:14px'>Figure 12 - Part #2 - Initial mesh.</caption>
+<table id='240' style='font-size:14px'><thead></thead><tbody><tr><td>Initial Mesh</td><td></td><td></td></tr><tr><td>Nodes</td><td>:</td><td>86</td></tr><tr><td>Triangles</td><td>:</td><td>172</td></tr><tr><td>Area</td><td>:</td><td>5. 352784E+04</td></tr><tr><td>Qamin</td><td>: :</td><td>4 . 778100E-01 1. 452030E-02</td></tr></tbody></table>
+<p id='241' data-category='paragraph' style='font-size:14px'>10 Other special conditions can also stop the patch growth that are beyond the scope of this manual.</p>
+<table id='242' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>22</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 23</div>
+<p id='243' data-category='paragraph' style='font-size:22px'>We first set the value of patch_angle_tolerance to 5 degrees:</p>
+<p id='244' data-category='paragraph' style='font-size:18px'>#include "stdafx.h"<br>#include <iostream><br>#include <fstream></p>
+<p id='245' data-category='paragraph' style='font-size:18px'>11 Simple optional tionaly-lay handler.<br>(void*, unsi gned, const char* msg) { std : : cout << msg; }<br>static void</p>
+<p id='246' data-category='paragraph' style='font-size:18px'>int main()</p>
+<br><p id='247' data-category='paragraph' style='font-size:16px'>{</p>
+<br><p id='248' data-category='paragraph' style='font-size:18px'>surfremesh_t3: : mesher the_remesher;<br>surfremesh_t3: : mesher: :data_type data;</p>
+<p id='249' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>surfremesh_t3 : : registration ("Licensed to SMART Inc. " "0BEE453363E8") ;<br>,</p>
+<p id='250' data-category='paragraph' style='font-size:16px'>11 READ THE INITIAL MESH.<br>std: :ifstream istrm("part1.dat") ;<br>matio: : transpose_read (istrm, data · pos) ;<br>matio: : transpose_read (istrm, data. connectM) ;</p>
+<p id='251' data-category='paragraph' style='font-size:14px'>11 REMESH THE SURFACE.<br>the_remesher · settings · min_h = 10 · ;<br>the_remesher . settings · max_h = 10 · ;<br>the_remesher . settings · target_h = 10. ;<br>the_remesher · settings · patch_angle_tolerance = 5.;<br>the_remesher . run(data) ;</p>
+<p id='252' data-category='paragraph' style='font-size:16px'>11 SOME OUTPUT INFO (OPTIONAL) ·<br>data.print_info (&display_hdl) ;</p>
+<p id='253' data-category='paragraph' style='font-size:16px'>11 VISUALIZATION (OPTIONAL) .<br>meshtools : : mecit_output("out.mesh" , data.pos, data.connectM, CM2_FACET3) ;</p>
+<br><p id='254' data-category='paragraph' style='font-size:18px'>return 0;<br>} 11 main</p>
+<p id='255' data-category='paragraph' style='font-size:22px'>The new mesh is close to the initial mesh. Many angles of the initial mesh remain in the new mesh (Figure 13).</p>
+<p id='256' data-category='paragraph' style='font-size:22px'>With patch_angle_ tolerance = 20, the patches are bigger. This gives a better and smoother new mesh at<br>the cost of a higher geometric error between the two meshes (Figure 16).</p>
+<p id='257' data-category='paragraph' style='font-size:20px'>With patch_angle_tolerance = 0, the initial mesh is partitioned into pure flat patches (can be limited to<br>only one element). The chordal error between the initial mesh and the new mesh is minimum11.</p>
+<p id='258' data-category='paragraph' style='font-size:20px'>The default value patch_angle_ tolerance = 20 degrees is a good compromise in most cases. A value of 45<br>degrees should be considered as a maximum.</p>
+<p id='259' data-category='footnote' style='font-size:16px'>11 Note that the error distance may still be non null due to node merges and edge swaps during the final optimization step driven by final_<br>optimization_flag and optim_ tolerance. To reduce the geometric error to zero set patch_angle_tolerance = optim_<br>tolerance = 0.</p>
+<table id='260' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh Ⓡ T3/Q4-tutorials</td><td>23</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 24</div>
+<caption id='261' style='font-size:16px'>Figure 13 - Part #2 - Skeleton lines in the initial mesh (patch_angle_ tolerance = 5).</caption>
+<figure id='262'><img alt="" data-coord="top-left:(332,511); bottom-right:(841,731)" /></figure>
+<caption id='263' style='font-size:16px'>Figure 14 - Part #2 remeshed with min_h = 10, max h = 10 and patch_angle_ tolerance = 5.</caption>
+<p id='264' data-category='paragraph' style='font-size:16px'>New Mesh</p>
+<br><table id='265' style='font-size:14px'><thead></thead><tbody><tr><td>Nodes</td><td>:</td><td>659</td></tr><tr><td>Triang les</td><td>:</td><td>1318</td></tr><tr><td>Area</td><td>:</td><td>5.352579E+04</td></tr><tr><td>Qavg</td><td>:</td><td>8.621966E-01</td></tr><tr><td>Qmin</td><td>:</td><td>2. 777585E-01</td></tr><tr><td>Max error dist.</td><td>:</td><td>1.912226E-01</td></tr></tbody></table>
+<table id='266' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>24</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 25</div>
+<caption id='267' style='font-size:16px'>Figure 15 - Part #2 - Skeleton lines in the initial mesh (patch_angle_ tolerance = 20).</caption>
+<figure id='268'><img alt="" data-coord="top-left:(303,498); bottom-right:(808,715)" /></figure>
+<p id='269' data-category='paragraph' style='font-size:16px'>Figure 16 - Part #2 remeshed with min_h = 10, max_h = 10 and patch_angle_ tolerance = 20.</p>
+<figure id='270'><img style='font-size:14px' alt="New Mesh
+Nodes : 653
+Triangles : 1306
+Area : 5.356828E+04
+Qavg : 8.813238E-01
+Qmin : 6.071915E-01
+Max error dist. : 3.821892E-01" data-coord="top-left:(106,823); bottom-right:(1139,989)" /></figure>
+<p id='271' data-category='paragraph' style='font-size:20px'>Usually, the higher the angle tolerance, the better the mesh, the smaller the number of elements but the<br>higher the Hausdorff distance between initial and remeshed surfaces.</p>
+<table id='272' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. 6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>25</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 26</div>
+<h1 id='273' style='font-size:22px'>5. Remeshing with quadrangles (CM2 SurfRemesh Q4)</h1>
+<p id='274' data-category='paragraph' style='font-size:20px'>CM2 SurfRemesh Q4 can be used in place of CM2 SurfRemesh T3 to remesh with quadrangles instead of<br>triangles. From the previous example, simply changing the namespace changes the type of the remesher:</p>
+<p id='275' data-category='paragraph' style='font-size:16px'>#include "stdafx.h"<br>#include <iostream><br>#include <fstream></p>
+<p id='276' data-category='paragraph' style='font-size:16px'>11 Simple optional display handler.<br>static void display_hdl (void*, unsigned, const char* msg) { std : : cout くく msg; }</p>
+<p id='277' data-category='paragraph' style='font-size:16px'>int main()</p>
+<br><p id='278' data-category='paragraph' style='font-size:14px'>{</p>
+<br><p id='279' data-category='paragraph' style='font-size:18px'>surfremesh_q4: :mesher the_remesher;<br>surfremesh_q4: :mesher::data_type data;</p>
+<p id='280' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>surfremesh_q4: : registration("Licensed to SMART Inc. " "0BEE453363E8") ;<br>,</p>
+<br><p id='281' data-category='paragraph' style='font-size:16px'>11 READ THE INITIAL MESH.<br>std: :ifstream istrm("part1.dat") in<br>matio: :transpose_read (istrm, data.pos) ;<br>matio: :transpose_read (istrm, data.connectM) ;</p>
+<p id='282' data-category='paragraph' style='font-size:14px'>11 REMESH THE SURFACE.<br>the_remesher . settings · min_h = 10 · ;<br>the_remesher · settings · max_h = 10<br>the_remesher · settings · target_h = 10.;<br>the_remesher · run(data) ;</p>
+<p id='283' data-category='paragraph' style='font-size:14px'>11 SOME OUTPUT INFO (OPTIONAL) ·<br>data.print_info (&display_hdl) ;</p>
+<p id='284' data-category='paragraph' style='font-size:14px'>11 VISUALIZATION (OPTIONAL) .<br>meshtools : : medit_output("out.mesh" , data. pos, data . connectM, CM2_FACE_MIX) ;</p>
+<br><p id='285' data-category='paragraph' style='font-size:16px'>return 0;<br>11 main</p>
+<br><p id='286' data-category='paragraph' style='font-size:16px'>}</p>
+<p id='287' data-category='paragraph' style='font-size:20px'>The default settings of this remesher is the quad-dominant mode: it generates mixed quadrangle-triangle<br>meshes. This is why the output file is performed here with the type CM2_FACE_MIX.</p>
+<table id='288' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>26</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 27</div>
+<figure id='289'><img alt="" data-coord="top-left:(367,110); bottom-right:(871,329)" /></figure>
+<p id='290' data-category='paragraph' style='font-size:16px'>Figure 17 - Part #2 remeshed in quad-dominant mode<br>(min_h = 10, max_h = 10, patch_angle_tolerance = 20).</p>
+<p id='291' data-category='paragraph' style='font-size:14px'>New Mesh</p>
+<br><table id='292' style='font-size:14px'><thead></thead><tbody><tr><td>Nodes</td><td>550</td></tr><tr><td>Elements</td><td>: 564</td></tr><tr><td>Quadrang les</td><td>: 536 (95.04 %, 97.92 %)</td></tr><tr><td>Triangles</td><td>: 28 (4.96 %, 2.08 %)</td></tr><tr><td>Area</td><td>: 5. 356221E+04</td></tr><tr><td>Qavg</td><td>: 9. 109910E-01</td></tr><tr><td>Qmin</td><td>5. 229764E-01</td></tr><tr><td>Max error dist.</td><td>: 3. 824302E-01</td></tr></tbody></table>
+<p id='293' data-category='paragraph' style='font-size:22px'>An all-quad mesh can be generated by changing a flag in the remesher's settings:</p>
+<p id='294' data-category='paragraph' style='font-size:18px'>int main()</p>
+<br><p id='295' data-category='paragraph' style='font-size:18px'>{</p>
+<br><p id='296' data-category='paragraph' style='font-size:18px'>surfremesh_q4 : : mesher the_remesher;<br>surfremesh_q4 : ·· mesher: :data_type data;</p>
+<p id='297' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>surfremesh_q4: :registration ("Licensed to SMART Inc . "0BEE453363E8") ;<br>"<br>,</p>
+<br><p id='298' data-category='paragraph' style='font-size:16px'>11 READ THE INITIAL MESH.<br>std: :ifstream istrm("part1.dat") ;<br>matio: : transpose_read (istrm, data. pos) ;<br>matio: : transpose_read (istrm, data. connectM) ;</p>
+<p id='299' data-category='paragraph' style='font-size:14px'>11 REMESH THE SURFACE.<br>the_remesher . settings · min_h = 10 · ;<br>the_remesher . settings · max_h = 10 ;<br>the_remesher · settings · target_h = 10.;<br>the_remesher · settings.all_quad_flag = true;<br>the_remesher . run(data) ;</p>
+<p id='300' data-category='paragraph' style='font-size:16px'>11 SOME OUTPUT INFO (OPTIONAL) .<br>data.print_info(&display_hdl) ;</p>
+<p id='301' data-category='paragraph' style='font-size:14px'>11 VISUALIZATION (OPTIONAL) .<br>meshtools : : medit_output("out.mesh" , data · pos, data · connectM, CM2_FACEQ4) ;</p>
+<br><p id='302' data-category='paragraph' style='font-size:18px'>return 0;<br>} 11 main</p>
+<table id='303' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>27</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 28</div>
+<figure id='304'><img alt="" data-coord="top-left:(367,110); bottom-right:(872,331)" /></figure>
+<p id='305' data-category='paragraph' style='font-size:16px'>Figure 18 - Part #2 remeshed in all-quad mode<br>(min_h = 10, max_h = 10, patch_angle_ tolerance = 20).</p>
+<p id='306' data-category='paragraph' style='font-size:18px'>New Mesh</p>
+<br><table id='307' style='font-size:14px'><thead></thead><tbody><tr><td>Nodes</td><td>: 706</td></tr><tr><td>Elements</td><td>: 706</td></tr><tr><td>Quadrangles</td><td>: 706 (100.00 %, 100. 00 %)</td></tr><tr><td>Triangles</td><td>: ⊙ (0.00 %, 0.00 %)</td></tr><tr><td>Area</td><td>: 5.357723E+04</td></tr><tr><td>Qavg</td><td>: 8. 113556E-01</td></tr><tr><td>Qmin</td><td>: 4. 757265E-01</td></tr><tr><td>Max error dist.</td><td>: 3.326376E-01</td></tr></tbody></table>
+<p id='308' data-category='paragraph' style='font-size:22px'>If triangles are tolerated, the quad-dominant mode (the default settings) should be preferred against the all-<br>quad mode. It gives usually better meshes with fewer elements.<br>The all-quad mode should be restricted to very simple surfaces such as this one.</p>
+<table id='309' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. 6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>28</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 29</div>
+<h1 id='310' style='font-size:22px'>6. Keeping the skeleton lines</h1>
+<p id='311' data-category='paragraph' style='font-size:20px'>Let us now consider the remeshing of a sphere (Figure 19):</p>
+<p id='312' data-category='paragraph' style='font-size:16px'>#include "stdafx.h"<br>#include <iostream></p>
+<p id='313' data-category='paragraph' style='font-size:16px'>11 Simple optional display handler.<br>static void display_hdl (void*, unsigned, const char* msg) { std : : cout << msg; }</p>
+<p id='314' data-category='paragraph' style='font-size:18px'>int main()</p>
+<br><p id='315' data-category='paragraph' style='font-size:16px'>{</p>
+<br><table id='316' style='font-size:16px'><thead></thead><tbody><tr><td>const double</td><td>R(10.) ;</td></tr><tr><td>const unsi gned</td><td>N(64) ;</td></tr><tr><td>UIntVec</td><td>indices;</td></tr><tr><td>UIntMat</td><td>connectE;</td></tr><tr><td>DoubleMat</td><td>pos;</td></tr><tr><td>UIntMat</td><td>connectMi , connectMr ;</td></tr></tbody></table>
+<p id='317' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>surfremesh_t3: : registration("Licensed to SMART Inc. " "0BEE453363E8") ;<br>,</p>
+<br><p id='318' data-category='paragraph' style='font-size:16px'>11 THE INITIAL MESH.</p>
+<br><p id='319' data-category='paragraph' style='font-size:18px'>pos.push_ back (DoubleVec3(0. 0. , R));<br>meshtools1d: :extrude_rotate (pos' 0, DoubleVec3(0.), DoubleVec3(0. , M_PI, 0.), N/2, indices) ;<br>meshtools1d: :indices_to_connectE2(indices, connectE) ;<br>meshtools2d: :extrude_rotate_T3(po54120030300., 0., 2.*M_PI), ,N, 1, connectMi);<br>connectE, DoubleVec3(0.)</p>
+<p id='320' data-category='paragraph' style='font-size:14px'>11 REMESH THE SURFACE.<br>surfremesh_ t3 : : mesher the_remesher;<br>surfremesh_t3 : : mesher: :data_type data;<br>data · pos = pos;<br>data · connectM . copy (connectMi) ; 11 Hard copy of connec tMi<br>the_remesher · settings · min_h = 1. ;<br>the_remesher . settings · max_h = 1. ;<br>the_remesher · settings. target_h = 1.;<br>the_remesher . run(data) ;<br>pos = data . pos;<br>connectMr = data.connectM;</p>
+<p id='321' data-category='paragraph' style='font-size:14px'>11 SOME OUTPUT INFO (OPTIONAL) ·<br>data.print_info(&display_hdl) ;</p>
+<p id='322' data-category='paragraph' style='font-size:14px'>11 VISUALIZATION (OPTIONAL) .<br>meshtools : : medit_output("in. mesh" pos, connectMi , CM2_FACET3) ;<br>meshtools : : medit_output("out. mesh"<br>, pos, connectMr, CM2_FACET3) ;</p>
+<br><p id='323' data-category='paragraph' style='font-size:16px'>return 0;<br>} 11 main</p>
+<p id='324' data-category='paragraph' style='font-size:20px'>To generate the initial mesh we start with meshing a "Greenwich" meridian12:</p>
+<p id='325' data-category='paragraph' style='font-size:14px'>pos.push_back (DoubleVec3 (0. , O. , R)) ;<br>meshtools1d: : extrude_rotate(pos, 日, DoubleVec3 (0.) , DoubleVec3(0 . M_PI, 0.) , N/2, indices) ;<br>,<br>meshtools1d: : indices_to_connectE2(indices, connectE) ;</p>
+<p id='326' data-category='paragraph' style='font-size:14px'>12 For explanation on cm2: :meshtools1d: : extrude_rotate, cm2 : : meshtools1d : : indices_ to_connectE2 and cm2:<br>: meshtools2d: :extrude_rotate_T3, please refer to the HTML reference manual of the CM2 MeshToolsⓇ SDK.</p>
+<table id='327' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>29</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 30</div>
+<p id='328' data-category='paragraph' style='font-size:20px'>This arc is then extruded into a triangle surface with a 2 � rotation:</p>
+<p id='329' data-category='paragraph' style='font-size:18px'>meshtools2d: :extrude_rotate_T3 (pos, connectE, DoubleVec3(0.) ,<br>DoubleVec3(0., ⊙., 2.*M_PI) , N, 1, connectMi) ;</p>
+<figure id='330'><img alt="" data-coord="top-left:(376,304); bottom-right:(870,810)" /></figure>
+<caption id='331' style='font-size:14px'>Figure 19 - Sphere. Initial mesh.</caption>
+<p id='332' data-category='paragraph' style='font-size:22px'>Note that this way of generating the mesh leads to multiple coincident nodes (along the initial meridian) and<br>degenerated triangles at the poles. Fortunately, the remeshers are able to fix these issues and the new meshes<br>are perfectly closed (watertight) with no degenerated element (due to the initial cleaning step).</p>
+<figure id='333'><img alt="" data-coord="top-left:(376,1019); bottom-right:(868,1517)" /></figure>
+<caption id='334' style='font-size:16px'>Figure 20 - Sphere remeshed with triangles.</caption>
+<table id='335' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>30</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 31</div>
+<figure id='336'><img alt="" data-coord="top-left:(375,113); bottom-right:(870,605)" /></figure>
+<caption id='337' style='font-size:14px'>Figure 21 - Sphere remeshed with quadrangles only (all-quad mode).</caption>
+<figure id='338'><img alt="" data-coord="top-left:(373,703); bottom-right:(868,1200)" /></figure>
+<caption id='339' style='font-size:14px'>Figure 22 - Sphere remeshed with quads and triangles (mixed mode).</caption>
+<p id='340' data-category='paragraph' style='font-size:20px'>It appears that the remeshers divide the initial sphere into two patches (Figure 23) and that the initial G<br>meridian and the equator lines are lost in the remeshing process. Should we be interested in keeping them, we<br>have to put the edges of these lines into the edge connectivity matrix skeleton_edges_ in as shown in the<br>following example13.</p>
+<table id='341' style='font-size:16px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>31</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 32</div>
+<table id='342' style='font-size:22px'><thead></thead><tbody><tr><td><figure><img alt="" data-coord="top-left:(322,120); bottom-right:(612,411)" /></figure></td><td><figure><img alt="" data-coord="top-left:(633,117); bottom-right:(916,412)" /></figure></td></tr><tr><td>Top <figure><img alt="Front" data-coord="top-left:(321,430); bottom-right:(610,719)" /></figure></td><td><figure><img alt="Right" data-coord="top-left:(629,427); bottom-right:(915,721)" /></figure></td></tr></tbody></table>
+<caption id='343' style='font-size:16px'>Figure 23 - Patches on the initial sphere (two patches).</caption>
+<p id='344' data-category='paragraph' style='font-size:18px'>13 The meridian edges are readily available. However the equator edges need to be searched for (the code to do that is not shown here).</p>
+<table id='345' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemeshⓇ T3/Q4 - tutorials</td><td>32</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 33</div>
+<p id='346' data-category='paragraph' style='font-size:16px'>#include "stdafx.h"<br>#include <iostream></p>
+<p id='347' data-category='paragraph' style='font-size:16px'>11 Simple display handler.<br>static void display_hdl (void*, unsi gned, const char* msg) { std : :cout くく msg; }</p>
+<br><p id='348' data-category='paragraph' style='font-size:18px'>int main()</p>
+<br><p id='349' data-category='paragraph' style='font-size:16px'>{</p>
+<br><table id='350' style='font-size:16px'><thead></thead><tbody><tr><td>const double</td><td>R(10.) ;</td><td></td></tr><tr><td>const</td><td>unsi gned</td><td>N(64) ;</td></tr><tr><td>UIntVec</td><td></td><td>indices;</td></tr><tr><td>UIntMat</td><td></td><td>connectE;</td></tr><tr><td>DoubleMat</td><td></td><td>pos;</td></tr><tr><td>UIntMat</td><td></td><td>connectMi ;</td></tr></tbody></table>
+<p id='351' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>surfremesh_t3: : registration("Licensed to SMART Inc. " "0BEE453363E8") ;<br>,</p>
+<br><p id='352' data-category='paragraph' style='font-size:16px'>11 THE INITIAL MESH.</p>
+<br><p id='353' data-category='paragraph' style='font-size:16px'>pos.push_back(DoubleVec3(0. , 0. , R));<br>meshtools1d: :extrude_rotate (pos, 日, DoubleVec3(0.), DoubleVec3(0 . M_PI, 0.) , N/2, indices) ;<br>,<br>meshtools1d: : indices_to_connectE2(indices, connectE) ;<br>meshtools2d: : extrude_rotate_T3(Po161eVec3(0. , 0. , 2.*M_PI), N, 1, connectMi) ;<br>connectE, DoubleVec3(0.) ,</p>
+<p id='354' data-category='paragraph' style='font-size:14px'>11 REMESHING THE SURFACE.<br>surfremesh_ t3 : : mesher the_remesher;<br>surfremesh_t3 : : mesher: :data_type data;<br>data · pos = pos;<br>data · connectM. copy (connectMi) ; 11 Hard copy of connectMi<br>data · skeleton_edges_in = connectE; 11 Keep the meridian line.<br>the_remesher . settings · min_h = 1. ;<br>the_remesher · settings · max_h = the_remesher · settings.target_h = 1.;<br>the_remesher . run(data) ;<br>pos = data · pos;<br>11 SOME OUTPUT INFO (OPTIONAL) ·<br>data.print_info(&display_hdl) ;</p>
+<p id='355' data-category='paragraph' style='font-size:14px'>11 VISUALIZATION (OPTIONAL) .<br>meshtools : : medit_output("out.mesh" , pos, data. connectM, CM2_FACET3) ;</p>
+<br><p id='356' data-category='paragraph' style='font-size:16px'>return 0;<br>} 11 main</p>
+<p id='357' data-category='paragraph' style='font-size:22px'>Now the remesher divides the initial sphere into four patches in order to keep the constrained line.</p>
+<figure id='358'><img alt="" data-coord="top-left:(376,1002); bottom-right:(867,1494)" /></figure>
+<p id='359' data-category='paragraph' style='font-size:16px'>Figure 24 - Patches on the remeshed sphere when G meridian is kept (four patches).</p>
+<table id='360' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>33</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 34</div>
+<p id='361' data-category='paragraph' style='font-size:20px'>Here the G meridian line (and by chance the equator line also) is kept in the final mesh. However it is remeshed:<br>the nodes and edges along it are different now. The geometry of the line is preserved but not its mesh.</p>
+<p id='362' data-category='paragraph' style='font-size:22px'>To keep the initial edges, we shall use the hard_edges field instead of skeleton_edges_ in:</p>
+<p id='363' data-category='paragraph' style='font-size:16px'>#include "stdafx.h"<br>#include <iostream></p>
+<p id='364' data-category='paragraph' style='font-size:16px'>11 Simple optional display handler.<br>static void display_hdl (void*, unsigned, const char* msg) { std : : cout << msg; }</p>
+<p id='365' data-category='paragraph' style='font-size:16px'>int main()</p>
+<br><p id='366' data-category='paragraph' style='font-size:16px'>{</p>
+<br><table id='367' style='font-size:16px'><thead></thead><tbody><tr><td>const double</td><td>R(10.) ;</td></tr><tr><td>const unsi gned</td><td>N(64) ;</td></tr><tr><td>UIntVec</td><td>indices;</td></tr><tr><td>UIntMat</td><td>connectE;</td></tr><tr><td>Doub leMat</td><td>pos;</td></tr><tr><td>UIntMat</td><td>connectMi , connectMr ;</td></tr></tbody></table>
+<p id='368' data-category='paragraph' style='font-size:14px'>11 UNLOCK THE DLL.<br>surfremesh_t3: : registration("Licensed to SMART Inc. " "0BEE453363E8") ;<br>,</p>
+<p id='369' data-category='paragraph' style='font-size:16px'>11 THE INITIAL MESH.<br>pos.push_back(DoubleVec3(0. , 0. , R)) ;<br>meshtools1d: :extrude_rotate(pos, 日, DoubleVec3(0.) ,<br>DoubleVec3 (0. , M_PI, 0.) : N/2, indices) ;<br>meshtools1d: : indices_ to_connectE2 (indices, connectE)<br>meshtools2d: :extrude_rotate_T3(pos, connectE, DoubleVec3(0.) ,<br>DoubleVec3(0. , 0. , 2.*M_PI) , N, 1,<br>connectMi) ;</p>
+<table id='370' style='font-size:14px'><thead></thead><tbody><tr><td>11 REMESHING THE SURFACE. surfremesh_ t3 : : mesher surfremesh_t3 : : mesher: :data_type data · pos = pos ; data ·</td><td>the_remesher; data ; connectM. copy(connectMi) ; 11 Hard copy of connectMi data · hard_ edges = connectE; 11 Keep the initial edges along the meridian. the_remesher . settings · min_h = 1. ; the_remesher · settings . max_h = 1 ; the_remesher . run(data) ; pos = data . pos; connectMr = data.connectM;</td></tr></tbody></table>
+<p id='371' data-category='paragraph' style='font-size:14px'>11 SOME OUTPUT INFO (OPTIONAL) .<br>data.print_info(&display_hdl) ;</p>
+<p id='372' data-category='paragraph' style='font-size:14px'>11 VISUALIZATION (OPTIONAL) .<br>meshtools : : medit_output("out.mesh" , pos, connectMr , CM2_FACET3) ;</p>
+<br><p id='373' data-category='paragraph' style='font-size:16px'>return 0;<br>11 main</p>
+<br><p id='374' data-category='paragraph' style='font-size:16px'>}</p>
+<table id='375' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5. .6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>34</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 35</div>
+<h1 id='376' style='font-size:20px'>COMPUTING<br>OBJECTS</h1>
+<h1 id='377' style='font-size:22px'>CM2 SurfRemesh � T3/Q4</h1>
+<br><h1 id='378' style='font-size:16px'>Version 5.6</h1>
+<h1 id='379' style='font-size:18px'>Mesh gallery</h1>
+<p id='380' data-category='paragraph' style='font-size:14px'>Revision February 2025.<br>https://www.computing-objects.com<br>Ⓒ Computing Objects SARL - 25 rue du Marechal Foch, 78000 Versailles, France.</p>
+</div>
+<div class="page">
+<div class="page-header">Page 36</div>
+<header id='381' style='font-size:22px'>Example 1</header>
+<figure id='382'><img alt="" data-coord="top-left:(141,220); bottom-right:(585,767)" /></figure>
+<figure id='383'><img alt="" data-coord="top-left:(144,885); bottom-right:(585,1429)" /></figure>
+<br><p id='384' data-category='paragraph' style='font-size:18px'>Initial mesh</p>
+<br><p id='385' data-category='paragraph' style='font-size:18px'>Nodes</p>
+<br><p id='386' data-category='paragraph' style='font-size:20px'>Triangles</p>
+<br><p id='387' data-category='paragraph' style='font-size:20px'>Area</p>
+<br><p id='388' data-category='paragraph' style='font-size:20px'>Qavg</p>
+<br><p id='389' data-category='paragraph' style='font-size:16px'>: 202</p>
+<br><p id='390' data-category='paragraph' style='font-size:16px'>: 400</p>
+<p id='391' data-category='paragraph' style='font-size:20px'>Qmin</p>
+<br><p id='392' data-category='paragraph' style='font-size:16px'>: 1. 772E+05</p>
+<br><p id='393' data-category='paragraph' style='font-size:16px'>: 4.058E-01</p>
+<br><p id='394' data-category='paragraph' style='font-size:14px'>: 6.857E-02</p>
+<p id='395' data-category='paragraph' style='font-size:18px'>New mesh CM2 SurfRemesh T3</p>
+<br><p id='396' data-category='paragraph' style='font-size:18px'>New Mesh</p>
+<br><p id='397' data-category='paragraph' style='font-size:18px'>Nodes</p>
+<br><p id='398' data-category='paragraph' style='font-size:14px'>: 939</p>
+<br><p id='399' data-category='paragraph' style='font-size:22px'>Triangles</p>
+<br><p id='400' data-category='paragraph' style='font-size:18px'>Area</p>
+<br><p id='401' data-category='paragraph' style='font-size:14px'>: 1874</p>
+<br><p id='402' data-category='paragraph' style='font-size:20px'>Qavg</p>
+<br><p id='403' data-category='paragraph' style='font-size:16px'>: 1. 765980E+05</p>
+<br><p id='404' data-category='paragraph' style='font-size:20px'>Qmin</p>
+<br><p id='405' data-category='paragraph' style='font-size:16px'>: 9. 110418E-01</p>
+<br><p id='406' data-category='paragraph' style='font-size:16px'>: 5. 289499E-01</p>
+<br><p id='407' data-category='paragraph' style='font-size:16px'>Max error dist. : 1.888201E+00</p>
+<br><p id='408' data-category='paragraph' style='font-size:20px'>Cleaning time</p>
+<br><p id='409' data-category='paragraph' style='font-size:16px'>0.00 s.</p>
+<br><p id='410' data-category='paragraph' style='font-size:16px'>Partition time : 0.02 S.</p>
+<br><p id='411' data-category='paragraph' style='font-size:18px'>Remesh time</p>
+<br><p id='412' data-category='paragraph' style='font-size:18px'>Optim time</p>
+<br><p id='413' data-category='paragraph' style='font-size:16px'>0.01 S.</p>
+<br><p id='414' data-category='paragraph' style='font-size:16px'>0.00 S.</p>
+<br><p id='415' data-category='paragraph' style='font-size:18px'>Total time</p>
+<br><p id='416' data-category='paragraph' style='font-size:18px'>0.03 S. (60451.34 t/s.)</p>
+<table id='417' style='font-size:22px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>36</td></tr></tbody></table>
+<br><p id='418' data-category='paragraph' style='font-size:20px'>The output information given here are only indicative. All runs were done with x64 CM2 libs (Visual Studio 2010 MD build)<br>on Windows 8.1 x64 with Intel Xeon E3-1270 V2 3.5 Ghz (8 threads, turbo boost disabled).</p>
+</div>
+<div class="page">
+<div class="page-header">Page 37</div>
+<figure id='419'><img alt="" data-coord="top-left:(144,226); bottom-right:(589,766)" /></figure>
+<br><p id='420' data-category='paragraph' style='font-size:16px'>New mesh CM2 SurfRemesh Q4 (all-quad)</p>
+<figure id='421'><img style='font-size:14px' alt="Nodes : 886
+Elements : 884
+Quadrangles : 884 (100.00 %, 100 . 00 %)
+Triangles : ⊙ (0.00 %, 0.00 %)
+Area : 1. 764462E+05
+Qavg : 8. 459630E-01
+Qmin : 2.016499E-01
+Max error dist. : 1.857904E+00
+Cleaning time : 0.00 s.
+Partition time : 0.01 s.
+Remesh time : 0.03 s.
+Optim time : 0.00 S.
+Total time : 0.05 s. (19217.39 e/s. )" data-coord="top-left:(635,368); bottom-right:(1039,587)" /></figure>
+<figure id='422'><img alt="" data-coord="top-left:(142,886); bottom-right:(588,1429)" /></figure>
+<br><p id='423' data-category='paragraph' style='font-size:16px'>New mesh CM2 SurfRemesh Q4 (quad-dominan)</p>
+<br><figure id='424'><img style='font-size:14px' alt="Nodes : 811
+Elements : 821
+Quadrangles : 797 (97.08 %, 98.81 %)
+Triangles : 24 (2.92 %, 1.19 %)
+Area : 1. 765048E+05
+Qavg : 9. 035228E-01
+Qmin : 3. 706508E-01
+Max error dist. : 2.168070E+00
+Cleaning time : 0.00 S.
+Partition time : 0.02 s.
+Remesh time : 0.02 S.
+Optim time : 0.00 s.
+Total time : 0.04 s. (22189 . 08 e/s. )" data-coord="top-left:(648,1026); bottom-right:(1023,1231)" /></figure>
+<p id='425' data-category='paragraph' style='font-size:18px'>The percent figures indicate the ratio between the number of quads and triangles and the ratio between the areas of quads<br>and triangles.</p>
+<table id='426' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>37</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 38</div>
+<header id='427' style='font-size:22px'>Example 2</header>
+<figure id='428'><img alt="" data-coord="top-left:(96,229); bottom-right:(628,764)" /></figure>
+<br><p id='429' data-category='paragraph' style='font-size:18px'>Initial mesh</p>
+<br><p id='430' data-category='paragraph' style='font-size:18px'>Nodes</p>
+<br><p id='431' data-category='paragraph' style='font-size:14px'>: 1152</p>
+<br><p id='432' data-category='paragraph' style='font-size:20px'>Triangles</p>
+<br><p id='433' data-category='paragraph' style='font-size:14px'>: 2316</p>
+<br><p id='434' data-category='paragraph' style='font-size:18px'>Area</p>
+<br><p id='435' data-category='paragraph' style='font-size:20px'>Qavg</p>
+<br><p id='436' data-category='paragraph' style='font-size:18px'>Qmin</p>
+<br><p id='437' data-category='paragraph' style='font-size:14px'>: 8.778E+04</p>
+<br><p id='438' data-category='paragraph' style='font-size:14px'>: 3. 764E-01</p>
+<br><p id='439' data-category='paragraph' style='font-size:14px'>: 3. 233E-04</p>
+<figure id='440'><img alt="" data-coord="top-left:(90,889); bottom-right:(626,1425)" /></figure>
+<br><figure id='441'><img style='font-size:16px' alt="New mesh CM2 SurfRemesh T3
+Nodes : 4181
+Triangles : 8374
+Area : 8. 759187E+04
+Qavg : 8. 737813E-01
+Qmin : 3.312088E-02
+Max error dist. : 5. 498549E-01
+Cleaning time : 0.01 s.
+Partition time : 0.12 s.
+Remesh time : 0.04 s.
+Optim time : 0.03 S .
+Total time : 0.19 S . (43388. 58 t/s. )" data-coord="top-left:(681,968); bottom-right:(1136,1228)" /></figure>
+<table id='442' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>38</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 39</div>
+<figure id='443'><img alt="" data-coord="top-left:(97,236); bottom-right:(623,764)" /></figure>
+<br><p id='444' data-category='paragraph' style='font-size:16px'>New mesh CM2 SurfRemesh Q4 (all-quad)</p>
+<table id='445' style='font-size:14px'><thead></thead><tbody><tr><td>Nodes</td><td>: 4891</td></tr><tr><td>Elements</td><td>4897</td></tr><tr><td>fuldrangles</td><td>: 4897 (100. ⊙⊙ %, 100  00 %)</td></tr><tr><td></td><td>⊙ (日. ⊙⊙ %, 0.00 %)</td></tr><tr><td>Area</td><td>8. 761525E+04</td></tr><tr><td>Qavg</td><td>6. 821883E-01</td></tr><tr><td>Qmin</td><td>3. 784221E-03</td></tr><tr><td>Max error dist.</td><td>: 1.267006E+00</td></tr><tr><td>Cleaning time</td><td>: 0.01 S.</td></tr><tr><td>Partition time</td><td>: 0.11 S.</td></tr><tr><td>Remesh time</td><td>: 0.16 S.</td></tr><tr><td>Optim time</td><td>: 0.02 S.</td></tr><tr><td>Total time</td><td>0.30 S. (16269. 11 e/s.)</td></tr></tbody></table>
+<p id='446' data-category='paragraph' style='font-size:18px'>Some quads have a very bad shape quality: rather use the quad-<br>dominant mode.</p>
+<figure id='447'><img alt="" data-coord="top-left:(92,888); bottom-right:(626,1424)" /></figure>
+<br><p id='448' data-category='paragraph' style='font-size:16px'>New mesh CM2 SurfRemesh Q4 (quad-dominant)</p>
+<figure id='449'><img style='font-size:14px' alt="Nodes : 3907
+Elements : 4009
+Quadrangles : 3817 (95.21 %, 98.23 %)
+Triangles : 192 (4. 79 %, 1. 77 %)
+Area 8. 760907E+04
+Qavg : 8. 149696E-01
+Qmin 1. 252741E-02
+Max error dist. : 6.558714E-01
+Cleaning time : 0.01 S.
+Partition time : 0.11 S.
+Remesh time : 0.06 S.
+Optim time : 0.02 S.
+Total time 0.21 S. (19461.16 e/s.)" data-coord="top-left:(676,1023); bottom-right:(1056,1231)" /></figure>
+<table id='450' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>39</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 40</div>
+<header id='451' style='font-size:22px'>Example 3</header>
+<figure id='452'><img alt="" data-coord="top-left:(93,299); bottom-right:(632,689)" /></figure>
+<br><p id='453' data-category='paragraph' style='font-size:16px'>Initial mesh</p>
+<p id='454' data-category='paragraph' style='font-size:16px'>Nodes</p>
+<br><p id='455' data-category='paragraph' style='font-size:14px'>: 2674</p>
+<br><p id='456' data-category='paragraph' style='font-size:20px'>Triangles</p>
+<br><p id='457' data-category='paragraph' style='font-size:14px'>: 5364</p>
+<br><p id='458' data-category='paragraph' style='font-size:18px'>Area</p>
+<br><p id='459' data-category='paragraph' style='font-size:20px'>Qavg</p>
+<br><p id='460' data-category='paragraph' style='font-size:18px'>Qmin</p>
+<br><p id='461' data-category='paragraph' style='font-size:14px'>: 8. 922E+05</p>
+<br><p id='462' data-category='paragraph' style='font-size:14px'>: 3.667E-01</p>
+<br><p id='463' data-category='paragraph' style='font-size:14px'>: 2.070E-04</p>
+<figure id='464'><img style='font-size:16px' alt="New mesh CM2 SurfRemesh T3
+Nodes 11153
+Triangles : 22322
+Area : 8. 914079E+05
+Qavg : 8. 573457E-01
+Qmin 3. 250150E-02
+Max error dist. 9. 770317E-01
+Cleaning time 0.01 s.
+Partition time 0.26 s.
+Remesh time 0.21 s.
+Optim time : 0.06 s.
+Total time : 0.56 s. (40219.82 t/s. )" data-coord="top-left:(672,984); bottom-right:(1140,1254)" /></figure>
+<table id='465' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>40</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 41</div>
+<figure id='466'><img alt="" data-coord="top-left:(89,303); bottom-right:(629,691)" /></figure>
+<br><p id='467' data-category='paragraph' style='font-size:18px'>New mesh CM2 SurfRemesh Q4 (all-quad)</p>
+<figure id='468'><img style='font-size:14px' alt="Nodes : 12970
+Elements : 12978
+Quadrangles : 12978 (100. 00 %, 100  00 %)
+Triangles : ⊙ (0.00 %, 0.00 %)
+Area 8. 916372E+05
+Qavg 6.891853E-01
+Qmin 2. 739883E-03
+Max error dist. 1.237764E+00
+Cleaning time 0.01 s.
+Partition time 0.25 s.
+Remesh time 0.56 s.
+Optim time 0.06 s.
+Total time : 0.91 s. (14245.88 e/s.)" data-coord="top-left:(666,365); bottom-right:(1071,571)" /></figure>
+<p id='469' data-category='paragraph' style='font-size:20px'>Some quads have a very bad shape quality: rather use the quad-<br>dominant mode.</p>
+<p id='470' data-category='paragraph' style='font-size:16px'>New mesh CM2 SurfRemesh Q4 (quad-dominant)</p>
+<br><figure id='471'><img style='font-size:16px' alt="Nodes : 10089
+Elements : 10277
+Quadrangles : 9917 (96.50 %, 98.90 %)
+Triangles : 360 (3. 50 1.10 %)
+Area 8.914259E+05
+Qavg 8. 330071E-01
+Qmin 3. 436851E-02
+Max error dist. 1. 038236E+00
+Cleaning time 0.01 s.
+Partition time 0.25 S.
+Remesh time 0.14 s.
+Optim time 0.05 s.
+Total time : 0.47 s. (21819.54 e/s.)" data-coord="top-left:(672,1021); bottom-right:(1054,1231)" /></figure>
+<table id='472' style='font-size:22px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials 41</td></tr></tbody></table>
+<br><figure id='473'><img alt="" data-coord="top-left:(88,960); bottom-right:(628,1350)" /></figure>
+</div>
+<div class="page">
+<div class="page-header">Page 42</div>
+<header id='474' style='font-size:22px'>Example 4</header>
+<figure id='475'><img alt="" data-coord="top-left:(93,262); bottom-right:(637,721)" /></figure>
+<figure id='476'><img alt="" data-coord="top-left:(95,927); bottom-right:(636,1380)" /></figure>
+<br><p id='477' data-category='paragraph' style='font-size:16px'>Initial mesh</p>
+<br><p id='478' data-category='paragraph' style='font-size:16px'>Nodes</p>
+<br><p id='479' data-category='paragraph' style='font-size:14px'>: 406</p>
+<br><p id='480' data-category='paragraph' style='font-size:20px'>Triangles</p>
+<br><p id='481' data-category='paragraph' style='font-size:14px'>: 812</p>
+<br><p id='482' data-category='paragraph' style='font-size:16px'>Area</p>
+<br><p id='483' data-category='paragraph' style='font-size:20px'>Qavg</p>
+<br><p id='484' data-category='paragraph' style='font-size:18px'>Qmin</p>
+<br><p id='485' data-category='paragraph' style='font-size:14px'>: 6.876E+04</p>
+<br><p id='486' data-category='paragraph' style='font-size:14px'>: 3. 052E-01</p>
+<br><p id='487' data-category='paragraph' style='font-size:14px'>: 2.591E-03</p>
+<figure id='488'><img style='font-size:16px' alt="New mesh CM2 SurfRemesh T3
+Nodes : 972
+Triangles : 1944
+Area : 6. 860757E+04
+Qavg : 7. 690156E-01
+Qmin : 1. 499089E-01
+Max error dist. : 1. 335935E+00
+Cleaning time : 0.00 S.
+Partition time 0.02 S.
+Remesh time : 0.02 s.
+Optim time : 0.00 S .
+Total time 0.04 S · (48600.05 t/s. )" data-coord="top-left:(692,993); bottom-right:(1138,1250)" /></figure>
+<table id='489' style='font-size:20px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>42</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 43</div>
+<figure id='490'><img alt="" data-coord="top-left:(95,273); bottom-right:(637,720)" /></figure>
+<figure id='491'><img alt="" data-coord="top-left:(91,924); bottom-right:(637,1384)" /></figure>
+<br><p id='492' data-category='paragraph' style='font-size:14px'>New mesh CM2 SurfRemesh Q4 (all-quad)</p>
+<table id='493' style='font-size:14px'><thead></thead><tbody><tr><td>Nodes</td><td>: 1511</td></tr><tr><td>Elements</td><td>: 1511</td></tr><tr><td>Quadrangles</td><td>: 1511 (100.00 %, 100. 00 %)</td></tr><tr><td>Triangles</td><td>⊙ (0.00 %, 0.00 %)</td></tr><tr><td>Area</td><td>6.860654E+04</td></tr><tr><td>Qavg</td><td>5.668175E-01</td></tr><tr><td>Qmin</td><td>3.951873E-02</td></tr><tr><td>Max error dist.</td><td>1.500103E+00</td></tr><tr><td>Cleaning time</td><td>0.00 S.</td></tr><tr><td>Partition time</td><td>0.02 S.</td></tr><tr><td>Remesh time</td><td>0.08 S.</td></tr><tr><td>Optim time</td><td>0.00 S.</td></tr><tr><td>Total time</td><td>0.10 s. (15109.98 e/s.)</td></tr></tbody></table>
+<p id='494' data-category='paragraph' style='font-size:14px'>New mesh CM2 SurfRemesh Q4 (quad-dominant)</p>
+<table id='495' style='font-size:14px'><thead></thead><tbody><tr><td>Nodes</td><td>: 926</td><td></td></tr><tr><td>Elements</td><td>: 944</td><td></td></tr><tr><td>Quadrangles</td><td>: 908 (96.</td><td>19 %, 99.06 %)</td></tr><tr><td>Triangles</td><td>: 36 (3.81 %)</td><td>%, 0.94</td></tr><tr><td>Area</td><td>6.858510E+04</td><td></td></tr><tr><td>Qavg</td><td>7 .</td><td>651056E-01</td></tr><tr><td>Qmin</td><td>1. 464406E-01</td><td></td></tr><tr><td>Max error dist.</td><td>1.683082E+00</td><td></td></tr><tr><td>Cleaning time</td><td>0.00 S.</td><td></td></tr><tr><td>Partition time</td><td>0.03 S.</td><td></td></tr><tr><td>Remesh time</td><td>0.04 S.</td><td></td></tr><tr><td>Optim time</td><td>0.00 S.</td><td></td></tr><tr><td>Total time</td><td>0.07 S.</td><td>(13882.34 e/s.)</td></tr></tbody></table>
+<table id='496' style='font-size:18px'><thead></thead><tbody><tr><td>Ⓒ Computing Objects /version 5.6 rev. February 2025</td><td>CM2 SurfRemesh � T3/Q4-tutorials</td><td>43</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 44</div>
+<h1 id='497' style='font-size:14px'>COMPUTING<br>OBJECTS</h1>
+</div>
+
+</body>
+</html>

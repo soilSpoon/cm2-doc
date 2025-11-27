@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .page {
+            page-break-after: always;
+            margin-bottom: 50px;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+        .page-header {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+        table td, table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        pre, code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        pre {
+            padding: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+<!-- Model: document-parse-250618 -->
+<div class="page">
+<div class="page-header">Page 1</div>
+<h1 id='0' style='font-size:20px'>CM2 TetraMesh® Iso/Aniso</h1>
+<br><h1 id='1' style='font-size:16px'>Version 5.6</h1>
+<p id='2' data-category='paragraph' style='font-size:18px'>reference manual</p>
+<p id='3' data-category='paragraph' style='font-size:14px'>Revision February 2025.<br>https://www.computing-objects.com<br>© Computing Objects SARL - 25 rue du Maréchal Foch, 78000 Versailles, France.</p>
+</div>
+<div class="page">
+<div class="page-header">Page 2</div>
+<h1 id='4' style='font-size:20px'>Forewords</h1>
+<p id='5' data-category='paragraph' style='font-size:16px'>This manual is a reference manual for the structures data_type and settings_type of the solid<br>tetrahedron mesh generators of the CM2 MeshTools® SDK:</p>
+<br><p id='6' data-category='list' style='font-size:16px'>• The isotropic meshers CM2 TetraMesh® Iso,<br>• The anisotropic meshers CM2 TetraMesh® Aniso.</p>
+<br><p id='7' data-category='paragraph' style='font-size:16px'>It is based on the HTML reference manual (Doxygen© generated).</p>
+<br><p id='8' data-category='paragraph' style='font-size:16px'>For examples, please refer to the manual CM2 TetraMesh Iso/Aniso - tutorials.</p>
+<p id='9' data-category='paragraph' style='font-size:16px'>The source code of CM2 MeshTools® (full library) has been registered with the APP under Inter Deposit number<br>IDDN.FR.001.260002.00.R.P.1998.000.20700 (22/06/1998) and<br>IDDN.FR.001.480030.006.S.P.2001.000.20700 (23/05/2019) is regularly deposited since then.</p>
+<br><p id='10' data-category='paragraph' style='font-size:16px'>The source code specific to CM2 TetraMesh® Iso/Aniso, together with this manual, has been registered with the<br>APP under Inter Deposit number IDDN.FR.001.440019.000.R.P.2008.000.20700 (31/10/2008) and is regularly<br>deposited since then.</p>
+<table id='11' style='font-size:14px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 2</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 3</div>
+<h1 id='12' style='font-size:20px'>Table of contents</h1>
+<p id='13' data-category='index' style='font-size:16px'>Forewords .................................................................................................................................................. 2<br>1. Data of the mesh generators 5<br>Points’ coordinates ................................................................................................................................................................... 5<br>Hard faces .................................................................................................................................................................................. 5<br>Isolated (embedded) hard nodes ......................................................................................................................................... 6<br>Repulsive points ........................................................................................................................................................................ 6<br>Background mesh .................................................................................................................................................................... 6<br>Tetrahedrons ............................................................................................................................................................................. 7<br>Unenforced entities ................................................................................................................................................................. 7<br>Elements’ color .......................................................................................................................................................................... 8<br>Neighbors ................................................................................................................................................................................... 8<br>Histograms ................................................................................................................................................................................. 9<br>Errors and warnings ................................................................................................................................................................. 9<br>Function members ................................................................................................................................................................. 11<br>2. Error and warning codes 13<br>Error codes ............................................................................................................................................................................... 13<br>Warning codes ......................................................................................................................................................................... 15<br>3. Settings of the mesh generators 17<br>Basic operating mode ........................................................................................................................................................... 17<br>Strict constraints enforcement ........................................................................................................................................... 17<br>Keeping or removing internal cavities ............................................................................................................................... 17<br>Refinement ............................................................................................................................................................................... 18<br>Node smoothing ..................................................................................................................................................................... 18<br>Node inserting ......................................................................................................................................................................... 19<br>Node removing ....................................................................................................................................................................... 19<br>Shell remeshing ...................................................................................................................................................................... 19<br>Local numbering ..................................................................................................................................................................... 19<br>Computation of the size-qualities histogram .................................................................................................................. 19<br>Limit on the number of nodes ............................................................................................................................................ 19</p>
+<table id='14' style='font-size:14px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 3</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 4</div>
+<h1 id='15' style='font-size:20px'>Table of contents</h1>
+<p id='16' data-category='index' style='font-size:16px'>Avoiding clamped edges ....................................................................................................................................................... 20<br>Optimization level ................................................................................................................................................................... 20<br>Target metric ........................................................................................................................................................................... 20<br>Max gradation ......................................................................................................................................................................... 20<br>Weight on shape quality ....................................................................................................................................................... 20<br>Upper bound on edges length ............................................................................................................................................ 20<br>Number of threads for parallel processing ...................................................................................................................... 21<br>Display handler ....................................................................................................................................................................... 21<br>Interrupt handler .................................................................................................................................................................... 21<br>Pass-through pointer ............................................................................................................................................................. 22<br>Function members ................................................................................................................................................................. 24<br>4. General scheme of the generators .................................................................................................. 25</p>
+<table id='17' style='font-size:14px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 4</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 5</div>
+<h1 id='18' style='font-size:22px'>1. Data of the mesh generators</h1>
+<br><p id='19' data-category='paragraph' style='font-size:18px'>The whole data set for a run of the mesher is gathered into a single structure of type data_type:</p>
+<p id='20' data-category='paragraph' style='font-size:14px'>void tetramesh_iso::mesher::run (tetramesh_iso::mesher::data_type& data);<br>void tetramesh_aniso::mesher::run (tetramesh_aniso::mesher::data_type& data);</p>
+<p id='21' data-category='paragraph' style='font-size:18px'>The data_type structure contains the following fields:</p>
+<br><h1 id='22' style='font-size:20px'>Points’ coordinates</h1>
+<p id='23' data-category='paragraph' style='font-size:18px'>Matrix pos of dimensions 3 x total_nods (IN/OUT).</p>
+<br><p id='24' data-category='paragraph' style='font-size:18px'>Stores the coordinates of all points. The coordinates are stored column-wise. The column index is the index of<br>the node (zero-based, i.e. from 0 to pos.cols() - 1). The X coordinates are in the first row, the Y coordinates<br>in the second row, and the Z coordinates in the third row.</p>
+<br><p id='25' data-category='paragraph' style='font-size:18px'>Upon exit, the coordinates of the newly generated nodes are appended to the back of the matrix as new<br>columns. The initial columns are left unchanged.</p>
+<h1 id='26' style='font-size:20px'>Hard faces</h1>
+<p id='27' data-category='paragraph' style='font-size:18px'>Matrix connectB of dimensions 3 x hard_faces_in (IN/OUT).</p>
+<br><p id='28' data-category='paragraph' style='font-size:18px'>Stores the connectivity of the triangles of the boundary mesh and, if any, of the constrained internal<br>(embedded) faces. The node IDs of the faces are stored column-wise: connectB(i, j) is the ith (0, 1 or 2)<br>node of the jth face.</p>
+<br><p id='29' data-category='paragraph' style='font-size:18px'>This triangle mesh must normally comply with three conditions:</p>
+<br><p id='30' data-category='list' style='font-size:18px'>• it must be valid (no face cuts, no edge cuts, no degenerated faces)1 ;<br>• it must contain at least one closed external boundary;<br>• if cavities or several external boundaries are present, all the elements of the external boundary(s) must be<br>oriented the same way (for instance, normal outside) and the boundaries for the cavities must be oriented<br>the opposite way2 ;</p>
+<br><p id='31' data-category='paragraph' style='font-size:18px'>This matrix can be left empty upon entry when the mesher is used in REGULARIZE_MODE or in CONVEX_HULL_<br>MODE (cf. Section 3). In REGULARIZE_MODE, the mesher will recalculate this boundary mesh. In this case, the<br>connectB matrix is also an output data.</p>
+<br><p id='32' data-category='paragraph' style='font-size:18px'>The ordering of the faces in the matrix (ordering of the columns) is irrelevant. Faces of holes can for instance be<br>mixed with faces of the external boundary.</p>
+<br><h1 id='33' style='font-size:20px'>Isolated (embedded) hard edges</h1>
+<br><p id='34' data-category='paragraph' style='font-size:18px'>Matrix connectE of dimensions 2 x hard_edges_in (IN).</p>
+<br><p id='35' data-category='paragraph' style='font-size:18px'>Stores the connectivity of the edges of the internal prescribed edges. These edges together with the edges of<br>the hard faces make the set of the so-called hard edges.</p>
+<br><p id='36' data-category='paragraph' style='font-size:18px'>The node IDs of the edges are stored column-wise. connectE(i, j) is the ith (0 or 1) node of the jth edge.<br>Cuts between hard edges are normally not allowed (see Section 3).</p>
+<p id='37' data-category='paragraph' style='font-size:14px'>1 These conditions can be partially leveraged with flag strict_constraints_flag = false. With this flag down, cuts between boundary<br>faces and cuts between boundary edges are allowed, as well as isolated nodes inside a face or an edge (but a warning is returned). See<br>Section 3.</p>
+<p id='38' data-category='list' style='font-size:14px'>2 Condition #3 can be leveraged with subdomains_forcing. See Section 3.</p>
+<table id='39' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025 CM2 TetraMesh® Iso/Aniso - reference manual 5</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 6</div>
+<p id='40' data-category='paragraph' style='font-size:18px'>The ordering of the edges in this matrix (ordering of the columns) is irrelevant.</p>
+<br><h1 id='41' style='font-size:20px'>Isolated (embedded) hard nodes</h1>
+<h1 id='42' style='font-size:18px'>Vector isolated_nodes (IN).</h1>
+<br><p id='43' data-category='paragraph' style='font-size:18px'>This vector stores the index of the points in the pos matrix that the user wants to keep in the final mesh3 on<br>top of the hard edges nodes. These points should be geometrically distinct and not located on a hard face or a<br>hard edge (see Section 3).</p>
+<br><p id='44' data-category='paragraph' style='font-size:18px'>These nodes together with the nodes of the hard edges make the set of the so-called hard nodes.</p>
+<h1 id='45' style='font-size:20px'>Repulsive points</h1>
+<p id='46' data-category='paragraph' style='font-size:18px'>Vector repulsive_points (IN).</p>
+<br><p id='47' data-category='paragraph' style='font-size:18px'>This vector contains the index of the points stored in the pos coordinate matrix that define areas of node<br>repulsion in the final mesh. These repulsive points must be associated with valid positive mesh sizes in the<br>metrics vector to be taken into account. These values define spheres of non-strict node exclusion. Because<br>the mesher has to take also into account the mesh sizes given at the neighboring hard nodes, the spheres are<br>mere repulsion spheres, not exclusion spheres. The closer to the repulsive points, the less the probability to<br>find a generated node.</p>
+<h1 id='48' style='font-size:20px'>Background mesh</h1>
+<p id='49' data-category='paragraph' style='font-size:18px'>Matrix background_mesh of dimensions 4 x MB (IN).</p>
+<br><p id='50' data-category='paragraph' style='font-size:18px'>This is the connectivity matrix of an auxiliary tetrahedron mesh used to interpolate the metrics map. Like the<br>other connectivity matrices (connectB, connectM), the indices refer to columns in the same pos coordinates<br>matrix. The metrics at the nodes of this background mesh are stored in the metrics array. All nodes of the<br>background mesh must have a valid metric in this array (i.e. a positive value for the isotropic meshers and<br>positive-definite 3 x 3 sym matrix for the anisotropic meshers). This mesh must not contain any degenerated or<br>badly oriented elements.</p>
+<br><p id='51' data-category='paragraph' style='font-size:18px'>The background mesh is used to control precisely the size of the elements on the entire domain, not only from<br>the hard nodes of the boundaries. This is very useful for instance in a mesh adaptivity scheme in FEA<br>computations. The mesh at step N + 1 (connectM) is generated using the mesh at step N as the background<br>mesh.</p>
+<p id='52' data-category='paragraph' style='font-size:18px'>The background mesh does not need to cover the entire domain. You can define a background mesh only on a<br>part of the domain and leave the default metric interpolation outside.</p>
+<br><p id='53' data-category='paragraph' style='font-size:18px'>If left empty, a default background mesh is used instead for the interpolation of the metrics.</p>
+<br><h1 id='54' style='font-size:20px'>Metric map</h1>
+<br><p id='55' data-category='paragraph' style='font-size:18px'>Vector (resp. 6-row matrix) metrics for the isotropic meshers (resp. anisotropic) mesher (IN/OUT).</p>
+<br><p id='56' data-category='paragraph' style='font-size:18px'>Upon entry, the user can specify a mesh size on each hard node or each node of the background mesh. If the<br>value for a node is zero or negative (resp. non positive-definite) or not present, a default metric will be used<br>instead4. The 3-D mesh is then generated to fit best the metrics map all over the domain.</p>
+<p id='57' data-category='paragraph' style='font-size:18px'>For better results, it is recommended to specify a metric value (resp. a metric matrix) only on isolated nodes<br>and leave the default values, i.e. set to zero, on the nodes of the hard faces/edges.</p>
+<p id='58' data-category='list' style='font-size:14px'>3 However, if such an isolated point is located outside the domain (or inside a cavity), it will not be present in the final mesh. But its<br>coordinates are left unchanged in the pos matrix.</p>
+<p id='59' data-category='list' style='font-size:14px'>4 For a node of a boundary or embedded surface/line, the default size is the average length of the coincident edges. For an isolated node,<br>the default size is based on the size value of the nearest nodes.</p>
+<table id='60' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025 CM2 TetraMesh® Iso/Aniso - reference manual 6</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 7</div>
+<p id='61' data-category='paragraph' style='font-size:18px'>Another solution is to use a background mesh but this requires a valid metric on each of its nodes.</p>
+<br><p id='62' data-category='paragraph' style='font-size:18px'>Note that a steep gradient in the metrics map renders the task of the mesher more difficult and surely affects<br>the quality of the elements.</p>
+<br><h1 id='63' style='font-size:20px'>Tetrahedrons</h1>
+<p id='64' data-category='paragraph' style='font-size:18px'>Matrix connectM of dimensions 4 x nefs (IN/OUT).</p>
+<br><p id='65' data-category='paragraph' style='font-size:18px'>Stores the connectivity of the tetrahedrons of the 3-D mesh. The node IDs of the elements are stored column-<br>wise: connectM(i, j) is the ith node of the jth element.</p>
+<br><p id='66' data-category='paragraph' style='font-size:18px'>The local numbering of the nodes is shown Figure 1. The local numbering can be inverted with flag default_<br>numbering_flag = false (see Section 3).</p>
+<br><p id='67' data-category='paragraph' style='font-size:18px'>This matrix can be non-empty upon entry when the mesher is used as an optimizer of an already existing<br>mesh. Otherwise, it is always an output matrix.</p>
+<br><p id='68' data-category='paragraph' style='font-size:18px'>The ordering of the elements in this matrix is irrelevant (upon exit and upon entry as well).</p>
+<figure id='69' data-category='chart'><img data-coord="top-left:(206,619); bottom-right:(506,902)" /><figcaption><p>Chart Type: line</p></figcaption><table><thead><tr><td></td><td>F</td><td>F3</td><td>F0</td><td>F2</td></tr></thead><tbody><tr><td>item_01</td><td>0</td><td>3</td><td>2</td><td>1</td></tr></tbody></table></figure>
+<br><figure id='70' data-category='chart'><img data-coord="top-left:(716,617); bottom-right:(1016,903)" /><figcaption><p>Chart Type: line</p></figcaption><table><thead><tr><td></td><td>F3</td><td>F2</td><td>F</td><td>F0</td></tr></thead><tbody><tr><td>item_01</td><td>0</td><td>3</td><td>2</td><td>1</td></tr></tbody></table></figure>
+<p id='71' data-category='paragraph' style='font-size:14px'>Figure 1 – Default local numbering of the nodes (left) and inverted numbering (right).<br>The face number is the number of the opposite node.</p>
+<h1 id='72' style='font-size:20px'>Unenforced entities</h1>
+<p id='73' data-category='paragraph' style='font-size:18px'>Vectors unenforced_boundary_IDs, unenforced_edge_IDs, unenforced_node_IDs (OUT).</p>
+<br><p id='74' data-category='paragraph' style='font-size:18px'>Upon exit, these arrays store the IDs of the entities that could not be enforced (because of intersections<br>between hard entities or hard entities located outside the domain).</p>
+<p id='75' data-category='paragraph' style='font-size:18px'>In strict-constraints mode (strict_constraints_flag = true, see Section 3) an error (CM2_NODE_ERROR,<br>CM2_EDGE_ERROR or CM2_FACE_ERROR) is raised when at least one such hard entity cannot be enforced<br>because of intersection.</p>
+<p id='76' data-category='paragraph' style='font-size:18px'>A warning (CM2_NODE_DISCARDED, CM2_EDGE_DISCARDED or CM2_FACE_DISCARDED) is raised in all other<br>cases (non-strict constraints mode or entities located outside the domain).</p>
+<br><h1 id='77' style='font-size:20px'>Pathological boundaries</h1>
+<br><p id='78' data-category='paragraph' style='font-size:18px'>Vector pathological_boundary_IDs (OUT).</p>
+<br><p id='79' data-category='paragraph' style='font-size:18px'>This vector gives the column IDs in the connectB matrix of the faces that intersect other hard faces(s)/edge(s)/<br>node(s).</p>
+<table id='80' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 7</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 8</div>
+<p id='81' data-category='paragraph' style='font-size:18px'>In non-strict mode (strict_constraints_flag = false) some of them will be present in the final mesh (the<br>first in connectB), some will be missing (the highest in connectB).</p>
+<br><p id='82' data-category='paragraph' style='font-size:18px'>In strict-constraints mode (strict_constraints_flag = true), the generator stops with error CM2_FACE_<br>ERROR when this vector is not empty.</p>
+<h1 id='83' style='font-size:20px'>Elements’ color</h1>
+<p id='84' data-category='paragraph' style='font-size:18px'>Vector colors of size equal to nefs, i.e. number of columns in matrix connectM (IN/OUT).</p>
+<br><p id='85' data-category='paragraph' style='font-size:18px'>For each element, this vector gives the index, the so-called color, of the sub-domain5 in which it belongs. Upon<br>exit, the size of this vector equals to the number of output elements, i.e. number of columns in matrix<br>connectM. The color values start at 0 for the most external domain and are incremented each time an internal<br>boundary is encountered from the exterior towards the interior6.</p>
+<br><p id='86' data-category='paragraph' style='font-size:18px'>After meshing, the element colors can be changed to reflect colors on boundaries with set_colors_by_<br>boundaries.</p>
+<p id='87' data-category='paragraph' style='font-size:18px'>In REGULARIZE_MODE, the user can provide upon entry a specific colors vector (with size equals to the<br>number of input elements)7 otherwise TetraMesh will affect color 0 to all elements.</p>
+<br><h1 id='88' style='font-size:20px'>Neighbors</h1>
+<p id='89' data-category='paragraph' style='font-size:18px'>Matrix neighbors of dimensions 4 x nefs (OUT).</p>
+<br><p id='90' data-category='paragraph' style='font-size:18px'>This matrix gives, for each element in the final mesh, the indices of the four neighboring elements (-1 if none).</p>
+<br><p id='91' data-category='paragraph' style='font-size:18px'>neighbors(i, j) is the neighbor of the jth element sharing the ith face. See Figure 1 for the local numbering<br>of the faces.</p>
+<br><h1 id='92' style='font-size:20px'>Ancestors</h1>
+<br><p id='93' data-category='paragraph' style='font-size:18px'>Vector ancestors of size total_nodes, i.e. the number of columns in the pos matrix (OUT).</p>
+<br><p id='94' data-category='paragraph' style='font-size:18px'>This vector gives, for each node, the index of one of the elements in which it belongs (-1 if none, i.e. if the point<br>is not in the final mesh).</p>
+<br><p id='95' data-category='paragraph' style='font-size:18px'>Together with the neighbors matrix, this can make easy the design of search and traversal algorithms (such<br>as looking for all elements connected to a node).</p>
+<br><h1 id='96' style='font-size:20px'>Shape qualities</h1>
+<br><p id='97' data-category='paragraph' style='font-size:18px'>Vector shape_qualities of size nefs, i.e. the number of columns in the connectM matrix (OUT).</p>
+<br><p id='98' data-category='paragraph' style='font-size:18px'>This vector gives the shape quality of each element between 0 for a degenerated tetrahedron to 1 for a perfect<br>equilateral one.</p>
+<br><p id='99' data-category='paragraph' style='font-size:18px'>The formula we use for the shape quality of a tetrahedron writes:</p>
+<table id='100' style='font-size:18px'><thead></thead><tbody><tr><td>V</td><td>V Volume of the tetrahedron.</td></tr><tr><td>Qs� � 6 6 Lm ax S</td><td>with: Lmax Length of the longest edge of the tetrahedron. S Total area of the four faces of the tetrahedron.</td></tr></tbody></table>
+<p id='101' data-category='list' style='font-size:14px'>5 A sub-domain means a set of connected elements not fully separated by a hard face boundary.<br>6 If several sub-domains have the same "level" with respect to the outer boundary, their relative color order is undefined.<br>7 Faces between elements with different colors will be considered also as hard boundaries in addition to those in connectB.</p>
+<table id='102' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025 CM2 TetraMesh® Iso/Aniso - reference manual 8</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 9</div>
+<h1 id='103' style='font-size:20px'>Histograms</h1>
+<p id='104' data-category='paragraph' style='font-size:16px'>Histograms histo_Qs and histo_Qh for the shape and size qualities of the mesh (OUT).</p>
+<br><p id='105' data-category='paragraph' style='font-size:16px'>In the anisotropic case, the shape quality of an element is computed using the metrics at its nodes (minimum<br>value of the qualities computed with the four metric transformations).</p>
+<br><p id='106' data-category='paragraph' style='font-size:16px'>histo_Qs is the histogram of the shape_qualities vector. histo_Qh is computed only when the option<br>flag compute_Qh_flag is up (see Section 3).</p>
+<br><p id='107' data-category='paragraph' style='font-size:16px'>Each histogram stores the minimum, the maximum and the average value as data members.</p>
+<h1 id='108' style='font-size:20px'>Errors and warnings</h1>
+<br><p id='109' data-category='paragraph' style='font-size:16px'>Two enums, error_code and warning_code, give upon exit the error and warning codes if any (OUT).</p>
+<br><p id='110' data-category='paragraph' style='font-size:16px'>A correct run gives the CM2_NO_ERROR and CM2_NO_WARNING codes (zero values). See Section 2 for more<br>detailed explanations of the error and warning codes.</p>
+<br><p id='111' data-category='paragraph' style='font-size:16px'>String msg1 holds explanation messages about the error/warning if any. In case of error, the meshing process<br>is aborted and the output mesh (connectM) is empty. With a mere warning, the process goes to its end though<br>the final mesh may have a poor quality.</p>
+<br><p id='112' data-category='paragraph' style='font-size:16px'>String msg2 is for debugging purpose and shouldn’t normally be used on production code.</p>
+<br><h1 id='113' style='font-size:20px'>Complementary information</h1>
+<br><p id='114' data-category='paragraph' style='font-size:16px'>In this section are gathered the remaining fields of the data_type structure. They are all output values about<br>the final mesh (OUT):</p>
+<br><p id='115' data-category='list' style='font-size:16px'>• nefs: the number of elements in the final mesh (also equals to the number of columns in connectM).<br>• total_nods: the number of points in the the pos matrix (i.e. number of columns).<br>• nods: the number of nodes in the mesh (less than or equal to total_nods).<br>• hard_nodes_in, hard_nodes_out: the number of input and output hard nodes. In strict mode, these<br>two quantities must be equal.<br>• hard_edges_in, hard_edges_out: the number of input and output hard edges. In strict mode, these two<br>quantities must be equal.<br>• hard_faces_in, hard_faces_out: the number of input and output hard faces. In strict mode, these two<br>quantities must be equal.<br>• Steiner_nodes: the number of Steiner nodes inserted in order to enforce the constraints8.<br>• volume: the volume of the mesh.<br>• Qmin_in: the worst shape quality of the elements in the mesh upon entry (REGULARIZE_MODE only).<br>• Qmin: the worst shape quality of the elements in the final mesh - also available in histo_Qs.<br>• max_min_quality: the upper bound for the minimum shape quality of a tetrahedral mesh based on the<br>boundary triangle mesh. The mesher cannot generate a mesh with worst shape quality better than this<br>value.<br>• min_box, max_box: the bounding box of the mesh<br>• subdomains: the number of sub-domains - i.e. the number of different values in the colors vector.<br>• boundary_sgn: the orientation of the external boundary: +1 if the contour is counter-clockwise, -1 if the<br>contour is clockwise.<br>• error_code, warning_code: the error and warning codes (see Section 2).<br>• msg1: the error message.<br>• front_time, refine_time, optim_time: the times spent in the successive steps of the mesher.<br>• total_time: the total time spent in the mesher.<br>• speed: the global speed of the mesher (number of generated elements per second).</p>
+<table id='116' style='font-size:14px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025 CM2 TetraMesh® Iso/Aniso - reference manual 9</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 10</div>
+<p id='117' data-category='paragraph' style='font-size:16px'>struct data_type</p>
+<br><p id='118' data-category='paragraph' style='font-size:16px'>{</p>
+<br><p id='119' data-category='paragraph' style='font-size:16px'>DoubleMat<br>UIntMat<br>UIntMat<br>UIntVec<br>UIntVec<br>UIntMat<br>DoubleVec<br>UIntMat</p>
+<p id='120' data-category='paragraph' style='font-size:16px'>UIntVec<br>UIntVec<br>UIntVec<br>UIntVec<br>UIntVec<br>UIntMat<br>UIntVec<br>DoubleVec<br>misc::histogram<br>misc::histogram</p>
+<p id='121' data-category='paragraph' style='font-size:16px'>unsigned<br>unsigned<br>unsigned<br>unsigned<br>unsigned<br>unsigned<br>unsigned<br>unsigned<br>unsigned<br>unsigned<br>double<br>double<br>double<br>double<br>DoubleVec3<br>DoubleVec3<br>unsigned<br>int</p>
+<p id='122' data-category='paragraph' style='font-size:16px'>double<br>double<br>double<br>double<br>double</p>
+<br><p id='123' data-category='paragraph' style='font-size:16px'>pos;<br>connectB;<br>connectE;<br>isolated_nodes;<br>repulsive_points;<br>background_mesh;<br>metrics;<br>connectM;</p>
+<br><p id='124' data-category='paragraph' style='font-size:16px'>unenforced_boundary_IDs;<br>unenforced_edge_IDs;<br>unenforced_node_IDs;<br>pathological_boundary_IDs;<br>colors;<br>neighbors;<br>ancestors;<br>shape_qualities;<br>histo_Qs;<br>histo_Qh;</p>
+<p id='125' data-category='paragraph' style='font-size:16px'>nefs;<br>nods;<br>total_nods;<br>hard_nodes_in;<br>hard_edges_in;<br>hard_faces_in;<br>hard_nodes_out;<br>hard_edges_out;<br>hard_faces_out;<br>Steiner_nodes;<br>volume;<br>Qmin_in;<br>Qmin;<br>max_min_quality;<br>min_box;<br>max_box;<br>subdomains;</p>
+<br><p id='126' data-category='paragraph' style='font-size:16px'>boundary_sgn;</p>
+<br><p id='127' data-category='paragraph' style='font-size:16px'>front_time;<br>refine_time;<br>optim_time;<br>total_time;<br>speed;</p>
+<br><p id='128' data-category='paragraph' style='font-size:16px'>error_code;<br>warning_code;<br>msg1[256];</p>
+<br><p id='129' data-category='paragraph' style='font-size:16px'>error_type<br>warning_type<br>char</p>
+<br><p id='130' data-category='paragraph' style='font-size:16px'>};</p>
+<caption id='131' style='font-size:16px'>Table 1 – The data_type structure (CM2 TetraMesh Iso).</caption>
+<table id='132' style='font-size:20px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025 - reference manual</td><td>CM2 TetraMesh® Iso/Aniso 10</td></tr></tbody></table>
+<br><p id='133' data-category='paragraph' style='font-size:14px'>8 In 2D, it is possible to triangulate any domain using only the nodes of the boundary mesh and respecting all the constraints. This is not true<br>in 3D. Internal nodes, called Steiner nodes, are sometimes needed in order to produce valid tetrahedrons. These Steiner nodes are inserted<br>during the constraints enforcement phase (front mesh). These new nodes are the first ones appended to the matrix pos.</p>
+</div>
+<div class="page">
+<div class="page-header">Page 11</div>
+<p id='134' data-category='paragraph' style='font-size:14px'>struct data_type</p>
+<br><p id='135' data-category='paragraph' style='font-size:14px'>{</p>
+<br><p id='136' data-category='paragraph' style='font-size:14px'>DoubleMat<br>UIntMat<br>UIntMat<br>UIntVec<br>UIntVec<br>UIntMat<br>DoubleMat<br>UIntMat</p>
+<h1 id='137' style='font-size:14px'>UIntVec</h1>
+<br><p id='138' data-category='paragraph' style='font-size:14px'>UIntVec</p>
+<br><p id='139' data-category='paragraph' style='font-size:14px'>UIntVec</p>
+<br><h1 id='140' style='font-size:14px'>UIntVec</h1>
+<br><p id='141' data-category='paragraph' style='font-size:14px'>UIntVec</p>
+<br><p id='142' data-category='paragraph' style='font-size:14px'>UIntMat</p>
+<br><h1 id='143' style='font-size:14px'>UIntVec</h1>
+<br><p id='144' data-category='paragraph' style='font-size:14px'>DoubleVec</p>
+<br><p id='145' data-category='paragraph' style='font-size:14px'>misc::histogram</p>
+<br><h1 id='146' style='font-size:14px'>misc::histogram</h1>
+<br><p id='147' data-category='paragraph' style='font-size:14px'>unsigned<br>unsigned<br>unsigned<br>unsigned<br>unsigned<br>unsigned<br>unsigned<br>unsigned<br>unsigned<br>unsigned<br>double<br>double<br>double<br>double<br>DoubleVec3<br>DoubleVec3<br>unsigned<br>int</p>
+<br><p id='148' data-category='paragraph' style='font-size:14px'>pos;<br>connectB;<br>connectE;<br>isolated_nodes;<br>repulsive_points;<br>background_mesh;<br>metrics;<br>connectM;</p>
+<br><p id='149' data-category='paragraph' style='font-size:14px'>unenforced_boundary_IDs;<br>unenforced_edge_IDs;<br>unenforced_node_IDs;<br>pathological_boundary_IDs;<br>colors;<br>neighbors;<br>ancestors;<br>shape_qualities;<br>histo_Qs;<br>histo_Qh;</p>
+<p id='150' data-category='paragraph' style='font-size:14px'>nefs;<br>nods;<br>total_nods;<br>hard_nodes_in;<br>hard_edges_in;<br>hard_faces_in;<br>hard_nodes_out;<br>hard_edges_out;<br>hard_faces_out;<br>Steiner_nodes;<br>volume;<br>Qmin_in;<br>Qmin;<br>max_min_quality;<br>min_box;<br>max_box;<br>subdomains;</p>
+<br><p id='151' data-category='paragraph' style='font-size:14px'>boundary_sgn;</p>
+<br><h1 id='152' style='font-size:14px'>double</h1>
+<br><p id='153' data-category='paragraph' style='font-size:14px'>double</p>
+<br><p id='154' data-category='paragraph' style='font-size:14px'>double</p>
+<br><h1 id='155' style='font-size:14px'>double</h1>
+<br><p id='156' data-category='paragraph' style='font-size:14px'>double</p>
+<br><p id='157' data-category='paragraph' style='font-size:14px'>front_time;<br>refine_time;<br>optim_time;<br>total_time;<br>speed;</p>
+<br><p id='158' data-category='paragraph' style='font-size:14px'>error_type<br>warning_type<br>char</p>
+<br><p id='159' data-category='paragraph' style='font-size:14px'>error_code;<br>warning_code;<br>msg1[256];</p>
+<br><p id='160' data-category='paragraph' style='font-size:14px'>};</p>
+<caption id='161' style='font-size:14px'>Table 2 – The data_type structure (CM2 TetraMesh Aniso).</caption>
+<h1 id='162' style='font-size:20px'>Function members</h1>
+<table id='163' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 11</td></tr></tbody></table>
+<br><p id='164' data-category='paragraph' style='font-size:18px'>The data_type are equipped with constructors, copy operator and other utility members:</p>
+</div>
+<div class="page">
+<div class="page-header">Page 12</div>
+<h1 id='165' style='font-size:14px'>// Constructors.</h1>
+<br><p id='166' data-category='paragraph' style='font-size:14px'>data_type();<br>data_type(const data_type& cpy);<br>data_type (const DoubleMat& P, const UIntMat& connectM);</p>
+<br><p id='167' data-category='paragraph' style='font-size:14px'>// Copy operator.<br>const data_type& operator= (const data_type& data);</p>
+<p id='168' data-category='paragraph' style='font-size:14px'>// Members.<br>void shallow_copy (const data_type& data);<br>bool valid() const;<br>int check() const;<br>void clear();<br>void clear_data_out();<br>void extract (DoubleMat& P, UIntMat& connectM) const;<br>void IDs_sorted_by_color (UIntVec& color_order, UIntVec& xColor) const;</p>
+<br><p id='169' data-category='paragraph' style='font-size:14px'>int get_colors_on_boundaries</p>
+<br><p id='170' data-category='paragraph' style='font-size:14px'>(const UIntMat& B, int orientation_code, UIntVec& colorsB) const;<br>int get_colors_on_boundaries (UIntVec& colorsB) const;<br>int set_colors_by_boundaries</p>
+<br><p id='171' data-category='paragraph' style='font-size:14px'>(const UIntMat& B, const UIntVec& colorsB,</p>
+<br><p id='172' data-category='paragraph' style='font-size:14px'>int multicolor_code, int orientation_code, UIntVec& colors_map);</p>
+<br><p id='173' data-category='paragraph' style='font-size:14px'>int set_colors_by_boundaries (const UIntVec& colorsB, UIntVec& colors_map);<br>void save (const char* filename, unsigned precision = 16) const;<br>int load (const char* filename);<br>void print_info (display_handler_type hdl) const;<br>bool error_raised() const;<br>bool warning_raised() const;</p>
+<p id='174' data-category='paragraph' style='font-size:14px'>Table 3 – The data_type function members.</p>
+<p id='175' data-category='paragraph' style='font-size:20px'>The IDs_sorted_by_color member gets the order of elements according to their color.<br>The get_colors_on_boundaries members returns the colors of the elements adjacent to the specified<br>boundary faces.<br>The set_colors_by_boundaries members changes the colors of the elements adjacent to the specified<br>boundary faces.</p>
+<br><p id='176' data-category='paragraph' style='font-size:20px'>Refer to the HTML reference manual for more details.</p>
+<table id='177' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 12</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 13</div>
+<h1 id='178' style='font-size:22px'>2. Error and warning codes</h1>
+<br><h1 id='179' style='font-size:20px'>Error codes</h1>
+<p id='180' data-category='paragraph' style='font-size:18px'>The error code is a public field of the class data_type::error_code as an enum of type error_type.</p>
+<figure id='181'><img style='font-size:14px' alt="enum error_type
+{
+CM2_NO_ERROR, // 0
+CM2_LICENSE_ERROR, // -100
+CM2_SETTINGS_ERROR, // -101
+CM2_DATA_ERROR, // -102
+CM2_NODES_LIMIT_ERROR, // -103
+CM2_NODE_ERROR, // -104
+CM2_EDGE_ERROR, // -105
+CM2_FACE_ERROR, // -106
+CM2_BOUNDARY_ERROR, // -107
+CM2_DEGENERATED_ELEMENT, // -108
+CM2_BACKGROUND_MESH_ERROR, // -109
+CM2_SYSTEM_MEMORY_ERROR, // -199
+CM2_INTERNAL_ERROR // -200
+};" data-coord="top-left:(102,300); bottom-right:(1139,630)" /></figure>
+<footer id='182' style='font-size:14px'>Table 4 – Error codes enum.</footer>
+<table id='183' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 13</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 14</div>
+<table id='184' style='font-size:20px'><thead></thead><tbody><tr><td>CM�_NO_ERROR</td><td>OK, no problem.</td></tr><tr><td>CM�_LICENSE_ERROR</td><td>The registration must occur before the instantiation of any meshers. Check also your license. You may renew it. Please, contact <license@computing-objects.com>.</td></tr><tr><td>CM�_SETTINGS_ERROR</td><td>At least one setting is not valid (see Section 3). Check the positivity/range of scalar values such as shape_ quality_weight, max_gradation...</td></tr><tr><td>CM�_DATA_ERROR</td><td>The input data are not valid. Check the sizes of matrices, of vectors, node indices in the connectivity matrices, look for insane values...</td></tr><tr><td>CM�_NODES_LIMIT_ERROR</td><td>The limitation on nodes number is too low.</td></tr><tr><td>CM�_NODE_ERROR</td><td>Invalid hard node(s): at least one hard node is in hard entity (node or edge or face). Strict mode only.</td></tr><tr><td>CM�_EDGE_ERROR</td><td>Invalid hard edge(s): at least one hard edge is intersecting another hard entity (edge or face). Strict mode only.</td></tr><tr><td>CM�_FACE_ERROR</td><td>Invalid hard face(s): at least one hard face intersecting another hard entity (face). Note: this error is raised only in very rare cases since normally a CM2_NODE_ERROR or CM2_EDGE_ERROR is raised before (higher priority). Strict mode only.</td></tr><tr><td>CM�_BOUNDARY_ERROR</td><td>The external boundary mesh is flat. There is no domain to be meshed.</td></tr><tr><td>CM�_DEGENERATED_ELEMENT</td><td>At least one of the elements is invalid (null or negative volume). Check the hard faces, hard edges and hard nodes.</td></tr><tr><td>CM�_BACKGROUND_MESH_ERROR</td><td>The background mesh is not valid (not a tetrahedral mesh, nodes not in the pos matrix or degenerated elements).</td></tr><tr><td>CM�_SYSTEM_MEMORY_ERROR</td><td>Insufficient memory available. Mesh is too big to be generated.</td></tr><tr><td>CM�_INTERNAL_ERROR</td><td>Unexpected error. Save the data by calling data_type::save and send the file zipped to <support@computing-objects.com>.</td></tr></tbody></table>
+<br><p id='185' data-category='paragraph' style='font-size:14px'>Table 5 – Error codes.</p>
+<p id='186' data-category='paragraph' style='font-size:20px'>This table reflects the priority of the error codes. The highest in the table, the highest priority.</p>
+<br><p id='187' data-category='paragraph' style='font-size:20px'>For error codes CM�_DEGENERATED_ELEMENT and CM�_INTERNAL_ERROR, save the data by calling data_<br>type::save and send the file zipped to <support@computing-objects.com>.</p>
+<table id='188' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 14</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 15</div>
+<p id='189' data-category='paragraph' style='font-size:20px'>Example</p>
+<p id='190' data-category='paragraph' style='font-size:14px'>if (data.error_raised())<br>{<br>// Error, do something according to data.error_code (send message to window, abort...)<br>}</p>
+<h1 id='191' style='font-size:22px'>Warning codes</h1>
+<p id='192' data-category='paragraph' style='font-size:18px'>The warning code is a public field of the class data_type::warning_code as an enum of type warning_<br>type.</p>
+<p id='193' data-category='paragraph' style='font-size:14px'>{</p>
+<br><p id='194' data-category='paragraph' style='font-size:14px'>enum warning_type</p>
+<br><p id='195' data-category='paragraph' style='font-size:14px'>CM2_NO_WARNING,<br>CM2_INTERRUPTION,<br>CM2_NODES_LIMIT_WARNING,<br>CM2_NODE_DISCARDED,<br>CM2_EDGE_DISCARDED,<br>CM2_FACE_DISCARDED,<br>CM2_BOUNDARY_WARNING,<br>CM2_SHAPE_QUALITY_WARNING</p>
+<br><p id='196' data-category='paragraph' style='font-size:14px'>// 0</p>
+<br><p id='197' data-category='paragraph' style='font-size:14px'>// -10</p>
+<br><p id='198' data-category='paragraph' style='font-size:14px'>// -11</p>
+<br><p id='199' data-category='paragraph' style='font-size:14px'>// -12</p>
+<br><p id='200' data-category='paragraph' style='font-size:14px'>// -13</p>
+<br><p id='201' data-category='paragraph' style='font-size:14px'>// -14</p>
+<br><p id='202' data-category='paragraph' style='font-size:14px'>// -15</p>
+<br><p id='203' data-category='paragraph' style='font-size:14px'>// -16</p>
+<br><p id='204' data-category='paragraph' style='font-size:14px'>};</p>
+<p id='205' data-category='paragraph' style='font-size:14px'>Table 6 – Warning codes enum.</p>
+<p id='206' data-category='paragraph' style='font-size:20px'>Example</p>
+<p id='207' data-category='paragraph' style='font-size:14px'>if (data.warning_raised())<br>{<br>// Warning, do something according to data.warning_code (send message to window...)<br>}</p>
+<table id='208' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 15</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 16</div>
+<table id='209' style='font-size:20px'><thead></thead><tbody><tr><td>CM�_NO_WARNING</td><td>OK, no problem.</td></tr><tr><td>CM�_NODES_LIMIT_WARNING</td><td>The node limit has been reached and the mesh may be far from optimal.</td></tr><tr><td>CM�_NODE_DISCARDED</td><td>Invalid hard node(s): at least two hard nodes are coincident and one is discarded (when strict_constraints_flag = false) or one is located outside the domain and is discarded.</td></tr><tr><td>CM�_EDGE_DISCARDED</td><td>Invalid hard edge(s): at least one hard edge is intersecting another hard entity (node or edge) and is discarded (when strict_ constraints_flag = false) or one is located outside the domain (but not its nodes) and is discarded.</td></tr><tr><td>CM�_FACE_DISCARDED</td><td>Invalid hard face(s): at least one hard face is intersecting another hard entity (node or edge) and is discarded (when strict_ constraints_flag = false) or is located outside the domain (but not its nodes nor edges) and is discarded.</td></tr><tr><td>CM�_BOUNDARY_WARNING</td><td>The boundary mesh was not watertight but it has been corrected (closed) by the generator9. See tutorials, Section 8. Or the boundary mesh was not uniformly oriented.</td></tr><tr><td>CM�_INTERRUPTION</td><td>The user has aborted the run (through the interrupt handler). The final mesh may be empty or valid but of poor quality.</td></tr><tr><td>CM�_SHAPE_QUALITY_WARNING</td><td>The final mesh is valid but at least one of the elements is very bad (shape quality < 0.01). Check that the discretization of connected lines are not too different.</td></tr></tbody></table>
+<br><p id='210' data-category='paragraph' style='font-size:16px'>Table 7 – Warning codes.</p>
+<p id='211' data-category='paragraph' style='font-size:20px'>This table reflects the priority of the warning codes. The highest in the table, the highest priority.</p>
+<br><p id='212' data-category='paragraph' style='font-size:20px'>For warning code CM�_SHAPE_QUALITY_WARNING, if the boundary mesh is good, save the data by calling<br>data_type::save and send the file zipped to <support@computing-objects.com>.</p>
+<p id='213' data-category='paragraph' style='font-size:14px'>9 The closing of the boundary mesh may induce noticeable changes of the surface geometry.</p>
+<table id='214' style='font-size:18px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 16</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 17</div>
+<h1 id='215' style='font-size:22px'>3. Settings of the mesh generators</h1>
+<p id='216' data-category='paragraph' style='font-size:18px'>CM2 TetraMesh Iso/Aniso can be used as regular mesh generators or as optimizers of some already existing<br>meshes. For that matter, flags and parameters can be used to adapt the meshers to many various needs.</p>
+<br><p id='217' data-category='paragraph' style='font-size:18px'>Some options are relevant only in the meshing mode, some only in the optimizing mode. They are all gathered<br>into a structure of type settings_type as a public member field of the mesher:</p>
+<p id='218' data-category='paragraph' style='font-size:14px'>cm2::tetramesh_iso::mesher::settings_type settings;<br>cm2::tetramesh_aniso::mesher::settings_type settings;</p>
+<h1 id='219' style='font-size:20px'>Basic operating mode</h1>
+<p id='220' data-category='paragraph' style='font-size:18px'>basic_mode. Default = MESH_MODE.</p>
+<br><p id='221' data-category='paragraph' style='font-size:18px'>The meshers have three distinct operating modes:</p>
+<br><p id='222' data-category='list' style='font-size:18px'>• MESH_MODE (the default mode): a mesh is generated from a set of hard faces and possibly some internal<br>(embedded) hard edges and nodes; the connectB and connectE matrices and isolated_nodes in the<br>data structure are input fields whereas the connectM matrix is an output of the mesher;<br>• REGULARIZE_MODE : the mesher improves the quality of an already existing tetrahedral mesh; the<br>connectM matrix is both input and output of the mesher;<br>• CONVEX_HULL_MODE : the mesher builds an approximate convex hull of the points; no new node is added<br>to the mesh;</p>
+<h1 id='223' style='font-size:20px'>Strict constraints enforcement</h1>
+<p id='224' data-category='paragraph' style='font-size:18px'>strict_constraints_flag. Default = true. Used in MESH_MODE only.</p>
+<br><p id='225' data-category='paragraph' style='font-size:18px'>This flag tells the mesher to raise an aborting error (CM2_FACE_ERROR, CM2_EDGE_ERROR, CM2_NODE_ERROR)<br>if at least one of the constraints cannot be enforced or to simply emit a warning (CM2_FACE_DISCARDED, CM2_<br>EDGE_DISCARDED, CM2_NODE_DISCARDED) and go on with the process if possible.</p>
+<p id='226' data-category='paragraph' style='font-size:18px'>☞ Beware that a rejected face can make a boundary non-closed and give a hole in the domain or merge sub-<br>domains.</p>
+<h1 id='227' style='font-size:20px'>Keeping or removing internal cavities</h1>
+<p id='228' data-category='paragraph' style='font-size:18px'>subdomains_forcing. Default = 0. Used in MESH_MODE only.</p>
+<br><p id='229' data-category='paragraph' style='font-size:18px'>Forcing mode for intern sub-domains. Possible values are:</p>
+<br><p id='230' data-category='list' style='font-size:18px'>• -1: all intern sub-domains are considered as holes regardless of the orientation of their enclosing boundary;<br>• 0: intern sub-domains are considered as holes when the orientation of their enclosing boundary is opposite<br>to the orientation of the most enclosing domain, otherwise, they are meshed;<br>• 1+: all intern sub-domains are meshed regardless of the orientation of their enclosing boundary;</p>
+<table id='231' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025 CM2 TetraMesh® Iso/Aniso - reference manual 17</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 18</div>
+<h1 id='232' style='font-size:20px'>Refinement</h1>
+<p id='233' data-category='paragraph' style='font-size:18px'>refine_flag. Default = true. Used in MESH_MODE and REGULARIZE_MODE.</p>
+<br><p id='234' data-category='paragraph' style='font-size:18px'>This flag enables the generation of new points inside the domain in order to get good element and size<br>qualities. This flag down makes the mesher to triangulate only the domain, i.e. it stops after the front mesh<br>step. Only the hard nodes, and possibly some Steiner nodes, will be in the final mesh.</p>
+<table id='235' style='font-size:16px'><thead><tr><td colspan="3">strict_constraints_flag</td></tr></thead><tbody><tr><td></td><td>false</td><td>true</td></tr><tr><td>Two hard nodes are coincident (or too close from each other)</td><td>Warning CM2_NODE_DISCARDED The highest node is discarded.</td><td>Error CM2_NODE_ERROR</td></tr><tr><td>A hard node is located inside a hard edge.</td><td>Warning CM2_EDGE_DISCARDED The edge is discarded.</td><td>Error CM2_NODE_ERROR</td></tr><tr><td>Two hard edges cross each other.</td><td>Warning CM2_EDGE_DISCARDED The highest edge is discarded.</td><td>Error CM2_EDGE_ERROR</td></tr><tr><td>A hard node is located outside the domain (or in a hole).</td><td>Warning CM2_NODE_DISCARDED The node is discarded.</td><td>Warning CM2_NODE_DISCARDED The node is discarded.</td></tr><tr><td>A hard edge is located outside the domain (or in a hole) but with nodes on boundary.</td><td>Warning CM2_EDGE_DISCARDED The edge is discarded.</td><td>Warning CM2_EDGE_DISCARDED The edge is discarded.</td></tr><tr><td>A hard edge is located outside the domain (or in a hole), with nodes outside also.</td><td>Warning CM2_NODE_DISCARDED The node(s) and the edge are discarded.</td><td>Warning CM2_NODE_DISCARDED The node(s) and the edge are discarded.</td></tr><tr><td>The contour mesh is not close.</td><td>Warning CM2_BOUNDARY_WARNING The mesh is empty.</td><td>Warning CM2_BOUNDARY_WARNING The mesh is empty.</td></tr><tr><td>The contour mesh is not consistently oriented.</td><td>Warning CM2_BOUNDARY_WARNING The ambiguous sub-domains are filled.</td><td>Warning CM2_BOUNDARY_WARNING The ambiguous sub-domains are filled.</td></tr></tbody></table>
+<caption id='236' style='font-size:14px'>Table 8 – Effect of strict_constraints_flag on invalid constraints.</caption>
+<h1 id='237' style='font-size:20px'>Node smoothing</h1>
+<p id='238' data-category='paragraph' style='font-size:18px'>node_smoothing_flag. Default = true. Used in MESH_MODE and REGULARIZE_MODE.</p>
+<br><p id='239' data-category='paragraph' style='font-size:18px'>This flag controls the node-smoothing scheme in the optimization step. Node smoothing doesn't change the<br>mesh connectivity, only the coordinates of nodes.</p>
+<br><p id='240' data-category='paragraph' style='font-size:18px'>This flag has no effect when the optimization step is disabled (optim_level = 0).</p>
+<table id='241' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 18</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 19</div>
+<h1 id='242' style='font-size:20px'>Node inserting</h1>
+<p id='243' data-category='paragraph' style='font-size:18px'>node_inserting_flag. Default = true. Used in MESH_MODE and REGULARIZE_MODE.</p>
+<br><p id='244' data-category='paragraph' style='font-size:18px'>This flag controls the node-inserting scheme in the optimization step. Node inserting increases the number of<br>nodes, changes the mesh connectivity, but doesn't change the other nodes' coordinates.</p>
+<br><p id='245' data-category='paragraph' style='font-size:18px'>This flag has no effect when the optimization step is disabled (optim_level = 0).</p>
+<h1 id='246' style='font-size:20px'>Node removing</h1>
+<p id='247' data-category='paragraph' style='font-size:18px'>node_removing_flag. Default = true. Used in MESH_MODE and REGULARIZE_MODE.</p>
+<br><p id='248' data-category='paragraph' style='font-size:18px'>This flag controls the node-removing scheme in the optimization step. Node removing decreases the number<br>of nodes, changes the mesh connectivity, but doesn't change the other nodes' coordinates.</p>
+<br><p id='249' data-category='paragraph' style='font-size:18px'>This flag has no effect when the optimization step is disabled (optim_level = 0).</p>
+<br><h1 id='250' style='font-size:20px'>Shell remeshing</h1>
+<br><p id='251' data-category='paragraph' style='font-size:18px'>shell_remeshing_flag. Default = true. Used in MESH_MODE and REGULARIZE_MODE.</p>
+<br><p id='252' data-category='paragraph' style='font-size:18px'>This flag controls the edge-swapping scheme in the optimization step. Edge swapping changes the mesh<br>connectivity, but doesn't change the number of nodes nor their coordinates.</p>
+<br><p id='253' data-category='paragraph' style='font-size:18px'>This flag has no effect when the optimization step is disabled (optim_level = 0).</p>
+<h1 id='254' style='font-size:20px'>Local numbering</h1>
+<br><p id='255' data-category='paragraph' style='font-size:18px'>default_numbering_flag. Default = true. Used in all modes.</p>
+<br><p id='256' data-category='paragraph' style='font-size:18px'>This flag controls the local node numbering of the tetrahedrons, as shown in Figure 1.</p>
+<br><h1 id='257' style='font-size:20px'>Computation of the size-qualities histogram</h1>
+<p id='258' data-category='paragraph' style='font-size:18px'>compute_Qh_flag. Default = false. Used in all modes.</p>
+<br><p id='259' data-category='paragraph' style='font-size:18px'>Before exiting the process, this flag tells the mesher to compute the histogram of the size quality of all the<br>edges in the mesh. The users are rarely interested in this histogram. So the default state is false.</p>
+<br><h1 id='260' style='font-size:20px'>Limit on the number of nodes</h1>
+<p id='261' data-category='paragraph' style='font-size:18px'>nodes_limit. Default = UINT_MAX. Used in all modes.</p>
+<br><p id='262' data-category='paragraph' style='font-size:18px'>When this limit is reached by the mesher10, the CM2_NODES_LIMIT_WARNING is issued. The algorithm<br>generates a mesh but the quality can be far from optimal. When the limit is so low that the mesher cannot even<br>insert all the hard nodes, the CM2_NODES_LIMIT_ERROR is raised and the mesh is aborted.</p>
+<p id='263' data-category='paragraph' style='font-size:14px'>10 This limit is not strict. The number of nodes actually in the final mesh may be slightly different from this limit (lesser or greater).</p>
+<table id='264' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 19</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 20</div>
+<h1 id='265' style='font-size:20px'>Avoiding clamped edges</h1>
+<p id='266' data-category='paragraph' style='font-size:16px'>no_edge_with_nodes_below. Default = 0. Used in MESH_MODE and REGULARIZE_MODE.</p>
+<br><p id='267' data-category='paragraph' style='font-size:16px'>Forbids edges with two nodes below this node id.</p>
+<br><p id='268' data-category='paragraph' style='font-size:16px'>To forbid edges between two hard nodes (nodes of the boundaries or embedded nodes) set this value to<br>data.pos.cols() upon entry. To disable this control, set this value to 0.</p>
+<br><p id='269' data-category='paragraph' style='font-size:16px'>This control can be limited by nodes_limit.</p>
+<br><p id='270' data-category='paragraph' style='font-size:16px'>This setting has no effect when the optimization step is disabled (optim_level = 0) or when node_<br>inserting_flag = false.</p>
+<br><h1 id='271' style='font-size:20px'>Optimization level</h1>
+<p id='272' data-category='paragraph' style='font-size:16px'>optim_level. Integer between 0 and 10. Default = 3. Used in MESH_MODE and REGULARIZE_MODE.</p>
+<br><p id='273' data-category='paragraph' style='font-size:16px'>A null value makes the mesher to skip the optimization step. The speed is maximal but the quality may be poor.<br>From value 1 on, the optimizer algorithm uses several techniques to improve both the shape quality and the<br>size quality of the elements, such as node smoothing, edge swapping, node insertion and node removal.<br>Level 3 is usually a good trade-off between quality and speed.</p>
+<h1 id='274' style='font-size:20px'>Target metric</h1>
+<p id='275' data-category='paragraph' style='font-size:16px'>target_metric. Double value (isotropic) or DoubleSym3 (anisotropic). Default = 0. Used in MESH_MODE only.</p>
+<br><p id='276' data-category='paragraph' style='font-size:16px'>Global element size inside the domain. The elements size tends toward this value as they get away from the<br>hard (boundary) edges. This parameter is often used to reduce the total number of elements (when target_<br>metric > default sizes based on boundary edge lengths) and to save FEA computation time without loosing<br>much on element shape quality.</p>
+<br><p id='277' data-category='paragraph' style='font-size:16px'>The target_metric may be smaller or bigger than the default sizes based on boundary edge lengths.</p>
+<h1 id='278' style='font-size:20px'>Max gradation</h1>
+<p id='279' data-category='paragraph' style='font-size:16px'>max_gradation. Double value greater than 0. Default = 0.5. Used in MESH_MODE only.</p>
+<br><p id='280' data-category='paragraph' style='font-size:16px'>This parameter controls the gradation of the elements size from the boundary sizes to the size defined by<br>target_metric inside the domain. A value close to 0 leads to a more progressive variation of mesh size<br>(smoother).</p>
+<h1 id='281' style='font-size:20px'>Weight on shape quality</h1>
+<p id='282' data-category='paragraph' style='font-size:16px'>shape_quality_weight. Double value between 0 and 1. Default = 0.60. Used in MESH_MODE and<br>REGULARIZE_MODE.</p>
+<br><p id='283' data-category='paragraph' style='font-size:16px'>This parameter controls the trade-off between shape optimization and size optimization. It is the weight of the<br>shape quality in the measure of the global quality of an element. The default value (0.6) gives a slight<br>preference to the shape quality over the size quality.</p>
+<h1 id='284' style='font-size:20px'>Upper bound on edges length</h1>
+<br><p id='285' data-category='paragraph' style='font-size:16px'>length_upper_bound. Double value greater than 0. Default = 1.414. Used in MESH_MODE only.</p>
+<br><p id='286' data-category='paragraph' style='font-size:16px'>This parameter is used to limit the length of the edges in the generated mesh (normalized length). This is not a<br>strict enforcement however. Most of the edges will be shorter than this limit, but some may remain somewhat</p>
+<table id='287' style='font-size:14px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025 CM2 TetraMesh® Iso/Aniso - reference manual 20</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 21</div>
+<p id='288' data-category='paragraph' style='font-size:18px'>longer. The default value (1.414) gives the optimal meshes with respect to the size qualities. With this default<br>value, the average edge length tends to be 1 (optimal edge quality on average).</p>
+<br><p id='289' data-category='paragraph' style='font-size:18px'>Sometimes, it can be useful to limit the length of the edges to a shorter value (usually between 1 and 1.414),<br>and to accept an average value smaller than 1 (sub-optimal edge qualities on average).</p>
+<br><h1 id='290' style='font-size:22px'>Number of threads for parallel processing</h1>
+<br><p id='291' data-category='paragraph' style='font-size:18px'>num_threads. Integer ≥ 0. Default = 0 (= the number of logical processors on the running CPU).</p>
+<br><p id='292' data-category='paragraph' style='font-size:18px'>If num_threads = 1 the mesh generator runs on a single thread. Values are capped by the number of logical<br>processors on the running CPU.</p>
+<h1 id='293' style='font-size:22px'>Display handler</h1>
+<p id='294' data-category='paragraph' style='font-size:18px'>display_hdl. Default = NULL. Used in all modes.</p>
+<br><p id='295' data-category='paragraph' style='font-size:18px'>This user-supplied function is used to handle the messages issued by the mesher.</p>
+<p id='296' data-category='paragraph' style='font-size:14px'>typedef void (*display_handler_type) (void* pass_thru, unsigned level, const char* msg);</p>
+<p id='297' data-category='paragraph' style='font-size:18px'>The pass_thru parameter is the pointer set by the user in the settings structure.<br>The level parameter gives the importance of the message:</p>
+<br><p id='298' data-category='list' style='font-size:18px'>• 0: Important (for instance entering a major step of the process)<br>• 1: Somewhat important (minor step of the process)<br>• 2+: Not serious (debug messages that should not be printed for end-users).</p>
+<br><p id='299' data-category='paragraph' style='font-size:18px'>The msg parameter is the string message (length ≤ 255 characters).</p>
+<br><p id='300' data-category='paragraph' style='font-size:18px'>Note: This handler is not called in case of error or warning. At the end of the run, the user must check for an<br>error or a warning in the fields data_type::error_code and data_type::warning_code and then (in<br>case of error or warning) process the string data_type::msg1.</p>
+<p id='301' data-category='paragraph' style='font-size:20px'>Example</p>
+<p id='302' data-category='paragraph' style='font-size:14px'>void my_display_handler (void* pass_thru, unsigned level, const char* msg)</p>
+<br><p id='303' data-category='paragraph' style='font-size:14px'>{</p>
+<br><p id='304' data-category='paragraph' style='font-size:14px'>window_type* my_window = static_cast<window_type*>(pass_thru);<br>my_window->show(msg);</p>
+<br><p id='305' data-category='paragraph' style='font-size:14px'>}</p>
+<br><p id='306' data-category='paragraph' style='font-size:14px'>cm2::tetramesh_iso::mesher my_mesher;<br>cm2::tetramesh_iso::mesher::data_type my_data(pos, connectB);<br>window_type my_window; // A “window” instance.</p>
+<br><p id='307' data-category='paragraph' style='font-size:14px'>my_window.init(...); // Initialize the window somehow.<br>my_mesher.settings.display_hdl = &my_display_handler;<br>my_mesher.settings.pass_thru = static_cast<void*>(&my_window);<br>my_mesher.run(my_data); // Will call my_display_handler with “my_window”<br>// in pass_thru parameter.</p>
+<h1 id='308' style='font-size:22px'>Interrupt handler</h1>
+<p id='309' data-category='paragraph' style='font-size:18px'>interrupt_hdl. Default = NULL. Used in all modes.</p>
+<table id='310' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 21</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 22</div>
+<p id='311' data-category='paragraph' style='font-size:18px'>Can be useful for big meshes (several thousands of elements).</p>
+<p id='312' data-category='paragraph' style='font-size:14px'>typedef bool (*interrupt_handler_type) (void* pass_thru, double progress);</p>
+<p id='313' data-category='paragraph' style='font-size:18px'>This handler, if any, is called periodically by the mesher to check for a stop signal. When the handler returns<br>true, the mesher aborts its current step. If the interruption occurs early in the meshing stage - for instance in<br>the front mesh step - the mesh is invalid, so it is cleared. From the refine step on however, the user can get a<br>valid mesh upon exit, though probably of poor quality.</p>
+<br><p id='314' data-category='paragraph' style='font-size:18px'>An interruption also raises the CM2_INTERRUPTION warning.</p>
+<br><p id='315' data-category='paragraph' style='font-size:18px'>The pass_thru parameter is the void* pointer set by the user in settings_type::pass_thru (the same<br>parameter is also passed to the display handler).<br>The parameter progress (between 0 and 1) gives a hint about the progress of the meshing process.</p>
+<p id='316' data-category='paragraph' style='font-size:20px'>Example (time-out)</p>
+<p id='317' data-category='paragraph' style='font-size:14px'>bool my_interrupt_handler (void* pass_thru, double progress)</p>
+<br><p id='318' data-category='paragraph' style='font-size:14px'>{</p>
+<br><p id='319' data-category='paragraph' style='font-size:14px'>clock_t* t_timeout = static_cast<clock_t*>(pass_thru);<br>return clock() > (*t_timeout);</p>
+<br><p id='320' data-category='paragraph' style='font-size:14px'>}</p>
+<br><p id='321' data-category='paragraph' style='font-size:14px'>cm2::tetramesh_iso::mesher my_mesher;<br>cm2::tetramesh_iso::mesher::data_type my_data(pos, connectB);<br>clock_t my_t_timeout(::clock() + 1E3*CLOCKS_PER_SEC);</p>
+<br><p id='322' data-category='paragraph' style='font-size:14px'>my_mesher.settings.interrupt_hdl = &my_interrupt_handler;<br>my_mesher.settings.pass_thru = static_cast<void*>(&my_t_timeout);<br>my_mesher.run(my_data); // Will stop if duration > 1000 s.</p>
+<h1 id='323' style='font-size:20px'>Example (progress bar)</h1>
+<p id='324' data-category='paragraph' style='font-size:14px'>bool my_interrupt_handler (void* pass_thru, double progress)</p>
+<br><p id='325' data-category='paragraph' style='font-size:14px'>{</p>
+<br><p id='326' data-category='paragraph' style='font-size:14px'>window_type* my_window = static_cast<window_type*>(pass_thru);<br>std::string msg(“Progress: “);</p>
+<br><p id='327' data-category='paragraph' style='font-size:14px'>msg += std::to_string(static_cast<int>(100.*progress)) + “ %”;<br>my_window->show(msg);<br>return false;</p>
+<br><p id='328' data-category='paragraph' style='font-size:14px'>}</p>
+<br><p id='329' data-category='paragraph' style='font-size:14px'>cm2::tetramesh_iso::mesher my_mesher;<br>cm2::tetramesh_iso::mesher::data_type my_data(pos, connectB);<br>window_type my_window; // A window instance.</p>
+<br><p id='330' data-category='paragraph' style='font-size:14px'>my_window.init(...); // Initialize the window somehow.<br>my_mesher.settings.interrupt_hdl = &my_interrupt_handler;<br>my_mesher.settings.pass_thru = static_cast<void*>(&my_window);<br>my_mesher.run(my_data); // Will call my_interrupt_handler with “my_window”<br>// in pass_thru parameter.</p>
+<h1 id='331' style='font-size:22px'>Pass-through pointer</h1>
+<h1 id='332' style='font-size:18px'>pass_thru. Default = NULL.</h1>
+<br><p id='333' data-category='paragraph' style='font-size:18px'>Void pointer (to be cast) to pass some user structure/class to the display handler and to the interruption</p>
+<table id='334' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 22</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 23</div>
+<p id='335' data-category='paragraph' style='font-size:20px'>handler.</p>
+<h1 id='336' style='font-size:14px'>enum basic_mode_type</h1>
+<br><p id='337' data-category='paragraph' style='font-size:14px'>{<br>MESH_MODE,<br>REGULARIZE_MODE,<br>CONVEX_HULL_MODE<br>};</p>
+<p id='338' data-category='paragraph' style='font-size:14px'>struct settings_type</p>
+<br><p id='339' data-category='paragraph' style='font-size:14px'>{</p>
+<br><table id='340' style='font-size:14px'><thead></thead><tbody><tr><td>basic_mode_type</td><td>basic_mode;</td></tr><tr><td>bool</td><td>strict_constraints_flag;</td></tr><tr><td>int</td><td>subdomains_forcing;</td></tr><tr><td>bool</td><td>refine_flag;</td></tr><tr><td>bool</td><td>node_smoothing_flag;</td></tr><tr><td>bool</td><td>node_inserting_flag;</td></tr><tr><td>bool</td><td>node_removing_flag;</td></tr><tr><td>bool</td><td>shell_remeshing_flag;</td></tr><tr><td>bool</td><td>compute_Qh_flag;</td></tr><tr><td>bool</td><td>default_numbering_flag;</td></tr><tr><td>unsigned</td><td>no_edge_with_nodes_below;</td></tr><tr><td>unsigned</td><td>nodes_limit;</td></tr><tr><td>unsigned</td><td>optim_level;</td></tr><tr><td>double</td><td>target_metric;</td></tr><tr><td>double</td><td>max_gradation;</td></tr><tr><td>double</td><td>shape_quality_weight;</td></tr><tr><td>double</td><td>length_upper_bound;</td></tr><tr><td>unsigned</td><td>num_threads;</td></tr><tr><td>display_handler_type</td><td>display_hdl;</td></tr><tr><td>interrupt_handler_type</td><td>interrupt_hdl;</td></tr><tr><td>void*</td><td>pass_thru;</td></tr></tbody></table>
+<br><p id='341' data-category='paragraph' style='font-size:14px'>};</p>
+<caption id='342' style='font-size:14px'>Table 9 – The settings_type (CM2 TetraMesh Iso).</caption>
+<h1 id='343' style='font-size:14px'>enum basic_mode_type</h1>
+<br><p id='344' data-category='paragraph' style='font-size:14px'>{</p>
+<br><p id='345' data-category='paragraph' style='font-size:14px'>MESH_MODE,<br>REGULARIZE_MODE,<br>CONVEX_HULL_MODE</p>
+<br><p id='346' data-category='paragraph' style='font-size:14px'>};</p>
+<h1 id='347' style='font-size:14px'>struct settings_type</h1>
+<br><p id='348' data-category='paragraph' style='font-size:14px'>{</p>
+<br><table id='349' style='font-size:14px'><thead></thead><tbody><tr><td>basic_mode_type</td><td>basic_mode;</td></tr><tr><td>bool</td><td>strict_constraints_flag;</td></tr><tr><td>int</td><td>subdomains_forcing;</td></tr><tr><td>bool</td><td>refine_flag;</td></tr><tr><td>bool</td><td>node_smoothing_flag;</td></tr><tr><td>bool</td><td>node_inserting_flag;</td></tr><tr><td>bool</td><td>node_removing_flag;</td></tr><tr><td>bool</td><td>shell_remeshing_flag;</td></tr><tr><td>bool</td><td>compute_Qh_flag;</td></tr><tr><td>bool</td><td>default_numbering_flag;</td></tr><tr><td>unsigned</td><td>no_edge_with_nodes_below;</td></tr><tr><td>unsigned</td><td>nodes_limit;</td></tr><tr><td>unsigned</td><td>optim_level;</td></tr><tr><td>DoubleSym3</td><td>target_metric;</td></tr><tr><td>double</td><td>max_gradation;</td></tr><tr><td>double</td><td>shape_quality_weight;</td></tr><tr><td>double</td><td>length_upper_bound;</td></tr><tr><td>unsigned</td><td>num_threads;</td></tr><tr><td>display_handler_type</td><td>display_hdl;</td></tr><tr><td>interrupt_handler_type</td><td>interrupt_hdl;</td></tr><tr><td>void*</td><td>pass_thru;</td></tr></tbody></table>
+<br><p id='350' data-category='paragraph' style='font-size:14px'>};</p>
+<table id='351' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 23</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 24</div>
+<header id='352' style='font-size:14px'>Table 10 – The settings_type (CM2 TetraMesh Aniso).</header>
+<h1 id='353' style='font-size:20px'>Function members</h1>
+<p id='354' data-category='paragraph' style='font-size:18px'>The settings_type class is equipped with default constructor and some utility members</p>
+<p id='355' data-category='paragraph' style='font-size:14px'>// Constructor.<br>settings_type();</p>
+<br><p id='356' data-category='paragraph' style='font-size:14px'>// Members.<br>bool valid() const;<br>int check() const;<br>void reset();<br>void save (const char* filename) const;<br>int load (const char* filename);</p>
+<caption id='357' style='font-size:14px'>Table 11 – The settings_type function members.</caption>
+<table id='358' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 24</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 25</div>
+<h1 id='359' style='font-size:20px'>4. General scheme of the generators</h1>
+<figure id='360'><img style='font-size:18px' alt="INITIALIZATION
+REGULARIZE_MODE MESH_MODE
+basic_mode
+FRONT MESH
+▪ Constraints enforcement
+▪ Elements coloring
+false
+refine_flag
+Detection of the
+boundary faces
+true
+REFINEMENT
+= 0
+optim_level
+> 0
+OPTIMIZATION
+FINALIZATION" data-coord="top-left:(215,187); bottom-right:(1046,1472)" /></figure>
+<caption id='361' style='font-size:14px'>Figure 2 – General scheme of the mesh generators.</caption>
+<table id='362' style='font-size:16px'><thead></thead><tbody><tr><td>© Computing Objects /version 5.6 rev. February 2025</td><td>CM2 TetraMesh® Iso/Aniso - reference manual 25</td></tr></tbody></table>
+</div>
+<div class="page">
+<div class="page-header">Page 26</div>
+<p id='363' data-category='paragraph' style='font-size:14px'>https://www.computing-objects.com</p>
+<br><p id='364' data-category='paragraph' style='font-size:14px'>© Computing Objects SARL - 25 rue du Maréchal Foch, 78000 Versailles, France.</p>
+<br><p id='365' data-category='paragraph' style='font-size:14px'>Limited Liability Company with a capital of 100 000 €.<br>Registered at Versailles RCS under SIRET number 422 791 038 00033.<br>EU VAT registration FR59422791038.</p>
+</div>
+
+</body>
+</html>
